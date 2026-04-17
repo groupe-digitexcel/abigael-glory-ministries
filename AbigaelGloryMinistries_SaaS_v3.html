@@ -1,0 +1,2625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Abigael Glory Ministries — Spirit-filled Digital Evangelism, Free Christian Books, Prayer, Grants & Outreach led by Besong Aseck Lydia in Cameroon and beyond.">
+<meta property="og:title" content="Abigael Glory Ministries">
+<meta property="og:description" content="Join our growing community of faith. Free books, prayer requests, testimonies & support grants.">
+<meta property="og:type" content="website">
+<title>Abigael Glory Ministries</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- ═══════════════════════════════════════════════════════
+     SUPABASE SETUP INSTRUCTIONS (FREE TIER — ZERO COST)
+     ═══════════════════════════════════════════════════════
+     1. Go to https://supabase.com → Create new project (free)
+     2. In SQL Editor run the schema in /supabase/schema.sql (provided below in comments)
+     3. Get your Project URL & anon key from Settings > API
+     4. Replace SUPABASE_URL and SUPABASE_ANON_KEY below
+     5. Push this file to GitHub → Connect repo to Vercel (free)
+     6. Done — live SaaS with real database!
+
+     SUPABASE SCHEMA (run in SQL editor):
+     CREATE TABLE members (id uuid DEFAULT gen_random_uuid() PRIMARY KEY, name text, email text UNIQUE, phone text, country text, interest text, created_at timestamptz DEFAULT now());
+     CREATE TABLE testimonies (id uuid DEFAULT gen_random_uuid() PRIMARY KEY, name text, location text, category text, story text, permission text, approved boolean DEFAULT false, created_at timestamptz DEFAULT now());
+     CREATE TABLE prayer_requests (id uuid DEFAULT gen_random_uuid() PRIMARY KEY, name text, country text, request text, prayed boolean DEFAULT false, created_at timestamptz DEFAULT now());
+     CREATE TABLE resources (id uuid DEFAULT gen_random_uuid() PRIMARY KEY, title text, type text, description text, scripture text, cover_url text, pdf_url text, fb_link text, tags text, status text DEFAULT 'published', downloads int DEFAULT 0, created_at timestamptz DEFAULT now());
+     CREATE TABLE contact_messages (id uuid DEFAULT gen_random_uuid() PRIMARY KEY, name text, email text, subject text, message text, read boolean DEFAULT false, created_at timestamptz DEFAULT now());
+     CREATE TABLE events (id uuid DEFAULT gen_random_uuid() PRIMARY KEY, title text, description text, event_date date, event_type text, fb_link text, active boolean DEFAULT true, created_at timestamptz DEFAULT now());
+     CREATE TABLE donations (id uuid DEFAULT gen_random_uuid() PRIMARY KEY, name text, amount text, fund text, message text, created_at timestamptz DEFAULT now());
+
+     Enable Row Level Security + policies for anon insert on members, testimonies, prayer_requests, contact_messages, donations.
+     Allow anon select on resources, events.
+     ════════════════════════════════════════════════════════ -->
+
+<script>
+  // ══ CONFIGURATION — replace with your Supabase credentials ══
+  const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+  const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
+  const ADMIN_PASS = 'AGM2025@Glory'; // change in production
+
+  // ══ SUPABASE CLIENT (loaded via CDN below) ══
+  let sb = null;
+
+  // Offline/demo fallback when Supabase not configured
+  const DEMO_MODE = (SUPABASE_URL.includes('YOUR_PROJECT'));
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+/* ══════════════════════════════════════════════════
+   DESIGN SYSTEM — Sacred Gold & Deep Navy
+   ══════════════════════════════════════════════════ */
+:root{
+  /* Core palette */
+  --gold:#C9943A; --gold2:#F0C96A; --glow:#FFE08A; --gold-light:rgba(201,148,58,.12);
+  --deep:#08121E; --navy:#0F1F35; --mid:#183354; --sky:#2563EB;
+  --cream:#FAFAF7; --warm:#F7F2E8; --card:#FFFFFF;
+  --text:#1A140A; --muted:#6B5D48; --soft:#9E8E78;
+  --green:#156E3A; --green2:#22C55E;
+  --red:#B32424; --purple:#5B2D8A;
+  --teal:#0F7B6C;
+
+  /* Admin theme */
+  --abg:#060E1A; --apanel:#0D1A2D; --acard:#142238;
+  --aborder:rgba(80,120,180,.15); --agold:#F0C96A;
+
+  /* Spacing & shape */
+  --r:18px; --r-sm:12px; --r-lg:24px;
+
+  /* Shadows */
+  --shadow-sm:0 2px 12px rgba(0,0,0,.07);
+  --shadow-md:0 6px 28px rgba(0,0,0,.10);
+  --shadow-lg:0 16px 48px rgba(0,0,0,.14);
+  --shadow-gold:0 8px 32px rgba(201,148,58,.28);
+}
+*, *::before, *::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{background:var(--cream);font-family:'Nunito',sans-serif;color:var(--text);overflow-x:hidden;line-height:1.6;}
+img{max-width:100%;display:block;}
+a{text-decoration:none;color:inherit;}
+button{font-family:'Nunito',sans-serif;cursor:pointer;}
+input,select,textarea{font-family:'Nunito',sans-serif;}
+
+/* ══ SCROLL BAR ══ */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--warm);}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:10px;}
+
+/* ══ VIEWS ══ */
+#publicSite{display:block;}
+#adminPanel{display:none;}
+
+/* ══════════════════════════════════════════════════
+   TICKER
+   ══════════════════════════════════════════════════ */
+.ticker-wrap{
+  background:linear-gradient(90deg,var(--deep),var(--navy),var(--deep));
+  overflow:hidden;padding:9px 0;border-bottom:1.5px solid rgba(201,148,58,.4);
+  position:relative;z-index:10;
+}
+.ticker-track{display:flex;animation:ticker 38s linear infinite;white-space:nowrap;}
+.ticker-track span{color:var(--gold2);font-size:10.5px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:0 28px;}
+.ticker-track span::before{content:"✦  ";color:var(--gold);opacity:.7;}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ══════════════════════════════════════════════════
+   HERO
+   ══════════════════════════════════════════════════ */
+.hero{
+  background:var(--deep);position:relative;overflow:hidden;
+  min-height:100svh;display:flex;flex-direction:column;
+}
+.hero-canvas{position:absolute;inset:0;pointer-events:none;}
+/* Radial glow layers */
+.hero-canvas::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% -10%,rgba(201,148,58,.20) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 40% at 85% 85%,rgba(91,45,138,.12) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 30% at 5% 70%,rgba(37,99,235,.08) 0%,transparent 55%);
+}
+/* Subtle grid */
+.hero-canvas::after{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(201,148,58,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(201,148,58,.04) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+/* Floating particles via box-shadow */
+.particles{
+  position:absolute;width:4px;height:4px;border-radius:50%;
+  background:rgba(240,201,106,.6);
+  box-shadow:
+    100px 200px 0 rgba(240,201,106,.3),
+    200px 100px 0 rgba(240,201,106,.2),
+    350px 300px 0 rgba(201,148,58,.4),
+    50px 400px 0 rgba(240,201,106,.2),
+    450px 150px 0 rgba(201,148,58,.3),
+    300px 450px 0 rgba(240,201,106,.2),
+    180px 350px 0 rgba(201,148,58,.35);
+  animation:particleDrift 14s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+@keyframes particleDrift{
+  0%{transform:translate(0,0) scale(1);}
+  50%{transform:translate(20px,-30px) scale(1.2);}
+  100%{transform:translate(-15px,15px) scale(0.85);}
+}
+
+.hero-inner{
+  position:relative;z-index:2;
+  text-align:center;
+  padding:52px 20px 40px;
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+
+/* Logo */
+.logo-wrap{display:inline-flex;flex-direction:column;align-items:center;margin-bottom:20px;}
+.logo-emblem{
+  width:120px;height:120px;margin-bottom:12px;
+  filter:drop-shadow(0 0 28px rgba(201,148,58,.6));
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-10px) rotate(1deg)}}
+
+.logo-name{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,8vw,50px);
+  font-weight:900;color:#fff;line-height:1.05;
+  text-shadow:0 4px 30px rgba(0,0,0,.6);
+  letter-spacing:-.5px;
+}
+.logo-name em{color:var(--gold2);font-style:italic;}
+.logo-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:12px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:var(--deep);
+  font-size:10px;font-weight:900;letter-spacing:2.5px;text-transform:uppercase;
+  padding:6px 20px;border-radius:40px;
+  box-shadow:var(--shadow-gold);
+}
+.hero-founder{color:rgba(255,255,255,.55);font-size:12.5px;font-style:italic;margin-top:10px;}
+.hero-tagline{
+  color:rgba(255,255,255,.72);font-size:14px;font-weight:400;
+  line-height:1.8;max-width:380px;margin:12px auto 0;
+}
+.hero-verse{
+  display:inline-block;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(201,148,58,.25);
+  backdrop-filter:blur(6px);
+  color:var(--gold2);font-size:12px;font-style:italic;
+  padding:8px 20px;border-radius:30px;
+  margin:16px 0 22px;
+}
+.hero-cta-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:8px;}
+
+/* CTA Buttons */
+.btn-primary{
+  display:inline-flex;align-items:center;gap:9px;
+  background:linear-gradient(135deg,var(--gold),#E8A030);
+  color:var(--deep);padding:14px 24px;border-radius:50px;
+  font-size:13.5px;font-weight:900;border:none;
+  box-shadow:var(--shadow-gold);
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(201,148,58,.5);}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:9px;
+  background:rgba(255,255,255,.08);
+  color:#fff;padding:14px 24px;border-radius:50px;
+  font-size:13.5px;font-weight:700;border:1.5px solid rgba(255,255,255,.2);
+  backdrop-filter:blur(6px);
+  transition:all .2s;
+}
+.btn-secondary:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.4);}
+.btn-fb{
+  display:inline-flex;align-items:center;gap:9px;
+  background:linear-gradient(135deg,#1877F2,#0a58bf);
+  color:#fff;padding:14px 24px;border-radius:50px;
+  font-size:13.5px;font-weight:800;border:none;
+  box-shadow:0 6px 24px rgba(24,119,242,.45);
+  transition:transform .2s;
+}
+.btn-fb:hover{transform:translateY(-3px);}
+
+/* Live indicator */
+.live-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);
+  color:#FCA5A5;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:5px 14px;border-radius:20px;margin-bottom:16px;
+}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#EF4444;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+/* Hero scroll hint */
+.hero-scroll{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:3;}
+.hero-scroll span{display:block;width:1.5px;height:32px;background:linear-gradient(to bottom,var(--gold),transparent);margin:0 auto;animation:scrollDown 2s ease-in-out infinite;}
+@keyframes scrollDown{0%{transform:translateY(0);opacity:1}100%{transform:translateY(16px);opacity:0}}
+
+/* Wave */
+.wave{display:block;width:100%;line-height:0;margin-bottom:-2px;}
+
+/* ══════════════════════════════════════════════════
+   STICKY NAV
+   ══════════════════════════════════════════════════ */
+.sticky-nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(250,250,247,.95);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(201,148,58,.20);
+  padding:10px 16px;
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
+}
+.nav-inner{
+  display:flex;justify-content:center;flex-wrap:wrap;gap:5px;
+  max-width:720px;margin:0 auto;
+}
+.nav-inner a{
+  text-decoration:none;font-size:10.5px;font-weight:800;letter-spacing:.8px;
+  text-transform:uppercase;padding:7px 14px;border-radius:30px;
+  border:1.5px solid rgba(201,148,58,.25);color:var(--muted);background:#fff;
+  transition:all .2s;
+}
+.nav-inner a:hover,.nav-inner a.active{
+  background:var(--gold);color:var(--deep);
+  border-color:var(--gold);box-shadow:0 4px 14px rgba(201,148,58,.3);
+}
+.admin-nav-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;
+  padding:7px 14px;border-radius:30px;
+  background:var(--deep);color:var(--gold2);
+  border:1.5px solid rgba(201,148,58,.35);
+  transition:all .2s;
+}
+.admin-nav-btn:hover{background:var(--gold);color:var(--deep);}
+
+/* ══════════════════════════════════════════════════
+   LAYOUT
+   ══════════════════════════════════════════════════ */
+.wrap{max-width:620px;margin:0 auto;padding:0 16px;}
+
+/* Section header */
+.sec-head{
+  display:flex;align-items:center;gap:12px;
+  margin:40px 0 20px;
+}
+.sec-head .line{flex:1;height:1.5px;background:linear-gradient(90deg,var(--gold),transparent);}
+.sec-head .line.r{background:linear-gradient(270deg,var(--gold),transparent);}
+.sec-head h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(17px,4vw,22px);font-weight:700;
+  color:var(--deep);white-space:nowrap;
+}
+
+/* Fade up animation */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .6s ease both;}
+
+/* ══════════════════════════════════════════════════
+   ABOUT
+   ══════════════════════════════════════════════════ */
+.about-card{
+  background:#fff;border-radius:var(--r);overflow:hidden;
+  box-shadow:var(--shadow-md);animation:fadeUp .6s ease both;
+}
+.about-stripe{height:5px;background:linear-gradient(90deg,var(--gold),var(--gold2),var(--sky),var(--purple),var(--green));}
+.about-body{padding:22px 20px;}
+.about-body p{font-size:14px;line-height:1.82;color:#3D3120;}
+.about-body p+p{margin-top:12px;}
+.about-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px;
+}
+.stat{background:var(--warm);border-radius:var(--r-sm);padding:14px 8px;text-align:center;}
+.stat .n{display:block;font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--gold);}
+.stat .l{font-size:9.5px;color:var(--muted);font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+
+/* Founder profile card */
+.founder-card{
+  background:linear-gradient(135deg,var(--deep),var(--navy));
+  border-radius:var(--r);padding:20px;margin-top:14px;
+  display:flex;gap:16px;align-items:center;
+  border:1px solid rgba(201,148,58,.2);
+}
+.founder-avatar{
+  width:64px;height:64px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;border:2.5px solid var(--gold2);
+}
+.founder-info h4{font-family:'Playfair Display',serif;font-size:16px;color:#fff;margin-bottom:3px;}
+.founder-info p{font-size:12px;color:rgba(255,255,255,.65);line-height:1.6;}
+.founder-info .founder-title{font-size:10px;color:var(--gold2);font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
+
+/* ══════════════════════════════════════════════════
+   PILLARS / WHAT WE DO
+   ══════════════════════════════════════════════════ */
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.pillar{
+  background:#fff;border-radius:16px;padding:18px 14px;
+  box-shadow:var(--shadow-sm);border-top:4px solid var(--gold);
+  animation:fadeUp .6s ease both;transition:transform .2s,box-shadow .2s;
+}
+.pillar:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+.pillar.b2{border-top-color:var(--sky);}
+.pillar.b3{border-top-color:var(--green);}
+.pillar.b4{border-top-color:var(--purple);}
+.pillar.b5{border-top-color:var(--red);}
+.pillar.b6{border-top-color:var(--teal);}
+.pillar .ico{font-size:28px;margin-bottom:10px;}
+.pillar h4{font-size:13.5px;font-weight:800;color:var(--deep);margin-bottom:4px;}
+.pillar p{font-size:11.5px;color:var(--muted);line-height:1.65;}
+
+/* ══════════════════════════════════════════════════
+   SEARCH BAR
+   ══════════════════════════════════════════════════ */
+.search-bar{
+  display:flex;gap:8px;margin-bottom:16px;
+  background:#fff;border-radius:50px;padding:6px 6px 6px 18px;
+  border:1.5px solid rgba(201,148,58,.25);
+  box-shadow:var(--shadow-sm);
+}
+.search-bar input{
+  flex:1;border:none;outline:none;font-size:13.5px;background:transparent;color:var(--text);
+}
+.search-bar input::placeholder{color:var(--soft);}
+.search-bar button{
+  background:linear-gradient(135deg,var(--gold),#E8A030);
+  color:var(--deep);border:none;border-radius:40px;
+  padding:9px 18px;font-size:12px;font-weight:800;
+  transition:filter .15s;
+}
+.search-bar button:hover{filter:brightness(1.08);}
+
+/* Filter chips */
+.filter-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;}
+.chip{
+  padding:6px 14px;border-radius:24px;font-size:11px;font-weight:700;
+  letter-spacing:.5px;border:1.5px solid rgba(201,148,58,.25);
+  background:#fff;color:var(--muted);cursor:pointer;transition:all .2s;
+}
+.chip.active,.chip:hover{background:var(--gold);color:var(--deep);border-color:var(--gold);}
+
+/* ══════════════════════════════════════════════════
+   MEMBERSHIP & LIBRARY
+   ══════════════════════════════════════════════════ */
+.member-banner{
+  background:linear-gradient(135deg,var(--deep),#152840);
+  border-radius:var(--r);padding:26px 22px;text-align:center;margin-bottom:16px;
+  border:1px solid rgba(201,148,58,.18);
+  position:relative;overflow:hidden;
+}
+.member-banner::before{
+  content:'✦';position:absolute;top:-20px;right:-10px;
+  font-size:120px;color:rgba(201,148,58,.06);line-height:1;
+}
+.member-banner h3{font-family:'Playfair Display',serif;font-style:italic;font-size:19px;color:var(--gold2);margin-bottom:8px;line-height:1.3;}
+.member-banner p{font-size:13px;color:rgba(255,255,255,.72);line-height:1.7;}
+
+.member-form{
+  background:#fff;border-radius:var(--r);padding:24px 20px;
+  box-shadow:var(--shadow-md);
+}
+.member-form h3{font-family:'Playfair Display',serif;font-size:19px;color:var(--deep);margin-bottom:16px;text-align:center;}
+.form-row{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
+.form-row input,.form-row select,.form-row textarea{
+  background:var(--warm);border:1.5px solid rgba(201,148,58,.25);
+  border-radius:var(--r-sm);padding:13px 16px;
+  font-size:13.5px;color:var(--text);outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{
+  border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,148,58,.12);
+}
+.form-row input::placeholder,.form-row textarea::placeholder{color:var(--soft);}
+
+.register-btn{
+  width:100%;padding:15px;border-radius:var(--r-sm);
+  background:linear-gradient(135deg,var(--gold),#E8A030);
+  color:var(--deep);font-size:14.5px;font-weight:900;border:none;
+  box-shadow:var(--shadow-gold);transition:transform .15s,box-shadow .2s;
+}
+.register-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(201,148,58,.45);}
+#memberLibrary{display:none;}
+
+.library-welcome{
+  background:linear-gradient(135deg,var(--green),#16A34A);
+  border-radius:14px;padding:18px 20px;color:#fff;text-align:center;margin-bottom:16px;
+}
+.library-welcome h3{font-family:'Playfair Display',serif;font-size:19px;margin-bottom:4px;}
+.library-welcome p{font-size:13px;opacity:.9;}
+
+/* ══════════════════════════════════════════════════
+   BOOK / RESOURCE CARDS
+   ══════════════════════════════════════════════════ */
+.books-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.book-card{
+  background:#fff;border-radius:16px;overflow:hidden;
+  box-shadow:var(--shadow-sm);
+  transition:transform .2s,box-shadow .2s;animation:fadeUp .6s ease both;
+}
+.book-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);}
+.book-cover{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;}
+.book-cover-placeholder{
+  width:100%;aspect-ratio:3/4;
+  background:linear-gradient(135deg,var(--deep),var(--mid));
+  display:flex;align-items:center;justify-content:center;
+  font-size:36px;
+}
+.book-info{padding:12px 12px 14px;}
+.book-info h4{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--deep);margin-bottom:3px;line-height:1.3;}
+.book-info p{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:8px;}
+.book-info .tag{display:inline-block;font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:2px 9px;border-radius:12px;margin-bottom:7px;}
+.tag-book{background:#FFF3CD;color:#856404;border:1px solid #FFDF7E;}
+.tag-series{background:#DBEAFE;color:#1E40AF;border:1px solid #93C5FD;}
+.tag-article{background:#DCFCE7;color:#166534;border:1px solid #86EFAC;}
+.tag-devotional{background:#F3E8FF;color:#6B21A8;border:1px solid #D8B4FE;}
+.tag-coming{background:#FEE2E2;color:#991B1B;border:1px solid #FCA5A5;}
+.download-btn{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  width:100%;padding:10px;border-radius:9px;
+  background:linear-gradient(135deg,var(--gold),#E8A030);
+  color:var(--deep);font-size:11.5px;font-weight:900;
+  text-decoration:none;border:none;cursor:pointer;transition:filter .15s;
+}
+.download-btn:hover{filter:brightness(1.08);}
+.fb-read-btn{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  width:100%;padding:10px;border-radius:9px;
+  background:linear-gradient(135deg,#1877F2,#0a58bf);
+  color:#fff;font-size:11.5px;font-weight:900;text-decoration:none;
+}
+.coming-soon-overlay{
+  display:flex;align-items:center;justify-content:center;
+  width:100%;padding:10px;border-radius:9px;
+  background:#f0ebe3;color:var(--muted);font-size:11.5px;font-weight:700;
+}
+.book-downloads{font-size:10px;color:var(--soft);display:flex;align-items:center;gap:4px;margin-top:4px;}
+
+/* ══════════════════════════════════════════════════
+   TESTIMONY
+   ══════════════════════════════════════════════════ */
+.testimony-banner{
+  background:linear-gradient(135deg,var(--deep),#152840);
+  border-radius:var(--r);padding:24px 22px;text-align:center;margin-bottom:16px;
+  border:1px solid rgba(201,148,58,.18);
+}
+.testimony-banner h3{font-family:'Playfair Display',serif;font-style:italic;font-size:19px;color:var(--gold2);margin-bottom:8px;line-height:1.35;}
+.testimony-banner p{font-size:13px;color:rgba(255,255,255,.72);line-height:1.7;}
+
+.testimony-wizard{background:#fff;border-radius:var(--r);padding:24px 20px;box-shadow:var(--shadow-md);}
+.wizard-step{display:none;}
+.wizard-step.active{display:block;}
+
+/* Progress */
+.wizard-progress{display:flex;gap:6px;margin-bottom:22px;}
+.wizard-progress .dot{
+  flex:1;height:4px;border-radius:10px;background:#E8DFCF;
+  transition:background .3s;
+}
+.wizard-progress .dot.done{background:var(--gold);}
+
+.wizard-q{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--deep);margin-bottom:6px;}
+.wizard-hint{font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.55;}
+.wizard-input{
+  width:100%;background:var(--warm);border:1.5px solid rgba(201,148,58,.25);
+  border-radius:12px;padding:13px 16px;font-size:13.5px;color:var(--text);
+  outline:none;transition:border-color .2s;resize:vertical;
+}
+.wizard-input:focus{border-color:var(--gold);}
+.wizard-options{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.wizard-opt{
+  padding:9px 16px;border-radius:28px;border:1.5px solid rgba(201,148,58,.3);
+  background:#fff;font-size:12.5px;font-weight:700;color:var(--text);
+  cursor:pointer;transition:all .2s;
+}
+.wizard-opt.selected{background:var(--gold);color:var(--deep);border-color:var(--gold);}
+.wizard-nav{display:flex;gap:10px;margin-top:16px;}
+.wiz-btn{flex:1;padding:13px;border-radius:12px;font-size:13.5px;font-weight:800;border:none;cursor:pointer;transition:all .15s;}
+.wiz-prev{background:var(--warm);color:var(--muted);}
+.wiz-next{background:linear-gradient(135deg,var(--gold),#E8A030);color:var(--deep);box-shadow:0 4px 16px rgba(201,148,58,.35);}
+
+/* Testimony cards */
+.testimony-cards{display:flex;flex-direction:column;gap:14px;margin-top:14px;}
+.testimony-card{
+  background:#fff;border-radius:16px;padding:18px 20px;
+  box-shadow:var(--shadow-sm);border-left:4px solid var(--gold);
+  animation:fadeUp .6s ease both;position:relative;overflow:hidden;
+}
+.testimony-card::before{
+  content:'"';font-family:'Playfair Display',serif;font-size:72px;
+  color:var(--gold);opacity:.1;position:absolute;top:-4px;right:10px;
+  line-height:1;pointer-events:none;
+}
+.testimony-card p{font-size:13px;color:#3D3120;line-height:1.75;font-style:italic;}
+.testimony-card .t-author{display:flex;align-items:center;gap:10px;margin-top:12px;}
+.t-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;
+}
+.t-info strong{display:block;font-size:12.5px;font-weight:800;color:var(--deep);}
+.t-info span{font-size:10.5px;color:var(--muted);}
+.share-testimony-btn{
+  display:inline-flex;align-items:center;gap:6px;margin-top:10px;
+  padding:7px 16px;border-radius:24px;
+  background:linear-gradient(135deg,#1877F2,#0a58bf);
+  color:#fff;font-size:11px;font-weight:800;border:none;cursor:pointer;
+}
+
+/* Category badge on testimony */
+.t-cat-badge{
+  display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.8px;
+  text-transform:uppercase;padding:2px 10px;border-radius:20px;
+  background:var(--gold-light);color:var(--gold);border:1px solid rgba(201,148,58,.25);
+  margin-bottom:8px;
+}
+
+/* ══════════════════════════════════════════════════
+   GRANTS
+   ══════════════════════════════════════════════════ */
+.grant-banner{
+  background:linear-gradient(135deg,var(--deep),#152840);
+  border-radius:var(--r);padding:24px 22px;text-align:center;margin-bottom:16px;
+  border:1px solid rgba(201,148,58,.18);
+}
+.grant-banner h3{font-family:'Playfair Display',serif;font-style:italic;font-size:19px;color:var(--gold2);margin-bottom:8px;}
+.grant-banner p{font-size:13px;color:rgba(255,255,255,.72);line-height:1.7;}
+.grant-cards{display:flex;flex-direction:column;gap:14px;}
+.grant-card{background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-md);}
+.grant-head{padding:16px 18px;display:flex;align-items:center;gap:13px;}
+.grant-ico{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;background:rgba(255,255,255,.18);}
+.grant-head h4{font-size:15.5px;font-weight:800;color:#fff;}
+.grant-head p{font-size:11.5px;color:rgba(255,255,255,.72);margin-top:2px;}
+.grant-body{padding:14px 18px 18px;}
+.grant-body p{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:12px;}
+.checklist{list-style:none;margin-bottom:14px;}
+.checklist li{font-size:12.5px;color:#4A3B28;padding:4px 0;display:flex;gap:8px;align-items:flex-start;}
+.checklist li::before{content:"✓";color:var(--green2);font-weight:900;flex-shrink:0;}
+.apply-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:13px;border-radius:12px;font-size:13.5px;font-weight:900;
+  text-decoration:none;color:#fff;border:none;cursor:pointer;transition:transform .15s;
+}
+.apply-btn:hover{transform:translateY(-2px);}
+.g-med .grant-head{background:linear-gradient(135deg,#7B1818,var(--red));}
+.g-med .apply-btn{background:linear-gradient(135deg,#7B1818,var(--red));box-shadow:0 6px 20px rgba(179,36,36,.3);}
+.g-sch .grant-head{background:linear-gradient(135deg,#0E3D68,var(--sky));}
+.g-sch .apply-btn{background:linear-gradient(135deg,#0E3D68,var(--sky));box-shadow:0 6px 20px rgba(37,99,235,.3);}
+.g-food .grant-head{background:linear-gradient(135deg,#0F4D22,var(--green));}
+.g-food .apply-btn{background:linear-gradient(135deg,#0F4D22,var(--green));box-shadow:0 6px 20px rgba(21,110,58,.3);}
+.g-edu .grant-head{background:linear-gradient(135deg,#3C1B6A,var(--purple));}
+.g-edu .apply-btn{background:linear-gradient(135deg,#3C1B6A,var(--purple));box-shadow:0 6px 20px rgba(91,45,138,.3);}
+
+/* ══════════════════════════════════════════════════
+   DONATE
+   ══════════════════════════════════════════════════ */
+.pay-box{background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-md);margin-bottom:16px;}
+.pay-box-head{background:linear-gradient(135deg,var(--deep),#152840);padding:18px 20px;text-align:center;}
+.pay-box-head p{color:var(--gold2);font-family:'Playfair Display',serif;font-style:italic;font-size:18px;margin-bottom:3px;}
+.pay-box-head span{color:rgba(255,255,255,.58);font-size:12px;}
+.pay-box-body{padding:18px;}
+
+.momo-block{
+  background:linear-gradient(135deg,#ECFDF5,#F0FDF4);
+  border-radius:14px;padding:16px;border:2px solid #86EFAC;margin-bottom:12px;
+}
+.momo-top{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.momo-ico{
+  width:44px;height:44px;border-radius:12px;
+  background:linear-gradient(135deg,#15803D,#16A34A);
+  display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;
+}
+.momo-top h4{font-size:14.5px;font-weight:900;color:#14532D;}
+.momo-top p{font-size:11.5px;color:#15803D;}
+.momo-number-box{
+  background:#fff;border-radius:10px;padding:12px 14px;
+  border:1.5px dashed #86EFAC;display:flex;align-items:center;justify-content:space-between;
+}
+.momo-number-box .num-label{font-size:9.5px;color:#888;text-transform:uppercase;letter-spacing:1px;font-weight:800;}
+.momo-number-box .num{font-size:24px;font-weight:900;color:#14532D;letter-spacing:3px;font-family:'Playfair Display',serif;}
+.momo-number-box .num-name{font-size:11px;color:#555;margin-top:2px;}
+.copy-btn{
+  background:linear-gradient(135deg,#15803D,#16A34A);color:#fff;border:none;
+  border-radius:10px;padding:10px 14px;font-size:12px;font-weight:900;
+  cursor:pointer;transition:transform .15s;flex-shrink:0;
+}
+.copy-btn:hover{transform:scale(1.05);}
+.momo-note{font-size:11px;color:#555;margin-top:10px;text-align:center;}
+
+.fb-pay-block{
+  background:linear-gradient(135deg,#EFF6FF,#F5F3FF);
+  border-radius:14px;padding:16px;border:2px solid #93C5FD;
+}
+.fb-pay-top{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.fb-pay-ico{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#1877F2,#0a58bf);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.fb-pay-top h4{font-size:14.5px;font-weight:900;color:#1E3A8A;}
+.fb-pay-top p{font-size:11.5px;color:#1D4ED8;}
+.fb-pay-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:13px;border-radius:10px;
+  background:linear-gradient(135deg,#1877F2,#0a58bf);
+  color:#fff;font-size:13px;font-weight:900;text-decoration:none;
+  transition:filter .15s;border:none;cursor:pointer;
+}
+.fb-pay-btn:hover{filter:brightness(1.08);}
+
+/* Donation fund cards */
+.donate-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;}
+.donate-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;}
+.dc-side{height:5px;background:var(--gold);}
+.dc-body{padding:14px 14px 16px;flex:1;display:flex;flex-direction:column;}
+.dc-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.dc-ico{width:32px;height:32px;border-radius:9px;background:var(--warm);display:flex;align-items:center;justify-content:center;font-size:16px;}
+.dc-body h4{font-size:13px;font-weight:900;color:var(--deep);}
+.dc-body > p{font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:10px;flex:1;}
+.prog-label{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);font-weight:700;margin-bottom:4px;}
+.prog-bar{height:5px;background:#EDE8DD;border-radius:10px;overflow:hidden;margin-bottom:10px;}
+.prog-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width 1s ease;}
+.give-btn{
+  display:flex;align-items:center;justify-content:center;gap:5px;padding:9px;border-radius:9px;
+  font-size:11.5px;font-weight:900;text-decoration:none;color:#fff;border:none;cursor:pointer;
+}
+.d-med .dc-side{background:var(--red);}.d-med .prog-fill{background:linear-gradient(90deg,#8B1A1A,var(--red));}.d-med .give-btn{background:linear-gradient(135deg,#8B1A1A,var(--red));}
+.d-orp .dc-side{background:var(--sky);}.d-orp .prog-fill{background:linear-gradient(90deg,#1E40AF,var(--sky));}.d-orp .give-btn{background:linear-gradient(135deg,#1E40AF,var(--sky));}
+.d-pri .dc-side{background:var(--purple);}.d-pri .prog-fill{background:linear-gradient(90deg,#3C1B6A,var(--purple));}.d-pri .give-btn{background:linear-gradient(135deg,#3C1B6A,var(--purple));}
+.d-gen .dc-side{background:var(--green);}.d-gen .prog-fill{background:linear-gradient(90deg,#0F4D22,var(--green));}.d-gen .give-btn{background:linear-gradient(135deg,#0F4D22,var(--green));}
+
+/* ══════════════════════════════════════════════════
+   EVENTS
+   ══════════════════════════════════════════════════ */
+.events-list{display:flex;flex-direction:column;gap:10px;}
+.event-card{
+  background:#fff;border-radius:var(--r-sm);padding:16px;
+  box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:14px;
+  transition:transform .2s;border:1.5px solid rgba(201,148,58,.12);
+}
+.event-card:hover{transform:translateX(4px);}
+.event-date{
+  background:linear-gradient(135deg,var(--deep),var(--navy));
+  border-radius:12px;padding:10px 12px;text-align:center;flex-shrink:0;min-width:52px;
+}
+.event-date .day{display:block;font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold2);line-height:1;}
+.event-date .mon{display:block;font-size:9px;color:rgba(255,255,255,.6);font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;}
+.event-info{flex:1;}
+.event-info h4{font-size:13.5px;font-weight:800;color:var(--deep);margin-bottom:3px;}
+.event-info p{font-size:11.5px;color:var(--muted);line-height:1.5;}
+.event-tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:2px 9px;border-radius:20px;margin-top:5px;}
+.live-tag{background:#FEE2E2;color:#991B1B;}
+.online-tag{background:#DCFCE7;color:#166534;}
+.prayer-tag{background:#F3E8FF;color:#6B21A8;}
+.join-btn{
+  background:linear-gradient(135deg,var(--gold),#E8A030);color:var(--deep);
+  border:none;border-radius:28px;padding:9px 16px;font-size:11.5px;font-weight:900;
+  cursor:pointer;flex-shrink:0;transition:filter .15s;text-decoration:none;
+}
+.join-btn:hover{filter:brightness(1.08);}
+
+/* ══════════════════════════════════════════════════
+   PRAYER REQUEST
+   ══════════════════════════════════════════════════ */
+.prayer-box{
+  background:#fff;border-radius:var(--r);padding:24px 20px;
+  box-shadow:var(--shadow-md);margin-bottom:16px;
+}
+.prayer-box h3{font-family:'Playfair Display',serif;font-size:18px;color:var(--deep);margin-bottom:5px;}
+.prayer-box p{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:14px;}
+.prayer-promise{
+  background:linear-gradient(135deg,var(--deep),var(--navy));
+  border-radius:12px;padding:14px 16px;text-align:center;margin-bottom:16px;
+  border:1px solid rgba(201,148,58,.2);
+}
+.prayer-promise p{font-size:12px;color:rgba(255,255,255,.7);font-style:italic;}
+.prayer-promise strong{color:var(--gold2);}
+.prayer-submit-btn{
+  width:100%;padding:15px;border-radius:var(--r-sm);
+  background:linear-gradient(135deg,var(--purple),#7C3AED);
+  color:#fff;font-size:14.5px;font-weight:900;border:none;
+  box-shadow:0 6px 24px rgba(91,45,138,.3);
+  transition:transform .15s;
+}
+.prayer-submit-btn:hover{transform:translateY(-2px);}
+
+/* ══════════════════════════════════════════════════
+   CONNECT / CONTACT
+   ══════════════════════════════════════════════════ */
+.connect-grid{display:flex;flex-direction:column;gap:12px;}
+.connect-card{
+  background:#fff;border-radius:16px;padding:18px;
+  box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:14px;
+  transition:transform .2s,box-shadow .2s;text-decoration:none;
+}
+.connect-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+.connect-ico{
+  width:50px;height:50px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;flex-shrink:0;
+}
+.connect-info h4{font-size:14px;font-weight:800;color:var(--deep);margin-bottom:2px;}
+.connect-info p{font-size:12px;color:var(--muted);}
+.connect-arrow{margin-left:auto;font-size:18px;color:var(--gold);opacity:.5;}
+
+.contact-form{background:#fff;border-radius:var(--r);padding:24px 20px;box-shadow:var(--shadow-md);margin-top:14px;}
+.contact-form h3{font-family:'Playfair Display',serif;font-size:18px;color:var(--deep);margin-bottom:14px;}
+.contact-submit-btn{
+  width:100%;padding:14px;border-radius:var(--r-sm);
+  background:linear-gradient(135deg,var(--gold),#E8A030);
+  color:var(--deep);font-size:14px;font-weight:900;border:none;
+  box-shadow:var(--shadow-gold);transition:transform .15s;
+}
+.contact-submit-btn:hover{transform:translateY(-2px);}
+
+/* ══════════════════════════════════════════════════
+   NEWSLETTER BANNER
+   ══════════════════════════════════════════════════ */
+.newsletter-section{
+  background:linear-gradient(135deg,var(--deep),#152840);
+  border-radius:var(--r);padding:26px 22px;text-align:center;
+  margin:28px 0;border:1px solid rgba(201,148,58,.18);
+  position:relative;overflow:hidden;
+}
+.newsletter-section::after{
+  content:'📬';position:absolute;bottom:-10px;right:10px;
+  font-size:80px;opacity:.08;pointer-events:none;
+}
+.newsletter-section h3{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold2);margin-bottom:8px;}
+.newsletter-section p{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:16px;}
+.newsletter-row{display:flex;gap:8px;}
+.newsletter-row input{
+  flex:1;background:rgba(255,255,255,.1);border:1.5px solid rgba(201,148,58,.3);
+  border-radius:50px;padding:12px 18px;font-size:13px;color:#fff;outline:none;
+}
+.newsletter-row input::placeholder{color:rgba(255,255,255,.4);}
+.newsletter-row button{
+  background:linear-gradient(135deg,var(--gold),#E8A030);color:var(--deep);
+  border:none;border-radius:50px;padding:12px 20px;font-size:13px;font-weight:900;cursor:pointer;
+  white-space:nowrap;transition:filter .15s;
+}
+.newsletter-row button:hover{filter:brightness(1.08);}
+
+/* ══════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════ */
+.footer{
+  background:var(--deep);
+  padding:36px 20px 24px;margin-top:48px;
+}
+.footer-inner{max-width:620px;margin:0 auto;}
+.footer-brand{text-align:center;margin-bottom:24px;}
+.footer-brand h3{font-family:'Playfair Display',serif;font-size:22px;color:#fff;margin-bottom:4px;}
+.footer-brand p{font-size:12px;color:rgba(255,255,255,.5);}
+.footer-links{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:20px;
+}
+.footer-links a{
+  color:rgba(255,255,255,.55);font-size:11.5px;font-weight:700;
+  padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.1);
+  transition:all .2s;
+}
+.footer-links a:hover{color:var(--gold2);border-color:rgba(201,148,58,.3);}
+.footer-socials{display:flex;justify-content:center;gap:10px;margin-bottom:18px;}
+.fsoc{
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  transition:all .2s;cursor:pointer;text-decoration:none;
+}
+.fsoc:hover{background:var(--gold);border-color:var(--gold);}
+.footer-copy{
+  text-align:center;font-size:11px;color:rgba(255,255,255,.3);
+  border-top:1px solid rgba(255,255,255,.07);padding-top:16px;
+}
+.footer-verse{color:var(--gold2);font-style:italic;font-size:11.5px;display:block;margin-bottom:6px;}
+
+/* ══════════════════════════════════════════════════
+   MODALS & OVERLAYS
+   ══════════════════════════════════════════════════ */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.7);
+  z-index:1000;display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;padding:16px;
+}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-box{
+  background:#fff;border-radius:var(--r);padding:32px 24px;text-align:center;
+  max-width:340px;width:100%;
+  transform:scale(.9) translateY(20px);transition:transform .3s;
+  box-shadow:var(--shadow-lg);
+}
+.modal-overlay.open .modal-box{transform:scale(1) translateY(0);}
+.modal-icon{font-size:52px;margin-bottom:12px;}
+.modal-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--deep);margin-bottom:8px;}
+.modal-msg{font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:20px;}
+.modal-close{
+  width:100%;padding:13px;border-radius:12px;border:none;
+  background:linear-gradient(135deg,var(--gold),#E8A030);
+  color:var(--deep);font-size:14px;font-weight:900;cursor:pointer;
+}
+
+/* Admin login modal */
+.admin-login-modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.75);
+  z-index:900;display:flex;align-items:center;justify-content:center;
+  display:none;padding:16px;
+}
+.admin-login-box{
+  background:var(--apanel);border-radius:var(--r);padding:36px 28px;
+  max-width:340px;width:100%;
+  border:1px solid var(--aborder);
+  box-shadow:0 32px 80px rgba(0,0,0,.5);
+}
+.admin-login-box h2{font-family:'Playfair Display',serif;font-size:22px;color:var(--agold);margin-bottom:5px;text-align:center;}
+.admin-login-box p{font-size:12px;color:rgba(255,255,255,.5);text-align:center;margin-bottom:22px;}
+.admin-input{
+  width:100%;background:rgba(255,255,255,.07);border:1.5px solid var(--aborder);
+  border-radius:10px;padding:13px 16px;font-size:13.5px;color:#fff;outline:none;
+  margin-bottom:12px;transition:border-color .2s;
+}
+.admin-input:focus{border-color:var(--agold);}
+.admin-login-btn{
+  width:100%;padding:14px;border-radius:10px;
+  background:linear-gradient(135deg,var(--agold),#E8A030);
+  color:var(--deep);font-size:14.5px;font-weight:900;border:none;cursor:pointer;
+  margin-top:4px;
+}
+.admin-cancel-btn{
+  width:100%;padding:11px;border-radius:10px;background:transparent;
+  color:rgba(255,255,255,.5);font-size:13px;font-weight:700;border:none;cursor:pointer;margin-top:8px;
+}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--deep);color:#fff;padding:12px 22px;border-radius:50px;
+  font-size:13px;font-weight:700;z-index:9999;
+  box-shadow:var(--shadow-lg);border:1px solid rgba(201,148,58,.3);
+  transition:transform .3s ease, opacity .3s;opacity:0;white-space:nowrap;
+}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+/* Loading spinner */
+.spinner{
+  width:20px;height:20px;border:2.5px solid rgba(255,255,255,.2);
+  border-top-color:#fff;border-radius:50%;
+  animation:spin .7s linear infinite;display:inline-block;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* DB status indicator */
+.db-status{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:20px;font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;
+}
+.db-online{background:rgba(34,197,94,.15);color:#22C55E;border:1px solid rgba(34,197,94,.3);}
+.db-demo{background:rgba(201,148,58,.15);color:var(--gold);border:1px solid rgba(201,148,58,.3);}
+
+/* ══════════════════════════════════════════════════
+   ADMIN PANEL
+   ══════════════════════════════════════════════════ */
+#adminPanel{
+  min-height:100vh;background:var(--abg);color:#E2E8F0;
+  font-family:'Nunito',sans-serif;
+}
+.admin-header{
+  background:var(--apanel);padding:14px 18px;
+  border-bottom:1px solid var(--aborder);
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;
+}
+.admin-brand{display:flex;align-items:center;gap:10px;}
+.admin-brand .ico{font-size:22px;}
+.admin-brand h2{font-family:'Playfair Display',serif;font-size:17px;color:var(--agold);}
+.admin-brand p{font-size:11px;color:rgba(255,255,255,.4);margin-top:1px;}
+.admin-back-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);
+  border:1px solid var(--aborder);border-radius:28px;
+  padding:8px 16px;font-size:11.5px;font-weight:700;cursor:pointer;
+  transition:all .2s;
+}
+.admin-back-btn:hover{background:rgba(255,255,255,.1);color:#fff;}
+
+/* Admin nav tabs */
+.admin-nav{
+  display:flex;gap:3px;padding:12px 14px;
+  background:var(--apanel);border-bottom:1px solid var(--aborder);
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+}
+.admin-tab{
+  padding:8px 14px;border-radius:28px;font-size:11px;font-weight:800;
+  letter-spacing:.5px;white-space:nowrap;
+  color:rgba(255,255,255,.5);background:transparent;border:none;cursor:pointer;
+  transition:all .2s;
+}
+.admin-tab.active{background:var(--acard);color:var(--agold);}
+.admin-tab:hover:not(.active){color:rgba(255,255,255,.8);}
+
+.admin-view{display:none;padding:18px 16px;max-width:800px;margin:0 auto;}
+.admin-view.active{display:block;}
+.admin-page-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--agold);margin-bottom:4px;}
+.admin-page-sub{font-size:12px;color:rgba(255,255,255,.45);margin-bottom:20px;}
+
+/* Stats row */
+.admin-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:22px;}
+.a-stat{
+  background:var(--acard);border-radius:14px;padding:16px;
+  text-align:center;border:1px solid var(--aborder);
+}
+.a-stat-ico{font-size:22px;margin-bottom:6px;}
+.a-stat-n{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--agold);}
+.a-stat-l{font-size:10px;color:rgba(255,255,255,.4);font-weight:800;letter-spacing:.8px;text-transform:uppercase;margin-top:2px;}
+
+/* Admin table */
+.a-table-wrap{background:var(--acard);border-radius:14px;overflow:hidden;border:1px solid var(--aborder);}
+.a-table-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;border-bottom:1px solid var(--aborder);
+}
+.a-table-head h3{font-size:14px;font-weight:800;color:#E2E8F0;}
+.a-add-btn{
+  background:linear-gradient(135deg,var(--agold),#E8A030);color:var(--deep);
+  border:none;border-radius:28px;padding:8px 16px;font-size:11.5px;font-weight:900;cursor:pointer;
+}
+table.admin-tbl{width:100%;border-collapse:collapse;}
+table.admin-tbl th{
+  background:rgba(255,255,255,.04);padding:10px 14px;
+  font-size:10.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;
+  color:rgba(255,255,255,.4);text-align:left;border-bottom:1px solid var(--aborder);
+}
+table.admin-tbl td{
+  padding:11px 14px;font-size:12.5px;color:#CBD5E1;
+  border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;
+}
+table.admin-tbl tr:last-child td{border-bottom:none;}
+table.admin-tbl tr:hover td{background:rgba(255,255,255,.02);}
+
+/* Admin form fields */
+.upload-form-wrap{background:var(--acard);border-radius:16px;padding:22px;border:1px solid var(--aborder);}
+.upload-form-wrap h3{font-size:15px;font-weight:800;color:#E2E8F0;margin-bottom:4px;}
+.upload-form-wrap>p{font-size:12px;color:rgba(255,255,255,.4);margin-bottom:18px;}
+.upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.upload-field{display:flex;flex-direction:column;gap:6px;}
+.upload-field.full{grid-column:1/-1;}
+.upload-field label{font-size:11.5px;font-weight:800;color:rgba(255,255,255,.6);letter-spacing:.5px;}
+.upload-field input,.upload-field select,.upload-field textarea{
+  background:rgba(255,255,255,.06);border:1.5px solid var(--aborder);
+  border-radius:10px;padding:11px 14px;font-size:13px;color:#E2E8F0;outline:none;
+  transition:border-color .2s;
+}
+.upload-field input:focus,.upload-field select:focus,.upload-field textarea:focus{border-color:var(--agold);}
+.upload-field input::placeholder,.upload-field textarea::placeholder{color:rgba(255,255,255,.25);}
+.upload-field textarea{resize:vertical;min-height:80px;}
+.upload-field select option{background:var(--acard);}
+.upload-submit{
+  width:100%;margin-top:16px;padding:14px;border-radius:12px;
+  background:linear-gradient(135deg,var(--agold),#E8A030);
+  color:var(--deep);font-size:14.5px;font-weight:900;border:none;cursor:pointer;
+}
+
+/* Progress bar */
+.upload-progress{display:none;margin-top:14px;}
+.up-label{display:flex;justify-content:space-between;font-size:11.5px;color:rgba(255,255,255,.6);margin-bottom:5px;}
+.up-bar{height:6px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden;}
+.up-fill{height:100%;background:linear-gradient(90deg,var(--agold),#E8A030);border-radius:10px;transition:width .3s;}
+
+/* Drop zone */
+.drop-zone{
+  border:2px dashed rgba(201,148,58,.3);border-radius:12px;
+  padding:20px;text-align:center;position:relative;cursor:pointer;
+  transition:border-color .2s;
+}
+.drop-zone:hover{border-color:var(--agold);}
+.drop-zone input[type="file"]{
+  position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
+}
+.dz-ico{font-size:28px;margin-bottom:6px;}
+.dz-main{font-size:13px;color:#CBD5E1;}
+.dz-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:3px;}
+.dz-preview{display:none;flex-direction:column;align-items:center;gap:4px;}
+.dz-file-name{font-size:12.5px;color:#E2E8F0;font-weight:700;}
+.dz-file-size{font-size:11px;color:rgba(255,255,255,.4);}
+
+/* Cover preview */
+.cover-drop{
+  width:100%;aspect-ratio:3/4;border:2px dashed rgba(201,148,58,.3);
+  border-radius:12px;overflow:hidden;position:relative;cursor:pointer;
+  background:rgba(255,255,255,.03);display:flex;align-items:center;justify-content:center;
+}
+.cover-drop input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.cover-placeholder{text-align:center;pointer-events:none;}
+.cover-placeholder span{font-size:32px;display:block;margin-bottom:6px;}
+.cover-placeholder p{font-size:11.5px;color:rgba(255,255,255,.35);}
+.cover-drop img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;}
+
+/* Settings */
+.settings-wrap{background:var(--acard);border-radius:16px;padding:22px;border:1px solid var(--aborder);}
+.settings-section{margin-bottom:24px;}
+.settings-section h4{font-size:13px;font-weight:800;color:rgba(255,255,255,.6);letter-spacing:.8px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--aborder);}
+.save-settings-btn{
+  padding:12px 24px;border-radius:12px;
+  background:linear-gradient(135deg,var(--agold),#E8A030);
+  color:var(--deep);font-size:13.5px;font-weight:900;border:none;cursor:pointer;
+}
+
+/* Toggle switch */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;}
+.toggle-row label{font-size:13px;color:#CBD5E1;}
+.toggle{position:relative;width:44px;height:24px;}
+.toggle input{opacity:0;width:0;height:0;position:absolute;}
+.toggle-track{
+  position:absolute;inset:0;border-radius:24px;
+  background:rgba(255,255,255,.1);cursor:pointer;transition:background .2s;
+}
+.toggle input:checked + .toggle-track{background:var(--agold);}
+.toggle-track::before{
+  content:'';position:absolute;left:3px;top:3px;
+  width:18px;height:18px;border-radius:50%;
+  background:#fff;transition:transform .2s;
+}
+.toggle input:checked + .toggle-track::before{transform:translateX(20px);}
+
+/* Approve/Delete action buttons */
+.action-btn{
+  padding:5px 12px;border-radius:20px;font-size:11px;font-weight:800;border:none;cursor:pointer;
+}
+.approve-btn{background:rgba(34,197,94,.15);color:#22C55E;}
+.delete-btn{background:rgba(239,68,68,.12);color:#EF4444;}
+.view-btn{background:rgba(201,148,58,.15);color:var(--agold);}
+
+/* Supabase badge */
+.supabase-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(63,218,131,.1);border:1px solid rgba(63,218,131,.2);
+  color:#3FDA83;font-size:10px;font-weight:800;letter-spacing:.8px;
+  padding:4px 12px;border-radius:20px;
+}
+
+/* Responsive tweaks */
+@media(max-width:400px){
+  .hero-cta-row{gap:8px;}
+  .upload-grid{grid-template-columns:1fr;}
+  .upload-field.full{grid-column:auto;}
+  .admin-stats{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     PUBLIC SITE
+════════════════════════════════════════════════ -->
+<div id="publicSite">
+
+<!-- TICKER -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Gospel Blast is Live</span>
+    <span>Abigael Glory Ministries</span>
+    <span>Free Books for All Members</span>
+    <span>Prayer Changes Everything</span>
+    <span>Medical Grants Available</span>
+    <span>Join the Facebook Community</span>
+    <span>Orphanage Outreach Yaoundé</span>
+    <span>Prison Ministry Active</span>
+    <span>Gospel Blast is Live</span>
+    <span>Abigael Glory Ministries</span>
+    <span>Free Books for All Members</span>
+    <span>Prayer Changes Everything</span>
+    <span>Medical Grants Available</span>
+    <span>Join the Facebook Community</span>
+    <span>Orphanage Outreach Yaoundé</span>
+    <span>Prison Ministry Active</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-canvas"></div>
+  <div class="particles"></div>
+  <div class="hero-inner">
+    <div class="live-badge"><span class="live-dot"></span>Ministry Active — Cameroon & Beyond</div>
+    <div class="logo-wrap">
+      <!-- SVG Logo Emblem -->
+      <svg class="logo-emblem" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="gGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFE08A" stop-opacity=".6"/>
+            <stop offset="100%" stop-color="#C9943A" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="gCross" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#F0C96A"/>
+            <stop offset="100%" stop-color="#C9943A"/>
+          </linearGradient>
+          <linearGradient id="gWing" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#F0C96A" stop-opacity=".9"/>
+            <stop offset="100%" stop-color="#C9943A" stop-opacity=".5"/>
+          </linearGradient>
+        </defs>
+        <!-- Glow -->
+        <circle cx="60" cy="60" r="55" fill="url(#gGlow)"/>
+        <!-- Outer ring -->
+        <circle cx="60" cy="60" r="50" fill="none" stroke="url(#gCross)" stroke-width="1.5" stroke-dasharray="4 4" opacity=".5"/>
+        <!-- Wings -->
+        <path d="M60 35 C40 28 18 38 20 55 C22 68 42 72 60 72" fill="url(#gWing)" opacity=".7"/>
+        <path d="M60 35 C80 28 102 38 100 55 C98 68 78 72 60 72" fill="url(#gWing)" opacity=".7"/>
+        <!-- Cross -->
+        <rect x="55" y="25" width="10" height="60" rx="3" fill="url(#gCross)"/>
+        <rect x="35" y="50" width="50" height="10" rx="3" fill="url(#gCross)"/>
+        <!-- Star accent -->
+        <circle cx="60" cy="45" r="4" fill="#FFE08A" opacity=".9"/>
+        <!-- AG initials -->
+        <text x="60" y="100" text-anchor="middle" font-family="serif" font-size="11" fill="#F0C96A" font-weight="bold">AGM</text>
+      </svg>
+      <div class="logo-name">Abigael <em>Glory</em><br>Ministries</div>
+      <div class="logo-badge">✦ Spirit-Filled Digital Evangelism</div>
+    </div>
+    <p class="hero-founder">Founded by Besong Aseck Lydia · Cameroon</p>
+    <p class="hero-tagline">Carrying the light of Christ across the internet and into the hardest places — healing, hope, and the Gospel for every soul.</p>
+    <div class="hero-verse">"The Spirit of the Lord is upon me, because He has anointed me to preach." — Luke 4:18</div>
+    <div class="hero-cta-row">
+      <a class="btn-fb" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+        Follow on Facebook
+      </a>
+      <button class="btn-primary" onclick="smoothScroll('membership')">📚 Free Library</button>
+      <button class="btn-secondary" onclick="smoothScroll('donate')">❤️ Support</button>
+    </div>
+  </div>
+  <div class="hero-scroll"><span></span></div>
+  <svg class="wave" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#FAFAF7"/>
+  </svg>
+</section>
+
+<!-- NAV -->
+<nav class="sticky-nav" role="navigation">
+  <div class="nav-inner">
+    <a href="#about" onclick="navClick(this)">About</a>
+    <a href="#membership" onclick="navClick(this)">Library</a>
+    <a href="#testimony" onclick="navClick(this)">Testimony</a>
+    <a href="#grants" onclick="navClick(this)">Grants</a>
+    <a href="#donate" onclick="navClick(this)">Give</a>
+    <a href="#events" onclick="navClick(this)">Events</a>
+    <a href="#prayer" onclick="navClick(this)">Prayer</a>
+    <a href="#connect" onclick="navClick(this)">Connect</a>
+    <button class="admin-nav-btn" onclick="showAdminLogin()">⚙ Admin</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ─── ABOUT ─────────────────────────────────── -->
+<div id="about" class="sec-head"><div class="line"></div><h2>✦ About the Ministry</h2><div class="line r"></div></div>
+
+<div class="about-card">
+  <div class="about-stripe"></div>
+  <div class="about-body">
+    <p><strong>Abigael Glory Ministries</strong> was founded by <strong>Besong Aseck Lydia</strong> — a Spirit-filled Digital Christian Evangelist called to carry the light of Christ across the internet and into the hardest places of society.</p>
+    <p>Born out of personal hardship, lack, and an unquenchable burden for souls, Lydia began preaching in her community and launched her Facebook ministry in 2025, quickly reaching over 5,000 followers. Through <em>Gospel Blast</em>, teachings on the Life of Jesus, Journey to Easter, and upcoming projects <em>Abigael</em> and <em>Sophia</em>, the ministry is touching lives across Cameroon and beyond.</p>
+    <div class="about-stats">
+      <div class="stat"><span class="n">5,000+</span><span class="l">Followers</span></div>
+      <div class="stat"><span class="n">500+</span><span class="l">Books Given</span></div>
+      <div class="stat"><span class="n" id="prayerCount">—</span><span class="l">Prayers</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Founder card -->
+<div class="founder-card fade-up" style="animation-delay:.2s">
+  <div class="founder-avatar">🙏</div>
+  <div class="founder-info">
+    <p class="founder-title">Ministry Founder & Evangelist</p>
+    <h4>Besong Aseck Lydia</h4>
+    <p>Spirit-filled digital evangelist, teacher, intercessor and servant of God, reaching souls from Yaoundé to the ends of the earth.</p>
+  </div>
+</div>
+
+<!-- ─── WHAT WE DO ──────────────────────────────── -->
+<div class="sec-head" style="margin-top:28px;"><div class="line"></div><h2>🕊️ What We Do</h2><div class="line r"></div></div>
+<div class="pillars">
+  <div class="pillar fade-up"><div class="ico">📖</div><h4>Digital Evangelism</h4><p>Gospel Blast, Life of Jesus &amp; daily Bible content on Facebook reaching thousands.</p></div>
+  <div class="pillar b2 fade-up" style="animation-delay:.1s"><div class="ico">📚</div><h4>Free Library</h4><p>Christian books, articles, series and devotionals — 100% free for all registered members.</p></div>
+  <div class="pillar b3 fade-up" style="animation-delay:.15s"><div class="ico">🏥</div><h4>Medical Support</h4><p>Grants &amp; prayer for those facing unaffordable hospital bills and medical emergencies.</p></div>
+  <div class="pillar b4 fade-up" style="animation-delay:.2s"><div class="ico">🏠</div><h4>Orphanage Outreach</h4><p>Food, clothing, books &amp; worship at orphanages in Yaoundé and surrounding areas.</p></div>
+  <div class="pillar b5 fade-up" style="animation-delay:.25s"><div class="ico">⛓️</div><h4>Prison Ministry</h4><p>Bibles, prayer and pastoral care inside correctional facilities across Cameroon.</p></div>
+  <div class="pillar b6 fade-up" style="animation-delay:.3s"><div class="ico">🙏</div><h4>Prayer &amp; Intercession</h4><p>Live online prayer sessions &amp; personal intercession for all who reach out daily.</p></div>
+</div>
+
+<!-- ─── MEMBERSHIP & LIBRARY ──────────────────── -->
+<div id="membership" class="sec-head" style="margin-top:36px;"><div class="line"></div><h2>📚 Members' Library</h2><div class="line r"></div></div>
+
+<div class="member-banner">
+  <h3>"The entrance of Your words gives light…" — Psalm 119:130</h3>
+  <p>Register free to unlock all Christian books, articles, series and devotionals. Every resource is free — always. <span id="memberCountBadge"></span></p>
+</div>
+
+<div id="regForm" class="member-form">
+  <h3>✦ Register for Free Access</h3>
+  <div class="form-row">
+    <input type="text" id="regName" placeholder="Your Full Name *" autocomplete="name"/>
+    <input type="email" id="regEmail" placeholder="Email Address *" autocomplete="email"/>
+    <input type="tel" id="regPhone" placeholder="Phone / WhatsApp Number" autocomplete="tel"/>
+    <input type="text" id="regCountry" placeholder="Your Country *"/>
+    <select id="regInterest">
+      <option value="" disabled selected>What interests you most?</option>
+      <option>Free Books &amp; Articles</option>
+      <option>Prayer &amp; Intercession</option>
+      <option>Grants &amp; Support</option>
+      <option>Prison / Orphanage Outreach</option>
+      <option>All of the Above</option>
+    </select>
+  </div>
+  <button class="register-btn" onclick="registerMember()">✦ Register &amp; Access Library — FREE</button>
+  <p style="text-align:center;font-size:11.5px;color:var(--muted);margin-top:10px;">Already registered? <a href="#" onclick="showLibrary()" style="color:var(--gold);font-weight:800;">Click here →</a></p>
+</div>
+
+<div id="memberLibrary">
+  <div class="library-welcome">
+    <h3>🎉 Welcome to the Library!</h3>
+    <p id="welcomeName">You now have full access to all free books, articles, series and devotionals.</p>
+  </div>
+
+  <!-- Search + Filters -->
+  <div class="search-bar">
+    <input type="text" id="librarySearch" placeholder="Search books, articles, devotionals…" oninput="filterResources()"/>
+    <button onclick="filterResources()">🔍 Search</button>
+  </div>
+  <div class="filter-chips" id="filterChips">
+    <span class="chip active" onclick="setFilter('all',this)">All</span>
+    <span class="chip" onclick="setFilter('book',this)">📖 Books</span>
+    <span class="chip" onclick="setFilter('series',this)">📺 Series</span>
+    <span class="chip" onclick="setFilter('article',this)">📰 Articles</span>
+    <span class="chip" onclick="setFilter('devotional',this)">🌅 Devotionals</span>
+  </div>
+
+  <div class="sec-head" style="margin-top:4px;"><div class="line"></div><h2>📖 All Resources</h2><div class="line r"></div></div>
+  <div class="books-grid" id="publicBooksGrid">
+    <p style="text-align:center;color:var(--muted);font-size:13px;grid-column:1/-1;padding:20px;">Loading resources…</p>
+  </div>
+</div>
+
+<!-- ─── TESTIMONY ─────────────────────────────── -->
+<div id="testimony" class="sec-head" style="margin-top:36px;"><div class="line"></div><h2>✦ Share Your Testimony</h2><div class="line r"></div></div>
+
+<div class="testimony-banner">
+  <h3>"They overcame by the blood of the Lamb and the word of their testimony."</h3>
+  <p>Has God healed, saved, or turned your situation around? Share your story — it will preach to thousands. — Revelation 12:11</p>
+</div>
+
+<div class="testimony-wizard">
+  <div class="wizard-progress">
+    <div class="dot done" id="dot1"></div>
+    <div class="dot" id="dot2"></div>
+    <div class="dot" id="dot3"></div>
+    <div class="dot" id="dot4"></div>
+    <div class="dot" id="dot5"></div>
+  </div>
+
+  <div class="wizard-step active" id="step1">
+    <p class="wizard-q">What is your name? 👤</p>
+    <p class="wizard-hint">You can use your real name or stay anonymous — God knows either way.</p>
+    <input class="wizard-input" type="text" id="t_name" placeholder="e.g. Grace M. — or type 'Anonymous'"/>
+    <div class="wizard-nav"><button class="wiz-btn wiz-next" onclick="wizNext(1)">Next →</button></div>
+  </div>
+  <div class="wizard-step" id="step2">
+    <p class="wizard-q">Where are you from? 📍</p>
+    <p class="wizard-hint">Your city and country help others around the world connect with your story.</p>
+    <input class="wizard-input" type="text" id="t_location" placeholder="e.g. Yaoundé, Cameroon"/>
+    <div class="wizard-nav"><button class="wiz-btn wiz-prev" onclick="wizBack(2)">← Back</button><button class="wiz-btn wiz-next" onclick="wizNext(2)">Next →</button></div>
+  </div>
+  <div class="wizard-step" id="step3">
+    <p class="wizard-q">What category is your testimony? 📂</p>
+    <p class="wizard-hint">Select the one that best describes what God did.</p>
+    <div class="wizard-options">
+      <button class="wizard-opt" onclick="selectOpt(this,'t_cat')">🏥 Physical Healing</button>
+      <button class="wizard-opt" onclick="selectOpt(this,'t_cat')">✝️ Salvation</button>
+      <button class="wizard-opt" onclick="selectOpt(this,'t_cat')">💰 Financial Miracle</button>
+      <button class="wizard-opt" onclick="selectOpt(this,'t_cat')">👨‍👩‍👧 Family Restoration</button>
+      <button class="wizard-opt" onclick="selectOpt(this,'t_cat')">⛓️ Deliverance</button>
+      <button class="wizard-opt" onclick="selectOpt(this,'t_cat')">🙏 Answered Prayer</button>
+      <button class="wizard-opt" onclick="selectOpt(this,'t_cat')">✨ Other Miracle</button>
+    </div>
+    <input type="hidden" id="t_cat" value=""/>
+    <div class="wizard-nav"><button class="wiz-btn wiz-prev" onclick="wizBack(3)">← Back</button><button class="wiz-btn wiz-next" onclick="wizNext(3)">Next →</button></div>
+  </div>
+  <div class="wizard-step" id="step4">
+    <p class="wizard-q">Tell us what happened 📖</p>
+    <p class="wizard-hint">What were you going through? What did God do? Share in your own words.</p>
+    <textarea class="wizard-input" id="t_story" rows="6" placeholder="Share your full testimony here…"></textarea>
+    <div class="wizard-nav"><button class="wiz-btn wiz-prev" onclick="wizBack(4)">← Back</button><button class="wiz-btn wiz-next" onclick="wizNext(4)">Next →</button></div>
+  </div>
+  <div class="wizard-step" id="step5">
+    <p class="wizard-q">May we share your testimony? 📢</p>
+    <p class="wizard-hint">Your story may be shared on this website, Facebook, and in future ministry books.</p>
+    <div class="wizard-options">
+      <button class="wizard-opt" onclick="selectOpt(this,'t_permission')">✅ Yes — share it!</button>
+      <button class="wizard-opt" onclick="selectOpt(this,'t_permission')">🔒 Keep private</button>
+    </div>
+    <input type="hidden" id="t_permission" value=""/>
+    <div class="wizard-nav">
+      <button class="wiz-btn wiz-prev" onclick="wizBack(5)">← Back</button>
+      <button class="wiz-btn wiz-next" style="background:linear-gradient(135deg,var(--green),#16A34A);" onclick="submitTestimony()">✦ Submit Glory</button>
+    </div>
+  </div>
+</div>
+
+<!-- Testimony Wall -->
+<div class="sec-head" style="margin-top:26px;"><div class="line"></div><h2>🌟 Real Testimonies</h2><div class="line r"></div></div>
+<div class="testimony-cards" id="testimonyWall">
+  <div class="testimony-card">
+    <span class="t-cat-badge">🏥 Physical Healing</span>
+    <p>In 2024, during our ministry posting in Nyom, Cameroon, a beloved mama was diagnosed with breast cancer. We gathered and prayed in the name of Jesus. God moved. She was miraculously healed — to this day she stands as a living testimony. All glory to Jesus.</p>
+    <div class="t-author"><div class="t-avatar">🙏</div><div class="t-info"><strong>Mama from Nyom</strong><span>Nyom, Cameroon · 2024</span></div></div>
+    <button class="share-testimony-btn" onclick="shareT('Mama from Nyom was healed of breast cancer through prayer in Nyom 2024. Glory to Jesus!')">📢 Share</button>
+  </div>
+  <div class="testimony-card">
+    <span class="t-cat-badge">✨ Healing Miracle</span>
+    <p>In 2023 in Nkolodom, Yaoundé, a taxi driver had been bedridden for two years with a severe foot ulcer. Two weeks after prayer, the ulcer completely dried up and healed. The family offered their home as a church and gave their lives to Christ. A healing became a church.</p>
+    <div class="t-author"><div class="t-avatar">✨</div><div class="t-info"><strong>Anonymous — Taxi Driver</strong><span>Nkolodom, Yaoundé · 2023</span></div></div>
+    <button class="share-testimony-btn" onclick="shareT('A taxi driver bedridden 2 years with foot ulcer healed in 2 weeks! Family became a church. — Abigael Glory Ministries')">📢 Share</button>
+  </div>
+</div>
+
+<!-- ─── GRANTS ─────────────────────────────────── -->
+<div id="grants" class="sec-head" style="margin-top:36px;"><div class="line"></div><h2>🤲 Support &amp; Grants</h2><div class="line r"></div></div>
+<div class="grant-banner">
+  <h3>"The generous will themselves be blessed…" — Proverbs 22:9</h3>
+  <p>Direct support grants for those in genuine need. All applications are handled prayerfully and personally by Besong Aseck Lydia.</p>
+</div>
+<div class="grant-cards">
+  <div class="grant-card g-med">
+    <div class="grant-head"><div class="grant-ico">🏥</div><div><h4>Medical Bill Grants</h4><p>For those who cannot afford healthcare</p></div></div>
+    <div class="grant-body"><p>Assistance for hospital bills, surgeries, medications and emergency medical needs for those in desperate situations.</p>
+      <ul class="checklist"><li>Hospital bill assistance</li><li>Medication &amp; treatment costs</li><li>Emergency medical relief</li></ul>
+      <a class="apply-btn" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">🏥 Apply via Facebook</a></div></div>
+  <div class="grant-card g-sch">
+    <div class="grant-head"><div class="grant-ico">🎓</div><div><h4>School Fees &amp; Education</h4><p>Helping children stay in school</p></div></div>
+    <div class="grant-body"><p>School fees, uniforms, books and educational supplies for those who cannot afford them.</p>
+      <ul class="checklist"><li>Primary &amp; secondary school fees</li><li>School books and supplies</li><li>Orphan education support</li></ul>
+      <a class="apply-btn" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">🎓 Apply via Facebook</a></div></div>
+  <div class="grant-card g-food">
+    <div class="grant-head"><div class="grant-ico">🍞</div><div><h4>Food &amp; Basic Needs Relief</h4><p>Emergency relief for struggling families</p></div></div>
+    <div class="grant-body"><p>Food packages and basic essentials for families facing hunger and extreme poverty.</p>
+      <ul class="checklist"><li>Food packages &amp; groceries</li><li>Support for widows</li><li>Relief for displaced families</li></ul>
+      <a class="apply-btn" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">🍞 Apply via Facebook</a></div></div>
+  <div class="grant-card g-edu">
+    <div class="grant-head"><div class="grant-ico">📖</div><div><h4>Bible &amp; Resource Distribution</h4><p>Free Bibles and Christian literature</p></div></div>
+    <div class="grant-body"><p>Free Bibles, Christian books and devotionals distributed to prisons, orphanages and communities in need.</p>
+      <ul class="checklist"><li>Free Bibles for the unreached</li><li>Christian books for prisoners</li><li>Devotionals for new believers</li></ul>
+      <a class="apply-btn" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">📖 Request Resources</a></div></div>
+</div>
+
+<!-- ─── DONATE ─────────────────────────────────── -->
+<div id="donate" class="sec-head" style="margin-top:36px;"><div class="line"></div><h2>❤️ Support the Ministry</h2><div class="line r"></div></div>
+
+<div class="pay-box">
+  <div class="pay-box-head">
+    <p>Choose How to Give</p>
+    <span>Fast · Secure · Goes directly to the ministry</span>
+  </div>
+  <div class="pay-box-body">
+    <div class="momo-block">
+      <div class="momo-top">
+        <div class="momo-ico">📱</div>
+        <div><h4>MTN Mobile Money</h4><p>Send directly to Lydia's MoMo — Cameroon</p></div>
+      </div>
+      <div class="momo-number-box">
+        <div>
+          <div class="num-label">MoMo Number</div>
+          <div class="num">673 567 253</div>
+          <div class="num-name">Besong Aseck Lydia</div>
+        </div>
+        <button class="copy-btn" onclick="copyMomo()">📋 Copy</button>
+      </div>
+      <p class="momo-note">Open MTN MoMo → Send Money → Enter <strong>673567253</strong> → Confirm</p>
+    </div>
+
+    <div class="fb-pay-block">
+      <div class="fb-pay-top">
+        <div class="fb-pay-ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+        </div>
+        <div><h4>Facebook Pay / Stars</h4><p>Donate on the Facebook page</p></div>
+      </div>
+      <a class="fb-pay-btn" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">Send via Facebook Pay / Stars →</a>
+    </div>
+  </div>
+  <div style="background:var(--warm);padding:12px 18px;text-align:center;border-top:1px solid #E8DFC8;">
+    <p style="font-size:11.5px;color:var(--muted);">💛 <strong>100% of every donation</strong> goes directly to those in need. No hidden fees.</p>
+  </div>
+</div>
+
+<!-- Donation fund cards -->
+<div class="donate-cards">
+  <div class="donate-card d-med"><div class="dc-side"></div><div class="dc-body"><div class="dc-top"><div class="dc-ico">🏥</div><h4>Medical Fund</h4></div><p>Hospital bills &amp; medications for people who cannot afford care.</p><div class="prog-label"><span>Progress</span><span>67%</span></div><div class="prog-bar"><div class="prog-fill" style="width:67%"></div></div><a class="give-btn" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">❤️ Give Now</a></div></div>
+  <div class="donate-card d-orp"><div class="dc-side"></div><div class="dc-body"><div class="dc-top"><div class="dc-ico">🏠</div><h4>Orphanages</h4></div><p>Food, shelter and Christ's love for orphaned children in Yaoundé.</p><div class="prog-label"><span>Progress</span><span>42%</span></div><div class="prog-bar"><div class="prog-fill" style="width:42%"></div></div><a class="give-btn" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">💙 Give Now</a></div></div>
+  <div class="donate-card d-pri"><div class="dc-side"></div><div class="dc-body"><div class="dc-top"><div class="dc-ico">⛓️</div><h4>Prison Ministry</h4></div><p>Fund Bibles, books and pastoral visits for inmates.</p><div class="prog-label"><span>Progress</span><span>53%</span></div><div class="prog-bar"><div class="prog-fill" style="width:53%"></div></div><a class="give-btn" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">💜 Give Now</a></div></div>
+  <div class="donate-card d-gen"><div class="dc-side"></div><div class="dc-body"><div class="dc-top"><div class="dc-ico">🌍</div><h4>Evangelism</h4></div><p>Support online outreach and book distribution worldwide.</p><div class="prog-label"><span>Progress</span><span>35%</span></div><div class="prog-bar"><div class="prog-fill" style="width:35%"></div></div><a class="give-btn" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">💚 Give Now</a></div></div>
+</div>
+
+<!-- ─── EVENTS ─────────────────────────────────── -->
+<div id="events" class="sec-head" style="margin-top:36px;"><div class="line"></div><h2>📅 Upcoming Events</h2><div class="line r"></div></div>
+<div class="events-list" id="eventsList">
+  <!-- Loaded from Supabase or defaults -->
+  <div class="event-card"><div class="event-date"><span class="day">20</span><span class="mon">Apr</span></div><div class="event-info"><h4>Sunday Gospel Live Stream</h4><p>Join Lydia live on Facebook for worship, prayer and the Word.</p><span class="event-tag live-tag">🔴 Live</span></div><a class="join-btn" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">Join →</a></div>
+  <div class="event-card"><div class="event-date"><span class="day">25</span><span class="mon">Apr</span></div><div class="event-info"><h4>Orphanage Outreach — Yaoundé</h4><p>Book distribution, food &amp; prayer at local orphanages. Support welcome.</p><span class="event-tag online-tag">📦 Outreach</span></div><a class="join-btn" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">Support →</a></div>
+  <div class="event-card"><div class="event-date"><span class="day">27</span><span class="mon">Apr</span></div><div class="event-info"><h4>Online Prayer Night</h4><p>Group prayer, intercession and testimony sharing via Facebook Live.</p><span class="event-tag prayer-tag">🙏 Prayer</span></div><a class="join-btn" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">Join →</a></div>
+  <div class="event-card"><div class="event-date"><span class="day">3</span><span class="mon">May</span></div><div class="event-info"><h4>Prison Ministry Visit</h4><p>Pastoral care, Bible distribution and evangelism inside correctional facilities.</p><span class="event-tag online-tag">⛓️ Prison</span></div><a class="join-btn" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">Donate →</a></div>
+</div>
+
+<!-- ─── PRAYER ─────────────────────────────────── -->
+<div id="prayer" class="sec-head" style="margin-top:36px;"><div class="line"></div><h2>🙏 Prayer Request</h2><div class="line r"></div></div>
+
+<div class="prayer-promise">
+  <p><strong>"Call to me and I will answer you."</strong> — Jeremiah 33:3<br>Every prayer request is personally read and prayed over by Lydia.</p>
+</div>
+
+<div class="prayer-box">
+  <h3>Send Your Prayer Request</h3>
+  <p>Share your need below. It will be received in confidence and prayed over faithfully.</p>
+  <div class="form-row">
+    <input type="text" id="pName" placeholder="Your Name (optional)"/>
+    <input type="text" id="pCountry" placeholder="Your Country"/>
+    <select id="pCategory">
+      <option value="" disabled selected>Prayer Category</option>
+      <option>🏥 Healing &amp; Health</option>
+      <option>💰 Financial Breakthrough</option>
+      <option>👨‍👩‍👧 Family &amp; Relationships</option>
+      <option>💼 Employment &amp; Business</option>
+      <option>✝️ Salvation for Loved One</option>
+      <option>🧠 Peace of Mind</option>
+      <option>⛓️ Deliverance</option>
+      <option>🙏 General Prayer</option>
+    </select>
+    <textarea id="pRequest" placeholder="Share your prayer request here…" rows="4" style="background:var(--warm);border:1.5px solid rgba(201,148,58,.25);border-radius:12px;padding:13px 16px;font-size:13.5px;color:var(--text);outline:none;resize:vertical;"></textarea>
+  </div>
+  <button class="prayer-submit-btn" onclick="submitPrayer()">🙏 Send Prayer Request to Lydia</button>
+</div>
+
+<!-- ─── NEWSLETTER ─────────────────────────────── -->
+<div class="newsletter-section">
+  <h3>📬 Stay Encouraged</h3>
+  <p>Get weekly devotionals, testimony updates and ministry news delivered to you.</p>
+  <div class="newsletter-row">
+    <input type="email" id="nlEmail" placeholder="Enter your email address…"/>
+    <button onclick="subscribeNewsletter()">Subscribe</button>
+  </div>
+</div>
+
+<!-- ─── CONNECT ────────────────────────────────── -->
+<div id="connect" class="sec-head" style="margin-top:36px;"><div class="line"></div><h2>🌍 Connect With Us</h2><div class="line r"></div></div>
+
+<div class="connect-grid">
+  <a class="connect-card" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">
+    <div class="connect-ico" style="background:linear-gradient(135deg,#1877F2,#0a58bf);">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+    </div>
+    <div class="connect-info"><h4>Facebook Ministry Page</h4><p>Follow Gospel Blast, live streams &amp; community updates</p></div>
+    <span class="connect-arrow">→</span>
+  </a>
+  <a class="connect-card" href="https://wa.me/237673567253" target="_blank">
+    <div class="connect-ico" style="background:linear-gradient(135deg,#15803D,#16A34A);">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.135.558 4.14 1.535 5.874L0 24l6.285-1.489A11.945 11.945 0 0012 24c6.626 0 12-5.373 12-12S18.625 0 11.999 0zm.001 21.818a9.818 9.818 0 01-5.015-1.374l-.357-.213-3.722.882.935-3.602-.232-.37A9.806 9.806 0 012.18 12c0-5.422 4.397-9.818 9.82-9.818 5.421 0 9.819 4.396 9.819 9.818 0 5.421-4.398 9.818-9.819 9.818z"/></svg>
+    </div>
+    <div class="connect-info"><h4>WhatsApp</h4><p>Chat directly with the ministry: +237 673 567 253</p></div>
+    <span class="connect-arrow">→</span>
+  </a>
+  <a class="connect-card" href="mailto:abigaelgloryministries@gmail.com">
+    <div class="connect-ico" style="background:linear-gradient(135deg,var(--gold),#E8A030);">📧</div>
+    <div class="connect-info"><h4>Email the Ministry</h4><p>abigaelgloryministries@gmail.com</p></div>
+    <span class="connect-arrow">→</span>
+  </a>
+</div>
+
+<!-- Contact Form -->
+<div class="contact-form">
+  <h3>✉️ Send a Message</h3>
+  <div class="form-row">
+    <input type="text" id="cName" placeholder="Your Name *"/>
+    <input type="email" id="cEmail" placeholder="Your Email *"/>
+    <input type="text" id="cSubject" placeholder="Subject"/>
+    <textarea id="cMessage" placeholder="Your message…" rows="4" style="background:var(--warm);border:1.5px solid rgba(201,148,58,.25);border-radius:12px;padding:13px 16px;font-size:13.5px;color:var(--text);outline:none;resize:vertical;"></textarea>
+  </div>
+  <button class="contact-submit-btn" onclick="sendContactMessage()">✦ Send Message</button>
+</div>
+
+</div><!-- /.wrap -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>Abigael Glory Ministries</h3>
+      <p>Founded by Besong Aseck Lydia · Cameroon · Est. 2025</p>
+    </div>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#membership">Library</a>
+      <a href="#testimony">Testimony</a>
+      <a href="#grants">Grants</a>
+      <a href="#donate">Give</a>
+      <a href="#events">Events</a>
+      <a href="#prayer">Prayer</a>
+      <a href="#connect">Contact</a>
+    </div>
+    <div class="footer-socials">
+      <a class="fsoc" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank" title="Facebook">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+      </a>
+      <a class="fsoc" href="https://wa.me/237673567253" target="_blank" title="WhatsApp" style="color:white;">💬</a>
+    </div>
+    <div class="footer-copy">
+      <span class="footer-verse">"For I am not ashamed of the Gospel of Christ, for it is the power of God…" — Romans 1:16</span>
+      &copy; 2025 Abigael Glory Ministries · Built with faith ✦ Powered by Supabase + Vercel
+    </div>
+  </div>
+</footer>
+
+</div><!-- /#publicSite -->
+
+
+<!-- ════════════════════════════════════════════════
+     ADMIN LOGIN MODAL
+════════════════════════════════════════════════ -->
+<div class="admin-login-modal" id="adminLoginModal">
+  <div class="admin-login-box">
+    <h2>⚙ Admin Access</h2>
+    <p>Enter your admin password to manage the ministry dashboard</p>
+    <input class="admin-input" type="password" id="adminPassInput" placeholder="Admin Password" onkeydown="if(event.key==='Enter')verifyAdmin()"/>
+    <button class="admin-login-btn" onclick="verifyAdmin()">🔓 Enter Dashboard</button>
+    <button class="admin-cancel-btn" onclick="closeAdminLogin()">Cancel</button>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     ADMIN PANEL
+════════════════════════════════════════════════ -->
+<div id="adminPanel">
+  <header class="admin-header">
+    <div class="admin-brand">
+      <span class="ico">✦</span>
+      <div>
+        <h2>Ministry Dashboard</h2>
+        <p>Abigael Glory Ministries</p>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span class="supabase-badge" id="dbBadge">⬤ Demo Mode</span>
+      <button class="admin-back-btn" onclick="exitAdmin()">← Public Site</button>
+    </div>
+  </header>
+
+  <nav class="admin-nav">
+    <button class="admin-tab active" onclick="switchAdminView('dashboard',this)">📊 Dashboard</button>
+    <button class="admin-tab" onclick="switchAdminView('members',this)">👥 Members</button>
+    <button class="admin-tab" onclick="switchAdminView('testimonies',this)">✦ Testimonies</button>
+    <button class="admin-tab" onclick="switchAdminView('prayers',this)">🙏 Prayers</button>
+    <button class="admin-tab" onclick="switchAdminView('upload',this)">📚 Library</button>
+    <button class="admin-tab" onclick="switchAdminView('events',this)">📅 Events</button>
+    <button class="admin-tab" onclick="switchAdminView('messages',this)">✉️ Messages</button>
+    <button class="admin-tab" onclick="switchAdminView('settings',this)">⚙ Settings</button>
+  </nav>
+
+  <!-- DASHBOARD -->
+  <div id="view-dashboard" class="admin-view active">
+    <div class="admin-page-title">Ministry Overview</div>
+    <div class="admin-page-sub">Real-time stats from your Supabase database</div>
+    <div class="admin-stats">
+      <div class="a-stat"><div class="a-stat-ico">👥</div><div class="a-stat-n" id="ds-members">—</div><div class="a-stat-l">Members</div></div>
+      <div class="a-stat"><div class="a-stat-ico">📚</div><div class="a-stat-n" id="ds-content">—</div><div class="a-stat-l">Resources</div></div>
+      <div class="a-stat"><div class="a-stat-ico">✦</div><div class="a-stat-n" id="ds-test">—</div><div class="a-stat-l">Testimonies</div></div>
+      <div class="a-stat"><div class="a-stat-ico">🙏</div><div class="a-stat-n" id="ds-prayers">—</div><div class="a-stat-l">Prayer Requests</div></div>
+    </div>
+    <div class="a-table-wrap">
+      <div class="a-table-head"><h3>📚 Recent Resources</h3><button class="a-add-btn" onclick="switchAdminView('upload',null)">+ Add New</button></div>
+      <div id="dashContentList" style="padding:14px;color:rgba(255,255,255,.4);font-size:13px;text-align:center;">Loading…</div>
+    </div>
+  </div>
+
+  <!-- MEMBERS -->
+  <div id="view-members" class="admin-view">
+    <div class="admin-page-title">Registered Members</div>
+    <div class="admin-page-sub">All members who signed up for free library access</div>
+    <div class="a-table-wrap">
+      <div class="a-table-head"><h3>All Members</h3><button class="a-add-btn" onclick="exportMembers()">⬇ Export CSV</button></div>
+      <div style="overflow-x:auto;">
+        <table class="admin-tbl">
+          <thead><tr><th>Name</th><th>Email</th><th>Country</th><th>Interest</th><th>Date</th></tr></thead>
+          <tbody id="memberTableBody"><tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIES -->
+  <div id="view-testimonies" class="admin-view">
+    <div class="admin-page-title">Testimonies</div>
+    <div class="admin-page-sub">Review and approve testimonies for the public wall</div>
+    <div class="a-table-wrap">
+      <div class="a-table-head"><h3>All Testimonies</h3></div>
+      <div style="overflow-x:auto;">
+        <table class="admin-tbl">
+          <thead><tr><th>Name</th><th>Category</th><th>Story</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="testTableBody"><tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRAYERS -->
+  <div id="view-prayers" class="admin-view">
+    <div class="admin-page-title">Prayer Requests</div>
+    <div class="admin-page-sub">Received from the public prayer form — handle with care and compassion</div>
+    <div class="a-table-wrap">
+      <div class="a-table-head"><h3>Prayer Requests</h3></div>
+      <div style="overflow-x:auto;">
+        <table class="admin-tbl">
+          <thead><tr><th>Name</th><th>Country</th><th>Category</th><th>Request</th><th>Date</th><th>Prayed</th></tr></thead>
+          <tbody id="prayerTableBody"><tr><td colspan="6" style="text-align:center;color:#475569;padding:24px;">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIBRARY UPLOAD -->
+  <div id="view-upload" class="admin-view">
+    <div class="admin-page-title">Upload New Content</div>
+    <div class="admin-page-sub">Add books, series, articles, devotionals or any resource to the library</div>
+    <div class="upload-form-wrap">
+      <h3>New Resource</h3>
+      <p>Fill in the details below. Resources will be immediately available to all registered members.</p>
+      <div class="upload-grid">
+        <div class="upload-field full">
+          <label>Title *</label>
+          <input type="text" id="u_title" placeholder="e.g. The Power of Prayer"/>
+        </div>
+        <div class="upload-field">
+          <label>Type *</label>
+          <select id="u_type">
+            <option value="" disabled selected>Select type</option>
+            <option value="book">📖 Book</option>
+            <option value="series">📺 Series</option>
+            <option value="article">📰 Article</option>
+            <option value="devotional">🌅 Devotional</option>
+          </select>
+        </div>
+        <div class="upload-field">
+          <label>Status</label>
+          <select id="u_status">
+            <option value="published">✅ Published</option>
+            <option value="coming">🔜 Coming Soon</option>
+            <option value="draft">📝 Draft</option>
+          </select>
+        </div>
+        <div class="upload-field full">
+          <label>Description</label>
+          <textarea id="u_desc" placeholder="Short description shown to members…"></textarea>
+        </div>
+        <div class="upload-field full">
+          <label>Scripture / Subtitle (optional)</label>
+          <input type="text" id="u_scripture" placeholder="e.g. 'Call to me and I will answer you' — Jeremiah 33:3"/>
+        </div>
+        <div class="upload-field full">
+          <label>Cover Image URL</label>
+          <input type="url" id="u_cover" placeholder="https://… (image URL or leave blank for emoji icon)"/>
+        </div>
+        <div class="upload-field full">
+          <label>PDF / Download URL (Supabase Storage, Google Drive public link, etc.)</label>
+          <input type="url" id="u_pdf" placeholder="https://…"/>
+        </div>
+        <div class="upload-field full">
+          <label>Facebook Link (for Series / Articles)</label>
+          <input type="url" id="u_fblink" placeholder="https://facebook.com/…"/>
+        </div>
+        <div class="upload-field full">
+          <label>Tags (comma separated)</label>
+          <input type="text" id="u_tags" placeholder="prayer, healing, faith, cameroon"/>
+        </div>
+      </div>
+      <div class="upload-progress" id="uploadProgress">
+        <div class="up-label"><span id="upStatus">Saving…</span><span id="upPct">0%</span></div>
+        <div class="up-bar"><div class="up-fill" id="upFill"></div></div>
+      </div>
+      <button class="upload-submit" onclick="uploadContent()">✦ Save &amp; Publish to Library</button>
+    </div>
+
+    <!-- Existing resources list -->
+    <div class="a-table-wrap" style="margin-top:20px;">
+      <div class="a-table-head"><h3>📚 Existing Resources</h3></div>
+      <div style="overflow-x:auto;">
+        <table class="admin-tbl">
+          <thead><tr><th>Title</th><th>Type</th><th>Status</th><th>Downloads</th><th>Actions</th></tr></thead>
+          <tbody id="resourceTableBody"><tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- EVENTS MANAGEMENT -->
+  <div id="view-events" class="admin-view">
+    <div class="admin-page-title">Manage Events</div>
+    <div class="admin-page-sub">Add or edit upcoming ministry events</div>
+    <div class="upload-form-wrap" style="margin-bottom:20px;">
+      <h3>Add New Event</h3>
+      <div class="upload-grid">
+        <div class="upload-field full"><label>Event Title *</label><input type="text" id="ev_title" placeholder="e.g. Sunday Gospel Live Stream"/></div>
+        <div class="upload-field"><label>Date *</label><input type="date" id="ev_date"/></div>
+        <div class="upload-field">
+          <label>Type</label>
+          <select id="ev_type">
+            <option value="live">🔴 Live Stream</option>
+            <option value="outreach">📦 Outreach</option>
+            <option value="prayer">🙏 Prayer Night</option>
+            <option value="prison">⛓️ Prison Ministry</option>
+            <option value="other">📌 Other</option>
+          </select>
+        </div>
+        <div class="upload-field full"><label>Description</label><textarea id="ev_desc" placeholder="Event details…"></textarea></div>
+        <div class="upload-field full"><label>Facebook Link</label><input type="url" id="ev_fb" placeholder="https://facebook.com/…"/></div>
+      </div>
+      <button class="upload-submit" onclick="addEvent()">✦ Add Event</button>
+    </div>
+    <div class="a-table-wrap">
+      <div class="a-table-head"><h3>All Events</h3></div>
+      <div style="overflow-x:auto;">
+        <table class="admin-tbl">
+          <thead><tr><th>Title</th><th>Date</th><th>Type</th><th>Active</th><th>Actions</th></tr></thead>
+          <tbody id="eventsTableBody"><tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MESSAGES -->
+  <div id="view-messages" class="admin-view">
+    <div class="admin-page-title">Contact Messages</div>
+    <div class="admin-page-sub">Messages sent through the website contact form</div>
+    <div class="a-table-wrap">
+      <div class="a-table-head"><h3>All Messages</h3></div>
+      <div style="overflow-x:auto;">
+        <table class="admin-tbl">
+          <thead><tr><th>Name</th><th>Email</th><th>Subject</th><th>Message</th><th>Date</th></tr></thead>
+          <tbody id="msgTableBody"><tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div id="view-settings" class="admin-view">
+    <div class="admin-page-title">Settings</div>
+    <div class="admin-page-sub">Configure your ministry website</div>
+    <div class="settings-wrap">
+      <div class="settings-section">
+        <h4>Admin Password</h4>
+        <div class="upload-field" style="margin-bottom:10px;">
+          <label>New Password</label>
+          <input class="admin-input" type="password" id="s_pass" placeholder="New password…"/>
+        </div>
+        <div class="upload-field" style="margin-bottom:14px;">
+          <label>Confirm Password</label>
+          <input class="admin-input" type="password" id="s_pass2" placeholder="Confirm password…"/>
+        </div>
+        <button class="save-settings-btn" onclick="saveSettings()">Save Password</button>
+      </div>
+      <div class="settings-section">
+        <h4>Site Features</h4>
+        <div class="toggle-row">
+          <label>Auto-approve testimonies</label>
+          <label class="toggle"><input type="checkbox" id="autoApprove"><span class="toggle-track"></span></label>
+        </div>
+        <div class="toggle-row">
+          <label>Show member count publicly</label>
+          <label class="toggle"><input type="checkbox" id="showMemberCount" checked><span class="toggle-track"></span></label>
+        </div>
+        <div class="toggle-row">
+          <label>Enable prayer requests</label>
+          <label class="toggle"><input type="checkbox" id="enablePrayer" checked><span class="toggle-track"></span></label>
+        </div>
+      </div>
+      <div class="settings-section">
+        <h4>Supabase Integration</h4>
+        <p style="font-size:12.5px;color:rgba(255,255,255,.5);margin-bottom:12px;line-height:1.7;">
+          To connect a real database, update <code style="color:var(--agold);background:rgba(255,255,255,.06);padding:2px 6px;border-radius:4px;">SUPABASE_URL</code> and <code style="color:var(--agold);background:rgba(255,255,255,.06);padding:2px 6px;border-radius:4px;">SUPABASE_ANON_KEY</code> at the top of this file, then deploy to Vercel.<br><br>
+          <strong style="color:#E2E8F0;">Zero-cost stack:</strong> Supabase Free Tier (500MB DB + 1GB Storage) + Vercel Hobby (unlimited deploys) + GitHub (free repos) = <strong style="color:var(--agold);">$0/month</strong>
+        </p>
+        <div id="sbStatus" style="padding:10px;background:rgba(255,255,255,.04);border-radius:10px;font-size:12px;color:rgba(255,255,255,.5);">
+          Checking database connection…
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /#adminPanel -->
+
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal-box">
+    <div class="modal-icon" id="modalIcon">🙌</div>
+    <h2 class="modal-title" id="modalTitle">Glory to God!</h2>
+    <p class="modal-msg" id="modalMsg"></p>
+    <button class="modal-close" onclick="closeModal()">Amen ✦</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+
+<!-- ════════════════════════════════════════════════
+     JAVASCRIPT — SUPABASE + DEMO FALLBACK
+════════════════════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ══ INIT SUPABASE ══ */
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!DEMO_MODE) {
+    try {
+      sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      await loadPrayerCount();
+      await loadPublicResources();
+      await loadPublicEvents();
+      console.log('[AGM] Supabase connected ✓');
+    } catch(e) {
+      console.warn('[AGM] Supabase error, using demo mode:', e);
+    }
+  } else {
+    // Demo mode — seed with localStorage + demo data
+    loadDemoResources();
+    loadDemoPrayerCount();
+  }
+  loadStoredMember();
+});
+
+/* ══════════════════════════════════════════════════
+   LOCAL STORAGE HELPERS (offline / demo fallback)
+══════════════════════════════════════════════════ */
+const LS = {
+  get: (k, def=[]) => { try { return JSON.parse(localStorage.getItem(k)) || def; } catch{ return def; }},
+  set: (k, v) => localStorage.setItem(k, JSON.stringify(v)),
+};
+
+/* ══════════════════════════════════════════════════
+   PUBLIC SITE — MEMBER REGISTRATION
+══════════════════════════════════════════════════ */
+async function registerMember() {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const country = document.getElementById('regCountry').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const interest = document.getElementById('regInterest').value;
+  if (!name || !email || !country) { showToast('⚠️ Please fill in your name, email and country.'); return; }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { showToast('⚠️ Please enter a valid email address.'); return; }
+
+  const member = { name, email, phone, country, interest, created_at: new Date().toISOString() };
+
+  if (!DEMO_MODE && sb) {
+    const { error } = await sb.from('members').insert([member]);
+    if (error && !error.message.includes('unique')) {
+      console.error(error);
+      showToast('⚠️ Could not save — using offline mode.');
+    }
+  }
+
+  // Also save locally
+  const members = LS.get('agm_members', []);
+  if (!members.find(m => m.email === email)) {
+    members.push(member);
+    LS.set('agm_members', members);
+  }
+
+  localStorage.setItem('agm_current_member', JSON.stringify({ name, email }));
+  document.getElementById('welcomeName').textContent = `Welcome, ${name}! You now have full access.`;
+  showLibrary();
+  showModal('📚','Access Granted!', `Welcome to the library, ${name}! All resources are now unlocked for you. Every book is free — always.`);
+}
+
+function showLibrary() {
+  document.getElementById('regForm').style.display = 'none';
+  document.getElementById('memberLibrary').style.display = 'block';
+  if (DEMO_MODE) loadDemoResources();
+}
+
+function loadStoredMember() {
+  const m = localStorage.getItem('agm_current_member');
+  if (m) {
+    try {
+      const {name} = JSON.parse(m);
+      document.getElementById('welcomeName').textContent = `Welcome back, ${name}!`;
+      showLibrary();
+    } catch(e){}
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   LIBRARY — RESOURCES
+══════════════════════════════════════════════════ */
+let allResources = [];
+let activeFilter = 'all';
+
+// Default demo resources
+const DEMO_RESOURCES = [
+  {id:'1', title:'The Power of Prayer', type:'book', description:'A life-changing guide to prayer life and intercession in the Spirit.', scripture:'"Call to me and I will answer you" — Jer 33:3', cover_url:'', fb_link:'', pdf_url:'', status:'published', downloads:124, tags:'prayer,faith'},
+  {id:'2', title:'Life of Jesus — Series', type:'series', description:'A Facebook teaching series walking through the life and ministry of Jesus Christ.', scripture:'"The same Jesus is Lord of all" — Acts 10:36', cover_url:'', fb_link:'https://www.facebook.com/share/17RYr3KVJA/', status:'published', downloads:89, tags:'jesus,gospel'},
+  {id:'3', title:'Gospel Blast Devotionals', type:'devotional', description:'Daily devotionals to strengthen your walk with God, one day at a time.', scripture:'"Your word is a lamp to my feet" — Ps 119:105', cover_url:'', fb_link:'https://www.facebook.com/share/17RYr3KVJA/', status:'published', downloads:210, tags:'devotional,daily'},
+  {id:'4', title:'Journey to Easter', type:'series', description:'Walking the road to Calvary — teaching series on the passion and resurrection.', scripture:'"He is risen!" — Matthew 28:6', cover_url:'', fb_link:'https://www.facebook.com/share/17RYr3KVJA/', status:'published', downloads:67, tags:'easter,resurrection'},
+  {id:'5', title:'Abigael — Coming Soon', type:'book', description:'An upcoming book from the ministry — stay tuned for the release!', scripture:'', cover_url:'', status:'coming', downloads:0, tags:'upcoming'},
+  {id:'6', title:'Faith Over Fear', type:'article', description:'A powerful article on overcoming fear through Scripture and faith in God.', scripture:'"For God has not given us a spirit of fear…" — 2 Tim 1:7', cover_url:'', fb_link:'https://www.facebook.com/share/17RYr3KVJA/', status:'published', downloads:156, tags:'faith,fear'},
+];
+
+async function loadPublicResources() {
+  if (sb) {
+    const { data, error } = await sb.from('resources').select('*').eq('status', 'published').order('created_at', {ascending:false});
+    if (!error && data && data.length > 0) {
+      allResources = data;
+      renderResources(allResources);
+      return;
+    }
+  }
+  loadDemoResources();
+}
+
+function loadDemoResources() {
+  const custom = LS.get('agm_resources', []);
+  allResources = [...custom, ...DEMO_RESOURCES];
+  renderResources(allResources);
+}
+
+function renderResources(resources) {
+  const grid = document.getElementById('publicBooksGrid');
+  if (!grid) return;
+  const filtered = activeFilter === 'all' ? resources : resources.filter(r => r.type === activeFilter);
+  const search = document.getElementById('librarySearch')?.value.toLowerCase() || '';
+  const final = search ? filtered.filter(r => r.title.toLowerCase().includes(search) || (r.description||'').toLowerCase().includes(search) || (r.tags||'').toLowerCase().includes(search)) : filtered;
+
+  if (!final.length) {
+    grid.innerHTML = '<p style="text-align:center;color:var(--muted);grid-column:1/-1;padding:24px 0;font-size:13px;">No resources found.</p>';
+    return;
+  }
+  grid.innerHTML = final.map(r => bookCardHTML(r)).join('');
+}
+
+function bookCardHTML(r) {
+  const tagMap = {book:'tag-book',series:'tag-series',article:'tag-article',devotional:'tag-devotional',coming:'tag-coming'};
+  const emojiMap = {book:'📖',series:'📺',article:'📰',devotional:'🌅'};
+  const tagClass = r.status === 'coming' ? 'tag-coming' : (tagMap[r.type] || 'tag-book');
+  const tagLabel = r.status === 'coming' ? '🔜 Coming Soon' : `${emojiMap[r.type]||'📖'} ${r.type.charAt(0).toUpperCase()+r.type.slice(1)}`;
+  const cover = r.cover_url ? `<img class="book-cover" src="${r.cover_url}" alt="${r.title}" loading="lazy">` : `<div class="book-cover-placeholder">${emojiMap[r.type]||'📖'}</div>`;
+  let action = '';
+  if (r.status === 'coming') {
+    action = `<div class="coming-soon-overlay">🔜 Coming Soon</div>`;
+  } else if (r.pdf_url) {
+    action = `<a class="download-btn" href="${r.pdf_url}" target="_blank" onclick="trackDownload('${r.id}')">⬇ Download Free</a>`;
+  } else if (r.fb_link) {
+    action = `<a class="fb-read-btn" href="${r.fb_link}" target="_blank">📖 Read on Facebook</a>`;
+  } else {
+    action = `<a class="fb-read-btn" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">📖 Read on Facebook</a>`;
+  }
+  return `<div class="book-card">${cover}<div class="book-info"><span class="tag ${tagClass}">${tagLabel}</span><h4>${r.title}</h4><p>${r.description||''}</p>${action}<div class="book-downloads">📥 ${r.downloads||0} downloads</div></div></div>`;
+}
+
+function setFilter(type, el) {
+  activeFilter = type;
+  document.querySelectorAll('.filter-chips .chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderResources(allResources);
+}
+
+function filterResources() { renderResources(allResources); }
+
+async function trackDownload(id) {
+  if (sb) {
+    const r = allResources.find(x => x.id === id);
+    if (r) await sb.from('resources').update({downloads: (r.downloads||0)+1}).eq('id', id);
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   PRAYER COUNTER
+══════════════════════════════════════════════════ */
+async function loadPrayerCount() {
+  if (sb) {
+    const { count } = await sb.from('prayer_requests').select('*', {count:'exact', head:true});
+    document.getElementById('prayerCount').textContent = (count||0)+'+';
+  }
+}
+function loadDemoPrayerCount() {
+  const c = LS.get('agm_prayers', []).length;
+  document.getElementById('prayerCount').textContent = c ? c+'+' : '∞';
+}
+
+/* ══════════════════════════════════════════════════
+   TESTIMONY WIZARD
+══════════════════════════════════════════════════ */
+function wizNext(step) {
+  const val = { 1:'t_name', 2:'t_location', 4:'t_story' };
+  const selVal = { 3:'t_cat' };
+  if (val[step] && !document.getElementById(val[step]).value.trim()) { showToast('⚠️ Please fill in this field.'); return; }
+  if (selVal[step] && !document.getElementById(selVal[step]).value) { showToast('⚠️ Please make a selection.'); return; }
+  document.getElementById('step'+step).classList.remove('active');
+  document.getElementById('step'+(step+1)).classList.add('active');
+  document.getElementById('dot'+(step+1)).classList.add('done');
+}
+function wizBack(step) {
+  document.getElementById('step'+step).classList.remove('active');
+  document.getElementById('step'+(step-1)).classList.add('active');
+  document.getElementById('dot'+step).classList.remove('done');
+}
+function selectOpt(btn, fieldId) {
+  btn.closest('.wizard-options').querySelectorAll('.wizard-opt').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById(fieldId).value = btn.textContent.trim();
+}
+async function submitTestimony() {
+  const perm = document.getElementById('t_permission').value;
+  if (!perm) { showToast('⚠️ Please select a permission option.'); return; }
+  const t = {
+    name: document.getElementById('t_name').value.trim(),
+    location: document.getElementById('t_location').value.trim(),
+    category: document.getElementById('t_cat').value,
+    story: document.getElementById('t_story').value.trim(),
+    permission: perm,
+    approved: false,
+    created_at: new Date().toISOString()
+  };
+  if (!DEMO_MODE && sb) {
+    await sb.from('testimonies').insert([t]);
+  } else {
+    const tests = LS.get('agm_testimonies', []);
+    tests.push(t);
+    LS.set('agm_testimonies', tests);
+  }
+  if (perm.includes('Yes')) addTestimonyToWall(t);
+  window.open('https://www.facebook.com/share/17RYr3KVJA/', '_blank');
+  showModal('🙌','Glory to God!','Your testimony has been submitted and will be shared to build faith in thousands. Revelation 12:11 ✝️');
+  // Reset
+  for (let i=1;i<=5;i++) { document.getElementById('step'+i).classList.remove('active'); if(i>1)document.getElementById('dot'+i).classList.remove('done'); }
+  document.getElementById('step1').classList.add('active');
+  ['t_name','t_location','t_story'].forEach(id=>document.getElementById(id).value='');
+  ['t_cat','t_permission'].forEach(id=>document.getElementById(id).value='');
+  document.querySelectorAll('.wizard-opt').forEach(b=>b.classList.remove('selected'));
+}
+function addTestimonyToWall(t) {
+  const wall = document.getElementById('testimonyWall');
+  const emojiMap = {'🏥 Physical Healing':'🏥','✝️ Salvation':'✝️','💰 Financial Miracle':'💰','👨‍👩‍👧 Family Restoration':'👨‍👩‍👧','⛓️ Deliverance':'⛓️','🙏 Answered Prayer':'🙏','✨ Other Miracle':'✨'};
+  const em = emojiMap[t.category] || '🌟';
+  const div = document.createElement('div'); div.className = 'testimony-card'; div.style.animation = 'fadeUp .5s ease both';
+  div.innerHTML = `<span class="t-cat-badge">${t.category}</span><p>${t.story}</p><div class="t-author"><div class="t-avatar">${em}</div><div class="t-info"><strong>${t.name}</strong><span>${t.location} · ${new Date().toLocaleDateString()}</span></div></div><button class="share-testimony-btn" onclick="shareT('${(t.story.substring(0,100)).replace(/'/g,"\\'")}...')">📢 Share</button>`;
+  wall.prepend(div);
+}
+
+/* ══════════════════════════════════════════════════
+   PRAYER REQUEST
+══════════════════════════════════════════════════ */
+async function submitPrayer() {
+  const req = document.getElementById('pRequest').value.trim();
+  if (!req) { showToast('⚠️ Please enter your prayer request.'); return; }
+  const p = {
+    name: document.getElementById('pName').value.trim() || 'Anonymous',
+    country: document.getElementById('pCountry').value.trim(),
+    category: document.getElementById('pCategory').value || 'General Prayer',
+    request: req,
+    prayed: false,
+    created_at: new Date().toISOString()
+  };
+  if (!DEMO_MODE && sb) {
+    await sb.from('prayer_requests').insert([p]);
+  } else {
+    const prayers = LS.get('agm_prayers', []);
+    prayers.push(p);
+    LS.set('agm_prayers', prayers);
+  }
+  window.open('https://www.facebook.com/share/17RYr3KVJA/', '_blank');
+  showModal('🙏','Prayer Received!','Your prayer request has been sent to Lydia. She will personally pray over your situation. God hears every prayer. — Jeremiah 33:3');
+  ['pName','pCountry','pRequest'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('pCategory').value = '';
+  loadDemoPrayerCount();
+}
+
+/* ══════════════════════════════════════════════════
+   NEWSLETTER
+══════════════════════════════════════════════════ */
+async function subscribeNewsletter() {
+  const email = document.getElementById('nlEmail').value.trim();
+  if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { showToast('⚠️ Enter a valid email.'); return; }
+  const subs = LS.get('agm_newsletter', []);
+  if (!subs.includes(email)) { subs.push(email); LS.set('agm_newsletter', subs); }
+  showModal('📬','You\'re Subscribed!','Thank you! You\'ll receive weekly devotionals and ministry updates. God bless you!');
+  document.getElementById('nlEmail').value = '';
+}
+
+/* ══════════════════════════════════════════════════
+   CONTACT FORM
+══════════════════════════════════════════════════ */
+async function sendContactMessage() {
+  const name = document.getElementById('cName').value.trim();
+  const email = document.getElementById('cEmail').value.trim();
+  const message = document.getElementById('cMessage').value.trim();
+  if (!name || !email || !message) { showToast('⚠️ Please fill in name, email and message.'); return; }
+  const msg = { name, email, subject: document.getElementById('cSubject').value.trim(), message, read: false, created_at: new Date().toISOString() };
+  if (!DEMO_MODE && sb) {
+    await sb.from('contact_messages').insert([msg]);
+  } else {
+    const msgs = LS.get('agm_messages', []);
+    msgs.push(msg);
+    LS.set('agm_messages', msgs);
+  }
+  showModal('✉️','Message Sent!','Your message has been received. Lydia will get back to you as soon as possible. God bless you!');
+  ['cName','cEmail','cSubject','cMessage'].forEach(id => document.getElementById(id).value = '');
+}
+
+/* ══════════════════════════════════════════════════
+   EVENTS
+══════════════════════════════════════════════════ */
+async function loadPublicEvents() {
+  if (!sb) return;
+  const { data, error } = await sb.from('events').select('*').eq('active',true).order('event_date');
+  if (error || !data || !data.length) return;
+  const list = document.getElementById('eventsList');
+  const typeMap = {live:'live-tag 🔴 Live',outreach:'online-tag 📦 Outreach',prayer:'prayer-tag 🙏 Prayer',prison:'online-tag ⛓️ Prison',other:'online-tag 📌 Event'};
+  list.innerHTML = data.map(e => {
+    const d = new Date(e.event_date);
+    const [tag, label] = (typeMap[e.event_type]||'online-tag 📌 Event').split(' ').reduce(([t,...rest])=>[t, rest.join(' ')], []);
+    return `<div class="event-card"><div class="event-date"><span class="day">${d.getDate()}</span><span class="mon">${d.toLocaleString('default',{month:'short'})}</span></div><div class="event-info"><h4>${e.title}</h4><p>${e.description||''}</p><span class="event-tag ${tag}">${label}</span></div><a class="join-btn" href="${e.fb_link||'https://www.facebook.com/share/17RYr3KVJA/'}" target="_blank">Join →</a></div>`;
+  }).join('');
+}
+
+/* ══════════════════════════════════════════════════
+   ADMIN — AUTH
+══════════════════════════════════════════════════ */
+function showAdminLogin() { document.getElementById('adminLoginModal').style.display = 'flex'; }
+function closeAdminLogin() { document.getElementById('adminLoginModal').style.display = 'none'; }
+function verifyAdmin() {
+  const pass = document.getElementById('adminPassInput').value;
+  const stored = localStorage.getItem('agm_admin_pass') || ADMIN_PASS;
+  if (pass === stored) {
+    closeAdminLogin();
+    document.getElementById('publicSite').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    loadAdminDashboard();
+    document.getElementById('adminPassInput').value = '';
+  } else {
+    showToast('⚠️ Incorrect password.');
+    document.getElementById('adminPassInput').value = '';
+  }
+}
+function exitAdmin() {
+  document.getElementById('adminPanel').style.display = 'none';
+  document.getElementById('publicSite').style.display = 'block';
+}
+
+/* ══════════════════════════════════════════════════
+   ADMIN — NAVIGATION
+══════════════════════════════════════════════════ */
+function switchAdminView(view, btn) {
+  document.querySelectorAll('.admin-view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-'+view).classList.add('active');
+  if (btn) btn.classList.add('active');
+  else {
+    document.querySelectorAll('.admin-tab').forEach(t => {
+      if (t.getAttribute('onclick') && t.getAttribute('onclick').includes("'"+view+"'")) t.classList.add('active');
+    });
+  }
+  // Load relevant data
+  if (view === 'dashboard') loadAdminDashboard();
+  else if (view === 'members') renderMemberTable();
+  else if (view === 'testimonies') renderTestTable();
+  else if (view === 'prayers') renderPrayerTable();
+  else if (view === 'upload') { loadAdminResources(); }
+  else if (view === 'messages') renderMsgTable();
+  else if (view === 'events') renderEventsTable();
+  else if (view === 'settings') checkDbStatus();
+}
+
+/* ══════════════════════════════════════════════════
+   ADMIN — DASHBOARD
+══════════════════════════════════════════════════ */
+async function loadAdminDashboard() {
+  const badge = document.getElementById('dbBadge');
+  if (!DEMO_MODE && sb) {
+    badge.textContent = '⬤ Supabase Live';
+    badge.className = 'supabase-badge';
+    const [m, r, t, p] = await Promise.all([
+      sb.from('members').select('*',{count:'exact',head:true}),
+      sb.from('resources').select('*',{count:'exact',head:true}),
+      sb.from('testimonies').select('*',{count:'exact',head:true}),
+      sb.from('prayer_requests').select('*',{count:'exact',head:true}),
+    ]);
+    document.getElementById('ds-members').textContent = m.count||0;
+    document.getElementById('ds-content').textContent = r.count||0;
+    document.getElementById('ds-test').textContent = t.count||0;
+    document.getElementById('ds-prayers').textContent = p.count||0;
+
+    const {data:resources} = await sb.from('resources').select('*').order('created_at',{ascending:false}).limit(5);
+    renderDashContent(resources||[]);
+  } else {
+    badge.textContent = '⬤ Demo Mode';
+    document.getElementById('ds-members').textContent = LS.get('agm_members',[]).length;
+    document.getElementById('ds-content').textContent = LS.get('agm_resources',[]).length + DEMO_RESOURCES.length;
+    document.getElementById('ds-test').textContent = LS.get('agm_testimonies',[]).length;
+    document.getElementById('ds-prayers').textContent = LS.get('agm_prayers',[]).length;
+    renderDashContent([...LS.get('agm_resources',[]),...DEMO_RESOURCES].slice(0,5));
+  }
+}
+
+function renderDashContent(resources) {
+  const el = document.getElementById('dashContentList');
+  if (!resources.length) { el.innerHTML = '<p style="text-align:center;padding:20px;color:rgba(255,255,255,.3);font-size:13px;">No resources yet. Add one from the Library tab.</p>'; return; }
+  el.innerHTML = `<table class="admin-tbl"><thead><tr><th>Title</th><th>Type</th><th>Status</th><th>Downloads</th></tr></thead><tbody>${resources.map(r=>`<tr><td><strong style="color:#E2E8F0;">${r.title}</strong></td><td style="color:#94A3B8;text-transform:capitalize;">${r.type}</td><td><span style="font-size:11px;padding:2px 9px;border-radius:12px;background:rgba(34,197,94,.1);color:#22C55E;">${r.status}</span></td><td style="color:#94A3B8;">${r.downloads||0}</td></tr>`).join('')}</tbody></table>`;
+}
+
+/* ══════════════════════════════════════════════════
+   ADMIN — MEMBERS
+══════════════════════════════════════════════════ */
+async function renderMemberTable() {
+  const tbody = document.getElementById('memberTableBody');
+  let members = [];
+  if (!DEMO_MODE && sb) {
+    const {data} = await sb.from('members').select('*').order('created_at',{ascending:false}).limit(100);
+    members = data || [];
+  } else {
+    members = LS.get('agm_members', []);
+  }
+  if (!members.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">No members yet.</td></tr>'; return; }
+  tbody.innerHTML = members.map(m => `<tr>
+    <td><strong style="color:#E2E8F0;">${m.name||'—'}</strong></td>
+    <td style="color:#94A3B8;font-size:12px;">${m.email||'—'}</td>
+    <td style="color:#CBD5E1;font-size:12px;">${m.country||'—'}</td>
+    <td style="color:#94A3B8;font-size:11.5px;">${m.interest||'—'}</td>
+    <td style="color:#475569;font-size:11px;">${m.created_at ? new Date(m.created_at).toLocaleDateString() : '—'}</td>
+  </tr>`).join('');
+}
+
+function exportMembers() {
+  const members = LS.get('agm_members', []);
+  if (!members.length) { showToast('⚠️ No members to export.'); return; }
+  const csv = ['Name,Email,Phone,Country,Interest,Date', ...members.map(m => `"${m.name}","${m.email}","${m.phone}","${m.country}","${m.interest}","${m.created_at||''}"`).join('\n')].join('\n');
+  const a = document.createElement('a'); a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent(csv); a.download = 'AGM_Members.csv'; a.click();
+  showToast('✅ Members exported!');
+}
+
+/* ══════════════════════════════════════════════════
+   ADMIN — TESTIMONIES
+══════════════════════════════════════════════════ */
+async function renderTestTable() {
+  const tbody = document.getElementById('testTableBody');
+  let tests = [];
+  if (!DEMO_MODE && sb) {
+    const {data} = await sb.from('testimonies').select('*').order('created_at',{ascending:false}).limit(50);
+    tests = data || [];
+  } else {
+    tests = LS.get('agm_testimonies', []);
+  }
+  if (!tests.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">No testimonies yet.</td></tr>'; return; }
+  tbody.innerHTML = tests.map((t,i) => `<tr>
+    <td><strong style="color:#E2E8F0;font-size:13px;">${t.name||'Anonymous'}</strong><div style="font-size:10.5px;color:#475569;">${t.location||'—'}</div></td>
+    <td style="color:#94A3B8;font-size:12px;">${t.category||'—'}</td>
+    <td style="font-size:12px;color:#CBD5E1;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${t.story||''}</td>
+    <td><span style="font-size:11px;padding:2px 9px;border-radius:12px;background:${t.approved?'rgba(34,197,94,.1)':'rgba(201,148,58,.1)'};color:${t.approved?'#22C55E':'var(--agold)'};">${t.approved?'Approved':'Pending'}</span></td>
+    <td style="white-space:nowrap;">
+      ${!t.approved?`<button class="action-btn approve-btn" onclick="approveTestimony('${t.id||i}')">✓ Approve</button> `:''}
+      <button class="action-btn delete-btn" onclick="deleteTestimony('${t.id||i}')">✕</button>
+    </td>
+  </tr>`).join('');
+}
+
+async function approveTestimony(id) {
+  if (!DEMO_MODE && sb) {
+    await sb.from('testimonies').update({approved:true}).eq('id',id);
+  } else {
+    const tests = LS.get('agm_testimonies',[]);
+    const idx = parseInt(id);
+    if (!isNaN(idx) && tests[idx]) tests[idx].approved = true;
+    LS.set('agm_testimonies', tests);
+  }
+  showToast('✅ Testimony approved!');
+  renderTestTable();
+}
+
+async function deleteTestimony(id) {
+  if (!DEMO_MODE && sb) {
+    await sb.from('testimonies').delete().eq('id',id);
+  } else {
+    const tests = LS.get('agm_testimonies',[]);
+    const idx = parseInt(id);
+    if (!isNaN(idx)) tests.splice(idx,1);
+    LS.set('agm_testimonies', tests);
+  }
+  showToast('🗑 Testimony removed.');
+  renderTestTable();
+}
+
+/* ══════════════════════════════════════════════════
+   ADMIN — PRAYER TABLE
+══════════════════════════════════════════════════ */
+async function renderPrayerTable() {
+  const tbody = document.getElementById('prayerTableBody');
+  let prayers = [];
+  if (!DEMO_MODE && sb) {
+    const {data} = await sb.from('prayer_requests').select('*').order('created_at',{ascending:false}).limit(50);
+    prayers = data || [];
+  } else {
+    prayers = LS.get('agm_prayers', []);
+  }
+  document.getElementById('ds-prayers').textContent = prayers.length;
+  if (!prayers.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#475569;padding:24px;">No prayer requests yet.</td></tr>'; return; }
+  tbody.innerHTML = prayers.map((p,i) => `<tr>
+    <td><strong style="color:#E2E8F0;font-size:13px;">${p.name||'Anonymous'}</strong></td>
+    <td style="color:#94A3B8;font-size:12px;">${p.country||'—'}</td>
+    <td style="color:#94A3B8;font-size:12px;">${p.category||'—'}</td>
+    <td style="font-size:12px;color:#CBD5E1;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.request||''}</td>
+    <td style="font-size:11px;color:#475569;">${p.created_at?new Date(p.created_at).toLocaleDateString():'—'}</td>
+    <td><button class="action-btn approve-btn" onclick="markPrayed('${p.id||i}')">${p.prayed?'✓ Prayed':'🙏 Pray'}</button></td>
+  </tr>`).join('');
+}
+
+async function markPrayed(id) {
+  if (!DEMO_MODE && sb) {
+    await sb.from('prayer_requests').update({prayed:true}).eq('id',id);
+  } else {
+    const prayers = LS.get('agm_prayers',[]);
+    const idx = parseInt(id);
+    if (!isNaN(idx) && prayers[idx]) prayers[idx].prayed = true;
+    LS.set('agm_prayers', prayers);
+  }
+  showToast('🙏 Marked as prayed over. God hears!');
+  renderPrayerTable();
+}
+
+/* ══════════════════════════════════════════════════
+   ADMIN — UPLOAD CONTENT
+══════════════════════════════════════════════════ */
+async function uploadContent() {
+  const title = document.getElementById('u_title').value.trim();
+  const type = document.getElementById('u_type').value;
+  if (!title || !type) { showToast('⚠️ Title and type are required.'); return; }
+
+  const progress = document.getElementById('uploadProgress');
+  progress.style.display = 'block';
+  document.getElementById('upStatus').textContent = 'Saving…';
+
+  // Animate
+  let pct = 0;
+  const iv = setInterval(() => {
+    pct = Math.min(pct+20, 85);
+    document.getElementById('upFill').style.width = pct+'%';
+    document.getElementById('upPct').textContent = pct+'%';
+  }, 120);
+
+  const resource = {
+    title,
+    type,
+    status: document.getElementById('u_status').value || 'published',
+    description: document.getElementById('u_desc').value.trim(),
+    scripture: document.getElementById('u_scripture').value.trim(),
+    cover_url: document.getElementById('u_cover').value.trim(),
+    pdf_url: document.getElementById('u_pdf').value.trim(),
+    fb_link: document.getElementById('u_fblink').value.trim(),
+    tags: document.getElementById('u_tags').value.trim(),
+    downloads: 0,
+    created_at: new Date().toISOString()
+  };
+
+  if (!DEMO_MODE && sb) {
+    const {error} = await sb.from('resources').insert([resource]);
+    if (error) { showToast('⚠️ Database error: '+error.message); clearInterval(iv); progress.style.display='none'; return; }
+  } else {
+    const resources = LS.get('agm_resources', []);
+    resource.id = 'local_'+Date.now();
+    resources.unshift(resource);
+    LS.set('agm_resources', resources);
+  }
+
+  clearInterval(iv);
+  document.getElementById('upFill').style.width = '100%';
+  document.getElementById('upPct').textContent = '100%';
+  document.getElementById('upStatus').textContent = 'Saved!';
+  setTimeout(() => { progress.style.display='none'; }, 1500);
+
+  showToast('✅ Resource published to library!');
+  ['u_title','u_desc','u_scripture','u_cover','u_pdf','u_fblink','u_tags'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('u_type').value = '';
+  document.getElementById('u_status').value = 'published';
+  loadAdminResources();
+  allResources = [];
+  loadDemoResources();
+}
+
+async function loadAdminResources() {
+  const tbody = document.getElementById('resourceTableBody');
+  if (!tbody) return;
+  let resources = [];
+  if (!DEMO_MODE && sb) {
+    const {data} = await sb.from('resources').select('*').order('created_at',{ascending:false}).limit(50);
+    resources = data || [];
+  } else {
+    resources = [...LS.get('agm_resources',[]),...DEMO_RESOURCES];
+  }
+  if (!resources.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">No resources yet.</td></tr>'; return; }
+  tbody.innerHTML = resources.map((r,i)=>`<tr>
+    <td><strong style="color:#E2E8F0;">${r.title}</strong></td>
+    <td style="color:#94A3B8;text-transform:capitalize;">${r.type}</td>
+    <td><span style="font-size:11px;padding:2px 9px;border-radius:12px;background:rgba(34,197,94,.1);color:#22C55E;">${r.status}</span></td>
+    <td style="color:#94A3B8;">${r.downloads||0}</td>
+    <td><button class="action-btn delete-btn" onclick="deleteResource('${r.id||i}')">✕ Delete</button></td>
+  </tr>`).join('');
+}
+
+async function deleteResource(id) {
+  if (!DEMO_MODE && sb) {
+    await sb.from('resources').delete().eq('id',id);
+  } else {
+    const resources = LS.get('agm_resources',[]);
+    const idx = parseInt(id.replace('local_',''));
+    if (id.startsWith('local_')) {
+      const fi = resources.findIndex(r=>r.id===id);
+      if (fi>-1) resources.splice(fi,1);
+    }
+    LS.set('agm_resources', resources);
+  }
+  showToast('🗑 Resource removed.');
+  loadAdminResources();
+  allResources=[]; loadDemoResources();
+}
+
+/* ══════════════════════════════════════════════════
+   ADMIN — EVENTS
+══════════════════════════════════════════════════ */
+async function addEvent() {
+  const title = document.getElementById('ev_title').value.trim();
+  const date = document.getElementById('ev_date').value;
+  if (!title || !date) { showToast('⚠️ Title and date required.'); return; }
+  const ev = {
+    title,
+    event_date: date,
+    event_type: document.getElementById('ev_type').value,
+    description: document.getElementById('ev_desc').value.trim(),
+    fb_link: document.getElementById('ev_fb').value.trim(),
+    active: true,
+    created_at: new Date().toISOString()
+  };
+  if (!DEMO_MODE && sb) {
+    await sb.from('events').insert([ev]);
+  } else {
+    const evs = LS.get('agm_events',[]);
+    ev.id = 'ev_'+Date.now();
+    evs.unshift(ev);
+    LS.set('agm_events', evs);
+  }
+  showToast('✅ Event added!');
+  ['ev_title','ev_date','ev_desc','ev_fb'].forEach(id=>document.getElementById(id).value='');
+  renderEventsTable();
+  loadPublicEvents();
+}
+
+async function renderEventsTable() {
+  const tbody = document.getElementById('eventsTableBody');
+  let evs = [];
+  if (!DEMO_MODE && sb) {
+    const {data} = await sb.from('events').select('*').order('event_date');
+    evs = data || [];
+  } else {
+    evs = LS.get('agm_events',[]);
+  }
+  if (!evs.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">No events yet. Add one above.</td></tr>'; return; }
+  tbody.innerHTML = evs.map((e,i)=>`<tr>
+    <td><strong style="color:#E2E8F0;">${e.title}</strong></td>
+    <td style="color:#94A3B8;">${e.event_date||'—'}</td>
+    <td style="color:#94A3B8;text-transform:capitalize;">${e.event_type||'—'}</td>
+    <td><span style="font-size:11px;padding:2px 9px;border-radius:12px;background:${e.active?'rgba(34,197,94,.1)':'rgba(100,116,139,.1)'};color:${e.active?'#22C55E':'#64748B'};">${e.active?'Active':'Inactive'}</span></td>
+    <td><button class="action-btn delete-btn" onclick="deleteEvent('${e.id||i}')">✕</button></td>
+  </tr>`).join('');
+}
+
+async function deleteEvent(id) {
+  if (!DEMO_MODE && sb) {
+    await sb.from('events').delete().eq('id',id);
+  } else {
+    const evs = LS.get('agm_events',[]).filter(e=>e.id!==id);
+    LS.set('agm_events', evs);
+  }
+  showToast('🗑 Event removed.');
+  renderEventsTable();
+}
+
+/* ══════════════════════════════════════════════════
+   ADMIN — MESSAGES
+══════════════════════════════════════════════════ */
+async function renderMsgTable() {
+  const tbody = document.getElementById('msgTableBody');
+  let msgs = [];
+  if (!DEMO_MODE && sb) {
+    const {data} = await sb.from('contact_messages').select('*').order('created_at',{ascending:false}).limit(50);
+    msgs = data || [];
+  } else {
+    msgs = LS.get('agm_messages',[]);
+  }
+  if (!msgs.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">No messages yet.</td></tr>'; return; }
+  tbody.innerHTML = msgs.map(m=>`<tr>
+    <td><strong style="color:#E2E8F0;">${m.name}</strong></td>
+    <td style="color:#94A3B8;font-size:12px;">${m.email||'—'}</td>
+    <td style="color:#CBD5E1;font-size:12px;">${m.subject||'—'}</td>
+    <td style="font-size:12px;color:#CBD5E1;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${m.message||''}</td>
+    <td style="font-size:11px;color:#475569;">${m.created_at?new Date(m.created_at).toLocaleDateString():'—'}</td>
+  </tr>`).join('');
+}
+
+/* ══════════════════════════════════════════════════
+   ADMIN — SETTINGS
+══════════════════════════════════════════════════ */
+function saveSettings() {
+  const p = document.getElementById('s_pass').value;
+  const p2 = document.getElementById('s_pass2').value;
+  if (p && p !== p2) { showToast('⚠️ Passwords do not match.'); return; }
+  if (p) localStorage.setItem('agm_admin_pass', p);
+  showToast('✅ Settings saved!');
+}
+
+async function checkDbStatus() {
+  const el = document.getElementById('sbStatus');
+  if (DEMO_MODE) {
+    el.innerHTML = '<span style="color:var(--agold);">⬤ Demo Mode</span> — Supabase not configured. Data saved to localStorage only.<br><br>To enable real database: Replace SUPABASE_URL and SUPABASE_ANON_KEY in this file, then deploy to Vercel.';
+    return;
+  }
+  el.innerHTML = '<span class="spinner"></span> Testing connection…';
+  try {
+    const {error} = await sb.from('members').select('id').limit(1);
+    if (!error) { el.innerHTML = '<span style="color:#22C55E;">⬤ Supabase Connected</span> — Database is live and syncing. All submissions are being saved.'; }
+    else { el.innerHTML = '<span style="color:#EF4444;">⬤ Connection Error</span> — '+error.message; }
+  } catch(e) {
+    el.innerHTML = '<span style="color:#EF4444;">⬤ Error</span> — '+e.message;
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   UTILS
+══════════════════════════════════════════════════ */
+function copyMomo() {
+  navigator.clipboard.writeText('673567253')
+    .then(() => showToast('📱 673567253 copied to clipboard!'))
+    .catch(() => showToast('MoMo: 673 567 253'));
+}
+function shareT(text) {
+  window.open('https://wa.me/?text='+encodeURIComponent('✝️ TESTIMONY — Abigael Glory Ministries:\n\n"'+text+'"\n\nfacebook.com/share/17RYr3KVJA/'),'_blank');
+}
+function showModal(icon,title,msg) {
+  document.getElementById('modalIcon').textContent = icon;
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalMsg').textContent = msg;
+  document.getElementById('successModal').classList.add('open');
+}
+function closeModal() { document.getElementById('successModal').classList.remove('open'); }
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3400);
+}
+function smoothScroll(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({behavior:'smooth'});
+}
+function navClick(el) {
+  document.querySelectorAll('.nav-inner a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// Load testimonies on public site start
+window.addEventListener('load', () => {
+  const stored = LS.get('agm_testimonies', []);
+  stored.filter(t => t.permission && t.permission.includes('Yes')).slice(0,5).forEach(t => addTestimonyToWall(t));
+});
+</script>
+</body>
+</html>
