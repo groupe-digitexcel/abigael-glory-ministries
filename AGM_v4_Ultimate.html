@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Abigael Glory Ministries — Spirit-filled Digital Evangelism, Free & Premium Books, Prayer, Grants, AI Ministry Agent. Founded by Besong Aseck Lydia.">
+<title>Abigael Glory Ministries — Spirit-Filled Digital Evangelism</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=IM+Fell+English:ital@0;1&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#03070D;--abyss:#050C16;--depth:#080F1E;--night:#0C1628;
+  --vessel:#111E33;--altar:#172540;--veil:#1D2F4E;
+  --border:rgba(255,255,255,.06);--border-gold:rgba(212,163,57,.22);--border-fire:rgba(255,120,0,.18);
+  --gold:#C9943A;--gold2:#E8B84B;--gold3:#F5D070;--goldGlow:#FFE8A0;--goldDim:#7A5820;
+  --fire:#FF6B00;--fire2:#FF8C2A;--ember:#FF4500;
+  --heaven:#E8F4FF;--cloud:#B8D4F0;--sky:#4A90D9;
+  --life:#00C853;--life2:#69F0AE;--lifeDeep:#00783A;
+  --crimson:#C0392B;--crimson2:#E74C3C;
+  --white:#FFFFFF;--cream:#FDF8EE;--parchment:#F5EDD8;
+  --text:#E0D8C8;--muted:#7A8FA6;--dim:#3A506A;
+  --display:'Cinzel Decorative',serif;
+  --serif:'IM Fell English',serif;
+  --body:'Nunito',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --r:16px;--r-sm:10px;--r-lg:22px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:var(--body);background:var(--abyss);color:var(--text);overflow-x:hidden;min-height:100vh;}
+a{text-decoration:none;color:inherit;}
+button{font-family:var(--body);cursor:pointer;}
+input,select,textarea{font-family:var(--body);}
+img{max-width:100%;display:block;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--ink);}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:5px;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 100% 55% at 50% -8%,rgba(201,148,58,.11) 0%,transparent 58%),
+  radial-gradient(ellipse 45% 35% at 92% 45%,rgba(74,144,217,.06) 0%,transparent 55%),
+  radial-gradient(ellipse 35% 28% at 4% 78%,rgba(0,200,83,.04) 0%,transparent 50%);}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(201,148,58,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(201,148,58,.018) 1px,transparent 1px);
+  background-size:44px 44px;}
+*{position:relative;z-index:1;}
+
+/* VIEWS */
+.view{display:none;}
+.view.active{display:block;}
+#view-dashboard{display:none!important;}
+#view-dashboard.active{display:flex!important;}
+
+/* BROADCAST BAR */
+.broadcast-bar{background:linear-gradient(90deg,var(--night),var(--depth),var(--night));border-bottom:1px solid var(--border-gold);padding:8px 0;overflow:hidden;}
+.broadcast-inner{display:flex;align-items:center;}
+.broadcast-label{background:linear-gradient(135deg,var(--fire),var(--ember));color:#fff;font-size:9px;font-weight:900;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:5px;}
+.blive{width:6px;height:6px;border-radius:50%;background:#fff;animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.ticker-track{display:flex;animation:ticker 42s linear infinite;white-space:nowrap;padding-left:30px;}
+.ticker-track span{color:var(--gold3);font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:0 30px;}
+.ticker-track span::before{content:"✦  ";color:var(--gold);}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* TOP NAV */
+.topnav{position:sticky;top:0;z-index:500;background:rgba(5,12,22,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-gold);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;}
+.nav-brand{display:flex;align-items:center;gap:9px;cursor:pointer;}
+.nav-emblem{width:34px;height:34px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 0 16px rgba(201,148,58,.5);animation:emblemFloat 4s ease-in-out infinite;}
+@keyframes emblemFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.nav-name{font-family:var(--display);font-size:13px;font-weight:900;color:var(--goldGlow);letter-spacing:.5px;line-height:1.2;}
+.nav-name small{display:block;font-family:var(--body);font-size:9px;color:var(--muted);font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.nav-links{display:flex;align-items:center;gap:2px;}
+.nav-links button{padding:6px 12px;border-radius:7px;border:none;background:transparent;font-size:11.5px;font-weight:700;color:var(--muted);transition:all .18s;cursor:pointer;}
+.nav-links button:hover{color:var(--gold2);background:rgba(201,148,58,.08);}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.btn-nav-store{padding:8px 18px;border-radius:9px;border:1px solid var(--border-gold);background:transparent;color:var(--gold2);font-size:12px;font-weight:800;cursor:pointer;transition:all .2s;}
+.btn-nav-store:hover{background:rgba(201,148,58,.1);}
+.btn-nav-admin{padding:8px 16px;border-radius:9px;border:1px solid var(--border-gold);background:linear-gradient(135deg,var(--night),var(--vessel));color:var(--gold3);font-size:12px;font-weight:800;cursor:pointer;transition:all .2s;}
+.btn-nav-admin:hover{background:linear-gradient(135deg,var(--vessel),var(--altar));}
+
+/* HERO */
+.hero{background:var(--depth);min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 20px 36px;overflow:hidden;}
+.hero-aura{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(201,148,58,.16) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 50% 100%,rgba(0,200,83,.05) 0%,transparent 50%);}
+.hero-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.hp{position:absolute;border-radius:50%;animation:ascend linear infinite;opacity:.5;}
+@keyframes ascend{0%{transform:translateY(0) scale(1);opacity:.5}100%{transform:translateY(-110vh) scale(.3);opacity:0}}
+.hero-seal{width:120px;height:120px;margin-bottom:16px;filter:drop-shadow(0 0 30px rgba(201,148,58,.65));animation:sealGlow 4s ease-in-out infinite alternate;}
+@keyframes sealGlow{0%{filter:drop-shadow(0 0 22px rgba(201,148,58,.55))}100%{filter:drop-shadow(0 0 42px rgba(255,200,80,.8))}}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(0,200,83,.07);border:1px solid rgba(0,200,83,.22);border-radius:50px;padding:5px 16px;font-size:10.5px;font-weight:800;color:var(--life2);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+.kdot{width:6px;height:6px;border-radius:50%;background:var(--life);box-shadow:0 0 8px var(--life);animation:blink 2s infinite;}
+.hero-title{font-family:var(--display);font-size:clamp(26px,8vw,56px);font-weight:900;color:var(--white);line-height:1.0;letter-spacing:-.5px;margin-bottom:10px;}
+.hero-title .flame{color:var(--gold3);}
+.hero-title .sub-line{font-family:var(--serif);font-style:italic;font-size:clamp(16px,4vw,26px);color:var(--gold2);font-weight:400;display:block;margin-top:6px;}
+.hero-verse{font-family:var(--serif);font-style:italic;font-size:13px;color:rgba(255,255,255,.55);max-width:340px;margin:0 auto 8px;line-height:1.75;border-left:2px solid var(--gold);padding-left:12px;text-align:left;}
+.hero-by{font-size:12px;color:var(--muted);margin-bottom:22px;}
+.hero-proof{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:24px;}
+.hpill{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:50px;font-size:11px;font-weight:700;border:1px solid;}
+.hp-g{border-color:rgba(0,200,83,.25);background:rgba(0,200,83,.07);color:var(--life2);}
+.hp-b{border-color:rgba(74,144,217,.25);background:rgba(74,144,217,.07);color:#93C5FD;}
+.hp-o{border-color:rgba(255,107,0,.28);background:rgba(255,107,0,.07);color:var(--fire2);}
+.hp-gold{border-color:rgba(201,148,58,.3);background:rgba(201,148,58,.08);color:var(--gold3);}
+.hero-btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px;}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:15px 32px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--gold),#D4860A);color:var(--abyss);font-size:14px;font-weight:900;box-shadow:0 8px 32px rgba(201,148,58,.45);cursor:pointer;transition:all .22s;}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 44px rgba(201,148,58,.6);}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:15px 28px;border-radius:50px;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.05);color:var(--text);font-size:14px;font-weight:700;cursor:pointer;transition:all .22s;backdrop-filter:blur(8px);}
+.btn-secondary:hover{border-color:var(--border-gold);color:var(--gold2);}
+.btn-fire{display:inline-flex;align-items:center;gap:8px;padding:15px 28px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--fire),var(--ember));color:#fff;font-size:14px;font-weight:800;box-shadow:0 8px 28px rgba(255,107,0,.4);cursor:pointer;transition:all .22s;}
+.btn-fire:hover{filter:brightness(1.1);transform:translateY(-3px);}
+.hero-stats{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;}
+.hstat{text-align:center;}
+.hstat-n{font-family:var(--display);font-size:22px;font-weight:900;color:var(--gold2);}
+.hstat-l{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+.wave-divider{display:block;width:100%;line-height:0;margin-bottom:-2px;}
+
+/* SEC NAV */
+.sec-nav{background:rgba(12,22,40,.98);backdrop-filter:blur(14px);border-bottom:1px solid var(--border-gold);padding:10px 16px;position:sticky;top:56px;z-index:400;}
+.sec-nav-inner{max-width:680px;margin:0 auto;display:flex;justify-content:center;flex-wrap:wrap;gap:5px;}
+.snav-btn{padding:6px 14px;border-radius:22px;border:1.5px solid var(--border-gold);background:var(--vessel);color:var(--muted);font-size:10.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.snav-btn:hover,.snav-btn.act{background:var(--gold);color:var(--abyss);border-color:var(--gold);}
+
+/* PAGE LAYOUT */
+.page{max-width:680px;margin:0 auto;padding:0 16px 60px;}
+.sec-hd{display:flex;align-items:center;gap:12px;margin:40px 0 18px;}
+.sec-hd .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent);}
+.sec-hd .ln.r{background:linear-gradient(270deg,var(--gold),transparent);}
+.sec-hd h2{font-family:var(--display);font-size:clamp(15px,4vw,20px);font-weight:900;color:var(--white);white-space:nowrap;}
+
+/* ABOUT */
+.about-card{background:var(--vessel);border:1px solid var(--border-gold);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.3);}
+.about-stripe{height:4px;background:linear-gradient(90deg,var(--gold),var(--gold2),var(--sky),var(--life),var(--crimson2));}
+.about-body{padding:22px 20px;}
+.about-body p{font-family:var(--serif);font-size:14px;line-height:1.85;color:var(--cream);}
+.about-body p+p{margin-top:10px;}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;}
+.astat{background:rgba(201,148,58,.07);border:1px solid var(--border-gold);border-radius:12px;padding:14px 8px;text-align:center;}
+.astat-n{font-family:var(--display);font-size:22px;font-weight:900;color:var(--gold2);}
+.astat-l{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+.founder-strip{background:linear-gradient(135deg,var(--night),var(--altar));border:1px solid var(--border-gold);border-radius:14px;padding:18px;display:flex;gap:14px;align-items:center;margin-top:12px;}
+.founder-av{width:58px;height:58px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-size:24px;border:2.5px solid var(--gold2);}
+.founder-info .ftitle{font-size:9.5px;color:var(--gold);font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
+.founder-info h4{font-family:var(--display);font-size:15px;font-weight:700;color:var(--white);margin-bottom:3px;}
+.founder-info p{font-size:12px;color:var(--muted);line-height:1.55;}
+
+/* PILLARS */
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.pillar{background:var(--vessel);border:1px solid var(--border);border-radius:16px;padding:16px 14px;border-top:3px solid var(--gold);transition:all .22s;}
+.pillar:hover{border-color:var(--border-gold);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.25);}
+.pillar.p2{border-top-color:var(--sky);}.pillar.p3{border-top-color:var(--life);}.pillar.p4{border-top-color:#A855F7;}.pillar.p5{border-top-color:var(--crimson2);}.pillar.p6{border-top-color:var(--fire);}
+.pillar .ico{font-size:26px;margin-bottom:8px;}
+.pillar h4{font-size:13px;font-weight:800;color:var(--white);margin-bottom:3px;}
+.pillar p{font-size:11.5px;color:var(--muted);line-height:1.6;}
+
+/* STORE */
+.store-header{background:linear-gradient(135deg,var(--night),var(--altar));border:1px solid var(--border-gold);border-radius:var(--r-lg);padding:22px 20px;text-align:center;margin-bottom:16px;}
+.store-header h3{font-family:var(--display);font-size:18px;font-weight:900;color:var(--gold2);margin-bottom:6px;line-height:1.25;}
+.store-header p{font-size:13px;color:rgba(255,255,255,.68);line-height:1.68;}
+.tier-tabs{display:flex;background:rgba(255,255,255,.04);border-radius:50px;padding:4px;margin-bottom:16px;gap:4px;}
+.tier-tab{flex:1;padding:9px;border-radius:40px;border:none;background:transparent;font-size:12px;font-weight:800;color:var(--muted);cursor:pointer;transition:all .22s;text-align:center;}
+.tier-tab.active{background:linear-gradient(135deg,var(--gold),#D4860A);color:var(--abyss);box-shadow:0 4px 16px rgba(201,148,58,.4);}
+.tier-tab.active.tier-blessed{background:linear-gradient(135deg,#7C3AED,#5B21B6);color:#fff;}
+.tier-tab.active.tier-anointed{background:linear-gradient(135deg,#D4A012,var(--gold3));color:var(--abyss);}
+.store-search{display:flex;gap:8px;margin-bottom:14px;background:var(--vessel);border:1.5px solid var(--border-gold);border-radius:50px;padding:5px 5px 5px 18px;}
+.store-search input{flex:1;border:none;outline:none;background:transparent;font-size:13.5px;color:var(--text);}
+.store-search input::placeholder{color:var(--muted);}
+.store-search button{background:linear-gradient(135deg,var(--gold),#D4860A);color:var(--abyss);border:none;border-radius:40px;padding:9px 18px;font-size:12px;font-weight:800;cursor:pointer;}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.fchip{padding:5px 13px;border-radius:22px;font-size:11px;font-weight:700;border:1px solid var(--border-gold);background:var(--vessel);color:var(--muted);cursor:pointer;transition:all .2s;}
+.fchip.on,.fchip:hover{background:var(--gold);color:var(--abyss);border-color:var(--gold);}
+.books-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.book-card{background:var(--vessel);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all .25s;cursor:pointer;}
+.book-card:hover{border-color:var(--border-gold);transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,.4);}
+.book-card.paid{border-color:rgba(124,58,237,.25);}.book-card.elite{border-color:rgba(212,160,18,.25);}
+.book-cover-wrap{width:100%;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+.book-info{padding:12px 12px 14px;}
+.btb{display:inline-block;font-size:9px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:2px 9px;border-radius:20px;margin-bottom:6px;}
+.btb-free{background:rgba(0,200,83,.12);color:var(--life2);border:1px solid rgba(0,200,83,.25);}
+.btb-blessed{background:rgba(124,58,237,.12);color:#C4B5FD;border:1px solid rgba(124,58,237,.25);}
+.btb-anointed{background:rgba(212,160,18,.12);color:var(--gold3);border:1px solid rgba(212,160,18,.25);}
+.book-info h4{font-family:var(--display);font-size:12px;font-weight:700;color:var(--white);margin-bottom:3px;line-height:1.25;}
+.book-info p{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:7px;}
+.book-price{font-family:var(--display);font-size:18px;font-weight:900;color:var(--gold2);margin-bottom:7px;}
+.book-price.free-tag{color:var(--life2);font-size:14px;font-weight:800;}
+.book-price small{font-size:10px;color:var(--muted);font-family:var(--body);}
+.bab{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:9px;border-radius:9px;font-size:11.5px;font-weight:900;border:none;cursor:pointer;transition:all .2s;}
+.bab:hover{filter:brightness(1.08);}
+.bab-free{background:linear-gradient(135deg,var(--gold),#D4860A);color:var(--abyss);}
+.bab-blessed{background:linear-gradient(135deg,#7C3AED,#5B21B6);color:#fff;box-shadow:0 4px 16px rgba(124,58,237,.3);}
+.bab-anointed{background:linear-gradient(135deg,#D4A012,var(--gold3));color:var(--abyss);box-shadow:0 4px 16px rgba(212,160,18,.35);}
+.bab-locked{background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border);}
+.book-dls{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:3px;margin-top:4px;}
+
+/* PRICING */
+.pricing-header{text-align:center;margin-bottom:24px;}
+.pricing-header h3{font-family:var(--display);font-size:20px;font-weight:900;color:var(--white);margin-bottom:8px;}
+.pricing-header p{font-size:13px;color:var(--muted);line-height:1.65;}
+.pricing-cards{display:flex;flex-direction:column;gap:16px;}
+.plan-card{background:var(--vessel);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all .3s;}
+.plan-card:hover{transform:translateY(-3px);}
+.plan-card.featured{border-color:rgba(124,58,237,.35);box-shadow:0 0 50px rgba(124,58,237,.1);}
+.plan-card.elite-plan{border-color:rgba(212,160,18,.35);box-shadow:0 0 50px rgba(212,160,18,.1);}
+.plan-stripe{height:4px;}
+.plan-body{padding:22px 20px;}
+.plan-badge{display:inline-block;font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:12px;}
+.pb-free2{background:rgba(255,255,255,.07);color:var(--muted);border:1px solid var(--border);}
+.pb-blessed{background:rgba(124,58,237,.1);color:#C4B5FD;border:1px solid rgba(124,58,237,.25);}
+.pb-popular{background:linear-gradient(135deg,#7C3AED,#5B21B6);color:#fff;box-shadow:0 3px 12px rgba(124,58,237,.4);}
+.pb-anointed{background:rgba(212,160,18,.1);color:var(--gold3);border:1px solid rgba(212,160,18,.25);}
+.plan-name{font-family:var(--display);font-size:26px;font-weight:900;color:var(--white);margin-bottom:4px;}
+.plan-desc{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.6;}
+.plan-price{font-family:var(--display);font-size:44px;font-weight:900;line-height:1;}
+.pp-free{color:var(--life2);}.pp-blessed{color:#C4B5FD;}.pp-anointed{color:var(--gold3);}
+.plan-per{font-size:12px;color:var(--muted);margin-top:3px;margin-bottom:18px;}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:20px;}
+.plan-features li{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:var(--text);line-height:1.5;}
+.fc-yes{width:19px;height:19px;border-radius:6px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:10px;background:rgba(0,200,83,.12);color:var(--life2);border:1px solid rgba(0,200,83,.25);}
+.fc-no{width:19px;height:19px;border-radius:6px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:10px;background:rgba(255,255,255,.04);color:var(--dim);border:1px solid var(--border);}
+.plan-features li.dim-feat{color:var(--muted);}
+.plan-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:12px;border:none;font-size:14px;font-weight:900;cursor:pointer;transition:all .22s;}
+.pc-free{background:rgba(255,255,255,.07);color:var(--text);border:1px solid var(--border);}
+.pc-free:hover{background:rgba(255,255,255,.12);}
+.pc-blessed{background:linear-gradient(135deg,#7C3AED,#5B21B6);color:#fff;box-shadow:0 6px 24px rgba(124,58,237,.4);}
+.pc-blessed:hover{filter:brightness(1.1);transform:translateY(-2px);}
+.pc-anointed{background:linear-gradient(135deg,#D4A012,var(--gold3));color:var(--abyss);box-shadow:0 6px 24px rgba(212,160,18,.4);}
+.pc-anointed:hover{filter:brightness(1.08);transform:translateY(-2px);}
+
+/* AI AGENT */
+.agent-wrap{background:linear-gradient(135deg,var(--night),var(--altar));border:1px solid var(--border-gold);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,.4);}
+.agent-header{background:linear-gradient(135deg,rgba(201,148,58,.12),rgba(201,148,58,.04));border-bottom:1px solid var(--border-gold);padding:16px 20px;display:flex;align-items:center;gap:14px;}
+.agent-av{width:48px;height:48px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-size:22px;border:2px solid rgba(201,148,58,.5);box-shadow:0 0 20px rgba(201,148,58,.4);animation:agentGlow 3s ease-in-out infinite alternate;}
+@keyframes agentGlow{from{box-shadow:0 0 14px rgba(201,148,58,.3)}to{box-shadow:0 0 28px rgba(255,200,80,.6)}}
+.agent-info h4{font-size:15px;font-weight:800;color:var(--white);}
+.agent-info p{font-size:11.5px;color:var(--muted);}
+.agent-online{margin-left:auto;display:inline-flex;align-items:center;gap:5px;background:rgba(0,200,83,.1);border:1px solid rgba(0,200,83,.25);border-radius:20px;padding:4px 10px;font-size:10px;font-weight:800;color:var(--life2);}
+.agent-body{height:320px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;}
+.agent-body::-webkit-scrollbar{width:3px;}
+.agent-body::-webkit-scrollbar-thumb{background:var(--goldDim);}
+.msg-bubble{max-width:88%;padding:12px 15px;border-radius:16px;font-size:13.5px;line-height:1.7;}
+.msg-agent{background:rgba(201,148,58,.08);border:1px solid var(--border-gold);color:var(--cream);border-radius:16px 16px 16px 4px;align-self:flex-start;}
+.msg-agent .msg-src{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--gold);margin-top:6px;display:block;}
+.msg-user{background:linear-gradient(135deg,rgba(74,144,217,.15),rgba(74,144,217,.08));border:1px solid rgba(74,144,217,.2);color:var(--text);border-radius:16px 16px 4px 16px;align-self:flex-end;}
+.msg-typing{display:flex;gap:4px;align-items:center;padding:14px 16px;background:rgba(201,148,58,.06);border:1px solid var(--border-gold);border-radius:16px;align-self:flex-start;}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:tdBounce 1.4s infinite;}
+.tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
+@keyframes tdBounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-7px)}}
+.agent-footer{border-top:1px solid var(--border-gold);padding:14px 16px;}
+.agent-quick-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.aqb{padding:5px 12px;border-radius:20px;border:1px solid var(--border-gold);background:rgba(201,148,58,.06);color:var(--gold2);font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;}
+.aqb:hover{background:rgba(201,148,58,.14);border-color:var(--gold);}
+.agent-input-row{display:flex;gap:8px;}
+.agent-input{flex:1;background:rgba(255,255,255,.05);border:1.5px solid var(--border-gold);border-radius:50px;padding:11px 18px;font-size:13.5px;color:var(--text);outline:none;transition:border-color .2s;}
+.agent-input:focus{border-color:var(--gold);}
+.agent-input::placeholder{color:var(--muted);}
+.agent-send{width:42px;height:42px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--gold),#D4860A);color:var(--abyss);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(201,148,58,.4);transition:all .2s;flex-shrink:0;}
+.agent-send:hover{transform:scale(1.1);}
+
+/* TESTIMONY */
+.testimony-banner{background:linear-gradient(135deg,var(--night),var(--altar));border:1px solid var(--border-gold);border-radius:var(--r-lg);padding:22px 20px;text-align:center;margin-bottom:14px;}
+.testimony-banner h3{font-family:var(--display);font-size:17px;font-weight:900;color:var(--gold2);margin-bottom:8px;line-height:1.25;}
+.testimony-banner p{font-size:13px;color:rgba(255,255,255,.65);line-height:1.68;}
+.wizard-card{background:var(--vessel);border:1px solid var(--border-gold);border-radius:var(--r-lg);padding:22px 20px;}
+.wiz-prog{display:flex;gap:5px;margin-bottom:20px;}
+.wiz-prog .pd{flex:1;height:3px;border-radius:4px;background:rgba(255,255,255,.07);transition:background .3s;}
+.wiz-prog .pd.dn{background:var(--gold);}
+.wiz-step{display:none;}
+.wiz-step.on{display:block;}
+.wiz-q{font-family:var(--display);font-size:16px;font-weight:700;color:var(--white);margin-bottom:4px;line-height:1.3;}
+.wiz-hint{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.55;}
+.wiz-in{width:100%;background:rgba(255,255,255,.05);border:1.5px solid var(--border-gold);border-radius:12px;padding:12px 16px;font-size:13.5px;color:var(--text);outline:none;transition:border-color .2s;resize:vertical;}
+.wiz-in:focus{border-color:var(--gold);}
+.wiz-in::placeholder{color:var(--muted);}
+.wiz-opts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.wiz-opt{padding:8px 14px;border-radius:26px;border:1.5px solid var(--border-gold);background:rgba(255,255,255,.04);font-size:12.5px;font-weight:700;color:var(--text);cursor:pointer;transition:all .2s;}
+.wiz-opt.sel{background:var(--gold);color:var(--abyss);border-color:var(--gold);}
+.wiz-nav{display:flex;gap:10px;margin-top:14px;}
+.wiz-back{flex:0 0 auto;padding:12px 20px;border-radius:10px;background:rgba(255,255,255,.06);color:var(--muted);border:none;cursor:pointer;font-size:13.5px;font-weight:700;}
+.wiz-fwd{flex:1;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--gold),#D4860A);color:var(--abyss);font-size:13.5px;font-weight:900;cursor:pointer;box-shadow:0 4px 18px rgba(201,148,58,.35);transition:all .15s;}
+.wiz-fwd:hover{filter:brightness(1.08);}
+.testi-card{background:var(--vessel);border:1px solid var(--border);border-radius:16px;padding:18px 20px;border-left:3px solid var(--gold);position:relative;overflow:hidden;}
+.testi-card::before{content:'"';font-family:var(--display);font-size:72px;color:var(--gold);opacity:.08;position:absolute;top:-8px;right:8px;line-height:1;pointer-events:none;}
+.tcat-badge{font-size:9.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:2px 10px;border-radius:20px;background:rgba(201,148,58,.1);color:var(--gold2);border:1px solid var(--border-gold);display:inline-block;margin-bottom:8px;}
+.testi-text{font-family:var(--serif);font-style:italic;font-size:13.5px;color:var(--cream);line-height:1.75;margin-bottom:12px;}
+.testi-auth{display:flex;align-items:center;gap:10px;}
+.t-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.t-name{font-size:12.5px;font-weight:800;color:var(--white);}
+.t-loc{font-size:10.5px;color:var(--muted);}
+.share-testi-btn{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:6px 14px;border-radius:20px;background:linear-gradient(135deg,#1877F2,#0a58bf);color:#fff;font-size:11px;font-weight:800;border:none;cursor:pointer;}
+
+/* HUMANITARIAN / GRANTS */
+.impact-bar{background:linear-gradient(135deg,var(--night),var(--altar));border:1px solid var(--border-gold);border-radius:14px;padding:18px 20px;margin-bottom:16px;}
+.impact-bar h4{font-family:var(--display);font-size:15px;font-weight:900;color:var(--gold2);margin-bottom:12px;}
+.impact-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.im-item{background:rgba(201,148,58,.06);border:1px solid var(--border-gold);border-radius:11px;padding:12px;text-align:center;}
+.im-n{font-family:var(--display);font-size:22px;font-weight:900;color:var(--gold2);}
+.im-l{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+.grant-cards{display:flex;flex-direction:column;gap:14px;}
+.grant-card{background:var(--vessel);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+.gc-head{padding:14px 16px;display:flex;align-items:center;gap:12px;}
+.gc-ico{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;background:rgba(255,255,255,.15);}
+.gc-head h4{font-size:15px;font-weight:800;color:#fff;}
+.gc-head p{font-size:11.5px;color:rgba(255,255,255,.7);margin-top:1px;}
+.gc-body{padding:14px 16px 16px;}
+.gc-body p{font-size:13px;color:var(--muted);line-height:1.62;margin-bottom:11px;}
+.gc-list{list-style:none;margin-bottom:12px;}
+.gc-list li{font-size:12px;color:var(--text);padding:3px 0;display:flex;gap:7px;align-items:flex-start;}
+.gc-list li::before{content:"✓";color:var(--life);font-weight:900;flex-shrink:0;}
+.gc-apply{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:12px;border-radius:10px;font-size:13px;font-weight:900;color:#fff;border:none;cursor:pointer;transition:all .2s;}
+.gc-apply:hover{transform:translateY(-1px);}
+.gm .gc-head{background:linear-gradient(135deg,#7B1818,#C0392B);}.gm .gc-apply{background:linear-gradient(135deg,#7B1818,#C0392B);box-shadow:0 4px 16px rgba(192,57,43,.3);}
+.gs .gc-head{background:linear-gradient(135deg,#0E3D68,#2A6EA6);}.gs .gc-apply{background:linear-gradient(135deg,#0E3D68,#2A6EA6);box-shadow:0 4px 16px rgba(42,110,166,.3);}
+.gf .gc-head{background:linear-gradient(135deg,#0F4D22,#1E7A4A);}.gf .gc-apply{background:linear-gradient(135deg,#0F4D22,#1E7A4A);box-shadow:0 4px 16px rgba(30,122,74,.3);}
+.gp .gc-head{background:linear-gradient(135deg,#3C1B6A,#7C3AED);}.gp .gc-apply{background:linear-gradient(135deg,#3C1B6A,#7C3AED);box-shadow:0 4px 16px rgba(124,58,237,.3);}
+
+/* DONATE */
+.donate-hero{background:linear-gradient(135deg,var(--night),var(--altar));border:1px solid var(--border-gold);border-radius:var(--r-lg);overflow:hidden;margin-bottom:16px;}
+.dh-head{background:linear-gradient(135deg,rgba(201,148,58,.12),rgba(201,148,58,.04));padding:18px 20px;text-align:center;border-bottom:1px solid var(--border-gold);}
+.dh-head p{font-family:var(--display);font-size:18px;color:var(--gold2);margin-bottom:3px;}
+.dh-head span{font-size:11.5px;color:var(--muted);}
+.dh-body{padding:18px 20px;}
+.momo-wrap{background:rgba(0,200,83,.06);border:2px solid rgba(0,200,83,.25);border-radius:14px;padding:15px;margin-bottom:12px;}
+.momo-top{display:flex;align-items:center;gap:11px;margin-bottom:10px;}
+.momo-ico{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#2E7D32,#43A047);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+.momo-top h4{font-size:14px;font-weight:800;color:#fff;}
+.momo-top p{font-size:11.5px;color:rgba(255,255,255,.65);}
+.momo-number-box{background:rgba(255,255,255,.07);border-radius:10px;padding:11px 13px;border:1.5px dashed rgba(0,200,83,.35);display:flex;align-items:center;justify-content:space-between;}
+.momo-num-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;font-weight:800;}
+.momo-num{font-size:22px;font-weight:900;color:#69F0AE;letter-spacing:2px;font-family:var(--display);}
+.momo-name-txt{font-size:11.5px;color:var(--muted);margin-top:1px;}
+.momo-copy-btn{background:linear-gradient(135deg,#2E7D32,#43A047);color:#fff;border:none;border-radius:9px;padding:9px 13px;font-size:12px;font-weight:900;cursor:pointer;transition:transform .15s;flex-shrink:0;}
+.momo-copy-btn:hover{transform:scale(1.05);}
+.momo-note{font-size:11px;color:var(--muted);margin-top:8px;text-align:center;}
+.fb-give-wrap{background:rgba(24,119,242,.07);border:2px solid rgba(24,119,242,.25);border-radius:14px;padding:15px;}
+.fg-top{display:flex;align-items:center;gap:11px;margin-bottom:10px;}
+.fg-ico{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#1877F2,#0a58bf);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.fg-top h4{font-size:14px;font-weight:800;color:#fff;}
+.fg-top p{font-size:11.5px;color:rgba(255,255,255,.65);}
+.fg-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border-radius:10px;background:linear-gradient(135deg,#1877F2,#0a58bf);color:#fff;font-size:13.5px;font-weight:900;border:none;cursor:pointer;transition:filter .2s;}
+.fg-btn:hover{filter:brightness(1.08);}
+.fund-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;}
+.fund-card{background:var(--vessel);border:1px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;}
+.fc-stripe{height:4px;}
+.fc-body{padding:13px 14px 15px;flex:1;display:flex;flex-direction:column;}
+.fc-top{display:flex;align-items:center;gap:7px;margin-bottom:5px;}
+.fc-ico{width:30px;height:30px;border-radius:8px;background:var(--night);display:flex;align-items:center;justify-content:center;font-size:15px;}
+.fc-body h4{font-size:13px;font-weight:900;color:var(--white);}
+.fc-body>p{font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:9px;flex:1;}
+.prog-lbl{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);font-weight:700;margin-bottom:4px;}
+.prog{height:4px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;margin-bottom:9px;}
+.prog-f{height:100%;border-radius:4px;transition:width 1.2s ease;}
+.give-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:8px;border-radius:9px;font-size:11.5px;font-weight:900;color:#fff;border:none;cursor:pointer;transition:all .2s;}
+.give-btn:hover{transform:translateY(-1px);}
+.fd-med .fc-stripe{background:var(--crimson2);}.fd-med .prog-f{background:linear-gradient(90deg,#8B1A1A,var(--crimson2));}.fd-med .give-btn{background:linear-gradient(135deg,#8B1A1A,#C0392B);}
+.fd-orp .fc-stripe{background:var(--sky);}.fd-orp .prog-f{background:linear-gradient(90deg,#1565C0,var(--sky));}.fd-orp .give-btn{background:linear-gradient(135deg,#1565C0,var(--sky));}
+.fd-pri .fc-stripe{background:#7C3AED;}.fd-pri .prog-f{background:linear-gradient(90deg,#3C1B6A,#7C3AED);}.fd-pri .give-btn{background:linear-gradient(135deg,#3C1B6A,#7C3AED);}
+.fd-gen .fc-stripe{background:var(--life);}.fd-gen .prog-f{background:linear-gradient(90deg,#00783A,var(--life));}.fd-gen .give-btn{background:linear-gradient(135deg,#00783A,var(--life));}
+
+/* EVENTS */
+.event-list{display:flex;flex-direction:column;gap:10px;}
+.event-card{background:var(--vessel);border:1px solid var(--border-gold);border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;transition:all .22s;}
+.event-card:hover{border-color:var(--border-fire);transform:translateX(4px);}
+.event-date{background:linear-gradient(135deg,var(--night),var(--altar));border:1px solid var(--border-gold);border-radius:12px;padding:9px 12px;text-align:center;flex-shrink:0;min-width:52px;}
+.ev-day{font-family:var(--display);font-size:22px;font-weight:900;color:var(--gold2);line-height:1;}
+.ev-mon{font-size:9px;color:var(--muted);font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;}
+.event-info{flex:1;}
+.event-info h4{font-size:13.5px;font-weight:800;color:var(--white);margin-bottom:2px;}
+.event-info p{font-size:11.5px;color:var(--muted);line-height:1.5;}
+.ev-tag{font-size:9.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:2px 9px;border-radius:20px;display:inline-block;margin-top:4px;}
+.evt-live{background:rgba(192,57,43,.12);color:#FCA5A5;}
+.evt-online{background:rgba(0,200,83,.1);color:var(--life2);}
+.evt-pray{background:rgba(124,58,237,.1);color:#C4B5FD;}
+.ev-join{background:linear-gradient(135deg,var(--gold),#D4860A);color:var(--abyss);border:none;border-radius:26px;padding:8px 16px;font-size:11.5px;font-weight:900;cursor:pointer;flex-shrink:0;transition:filter .2s;text-decoration:none;display:inline-flex;align-items:center;}
+.ev-join:hover{filter:brightness(1.08);}
+
+/* PRAYER */
+.prayer-promise{background:linear-gradient(135deg,var(--night),var(--altar));border:1px solid var(--border-gold);border-radius:13px;padding:14px 18px;text-align:center;margin-bottom:14px;}
+.prayer-promise blockquote{font-family:var(--serif);font-style:italic;font-size:13px;color:rgba(255,255,255,.68);line-height:1.7;}
+.prayer-promise cite{display:block;font-size:11.5px;color:var(--gold2);font-weight:700;margin-top:4px;}
+.prayer-form-card{background:var(--vessel);border:1px solid var(--border-gold);border-radius:var(--r-lg);padding:22px 20px;}
+.prayer-form-card h3{font-family:var(--display);font-size:17px;font-weight:900;color:var(--white);margin-bottom:4px;}
+.prayer-form-card p{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6;}
+.pf-in{width:100%;background:rgba(255,255,255,.05);border:1.5px solid var(--border-gold);border-radius:11px;padding:12px 15px;font-size:13.5px;color:var(--text);outline:none;transition:border-color .2s;margin-bottom:10px;}
+.pf-in:focus{border-color:var(--gold);}
+.pf-in::placeholder{color:var(--muted);}
+.pf-ta{resize:vertical;min-height:90px;}
+.pray-btn{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,#7C3AED,#5B21B6);color:#fff;font-size:14.5px;font-weight:900;cursor:pointer;box-shadow:0 6px 24px rgba(124,58,237,.3);transition:all .2s;}
+.pray-btn:hover{filter:brightness(1.1);transform:translateY(-2px);}
+
+/* CONNECT */
+.connect-grid{display:flex;flex-direction:column;gap:10px;}
+.connect-card{background:var(--vessel);border:1px solid var(--border);border-radius:16px;padding:16px;display:flex;align-items:center;gap:13px;text-decoration:none;transition:all .22s;}
+.connect-card:hover{border-color:var(--border-gold);transform:translateY(-2px);}
+.connect-ico{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.connect-info h4{font-size:14px;font-weight:800;color:var(--white);margin-bottom:1px;}
+.connect-info p{font-size:12px;color:var(--muted);}
+.connect-arr{margin-left:auto;font-size:18px;color:var(--gold);opacity:.5;}
+.contact-form-card{background:var(--vessel);border:1px solid var(--border-gold);border-radius:var(--r-lg);padding:22px 20px;margin-top:14px;}
+.contact-form-card h3{font-family:var(--display);font-size:17px;font-weight:900;color:var(--white);margin-bottom:14px;}
+.contact-submit{width:100%;padding:13px;border-radius:11px;border:none;background:linear-gradient(135deg,var(--gold),#D4860A);color:var(--abyss);font-size:14px;font-weight:900;cursor:pointer;box-shadow:0 4px 18px rgba(201,148,58,.3);transition:all .2s;}
+.contact-submit:hover{transform:translateY(-2px);}
+.newsletter-box{background:linear-gradient(135deg,var(--night),var(--altar));border:1px solid var(--border-gold);border-radius:var(--r-lg);padding:24px 20px;text-align:center;margin:28px 0;position:relative;overflow:hidden;}
+.newsletter-box::after{content:'📬';position:absolute;bottom:-8px;right:10px;font-size:72px;opacity:.08;pointer-events:none;}
+.newsletter-box h3{font-family:var(--display);font-size:17px;font-weight:900;color:var(--gold2);margin-bottom:6px;}
+.newsletter-box p{font-size:13px;color:rgba(255,255,255,.62);margin-bottom:16px;line-height:1.65;}
+.nl-row{display:flex;gap:8px;}
+.nl-input{flex:1;background:rgba(255,255,255,.07);border:1.5px solid var(--border-gold);border-radius:50px;padding:11px 18px;font-size:13px;color:#fff;outline:none;}
+.nl-input::placeholder{color:rgba(255,255,255,.35);}
+.nl-btn{background:linear-gradient(135deg,var(--gold),#D4860A);color:var(--abyss);border:none;border-radius:50px;padding:11px 20px;font-size:13px;font-weight:900;cursor:pointer;transition:filter .2s;}
+.nl-btn:hover{filter:brightness(1.08);}
+
+/* PAYMENT MODAL */
+.pay-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:900;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+.pay-overlay.open{opacity:1;pointer-events:all;}
+.pay-sheet{background:var(--depth);border:1px solid var(--border-gold);border-radius:26px 26px 0 0;width:100%;max-width:520px;padding:26px 22px;transform:translateY(100%);transition:transform .42s cubic-bezier(.16,1,.3,1);max-height:94svh;overflow-y:auto;}
+.pay-overlay.open .pay-sheet{transform:translateY(0);}
+.pay-sheet-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.pay-sheet-hd h3{font-family:var(--display);font-size:22px;font-weight:900;color:var(--white);}
+.pay-close-btn{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid var(--border);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;transition:all .2s;}
+.pay-close-btn:hover{background:rgba(255,255,255,.14);color:#fff;}
+.pay-summary{background:rgba(201,148,58,.07);border:1px solid var(--border-gold);border-radius:13px;padding:15px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;}
+.pay-summary-name{font-size:15.5px;font-weight:800;color:#fff;}
+.pay-summary-price{font-family:var(--display);font-size:26px;font-weight:900;color:var(--gold2);}
+.pay-methods-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+.pay-method{display:flex;align-items:center;gap:13px;background:rgba(255,255,255,.04);border:2px solid var(--border);border-radius:13px;padding:13px 15px;cursor:pointer;transition:all .2s;}
+.pay-method:hover{border-color:var(--border-gold);}
+.pay-method.sel{border-color:var(--gold2);background:rgba(201,148,58,.06);}
+.pm-ico{width:38px;height:38px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:19px;}
+.pm-momo{background:linear-gradient(135deg,#FFC107,#FF9800);}
+.pm-card{background:linear-gradient(135deg,#1565C0,#0D47A1);}
+.pm-paypal{background:linear-gradient(135deg,#0070BA,#003087);}
+.pm-info h5{font-size:14px;font-weight:700;color:#fff;margin-bottom:1px;}
+.pm-info p{font-size:11.5px;color:var(--muted);}
+.pm-radio{margin-left:auto;width:19px;height:19px;border-radius:50%;border:2px solid var(--dim);flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+.pay-method.sel .pm-radio{border-color:var(--gold);background:var(--gold);}
+.pay-method.sel .pm-radio::after{content:'';width:7px;height:7px;border-radius:50%;background:#fff;}
+.pay-form-fields{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+.pay-in{background:rgba(255,255,255,.05);border:1.5px solid var(--border);border-radius:10px;padding:12px 15px;font-size:13.5px;color:var(--text);outline:none;transition:border-color .2s;width:100%;}
+.pay-in:focus{border-color:var(--gold);}
+.pay-in::placeholder{color:var(--muted);}
+.pay-in-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.pay-submit-btn{width:100%;padding:15px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--gold),#D4860A);color:var(--abyss);font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 8px 28px rgba(201,148,58,.4);transition:all .22s;}
+.pay-submit-btn:hover{filter:brightness(1.1);transform:translateY(-2px);}
+.pay-secure-note{display:flex;align-items:center;gap:5px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:9px;}
+
+/* ADMIN */
+#view-dashboard{min-height:100svh;background:var(--ink);flex-direction:column;}
+.adm-header{background:var(--depth);padding:13px 18px;border-bottom:1px solid rgba(80,120,180,.15);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.adm-brand{display:flex;align-items:center;gap:10px;}
+.adm-brand h2{font-family:var(--display);font-size:15px;color:var(--gold2);}
+.adm-brand p{font-size:10.5px;color:var(--muted);margin-top:1px;}
+.adm-back{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(80,120,180,.15);border-radius:26px;padding:7px 15px;font-size:11.5px;font-weight:700;color:rgba(255,255,255,.65);cursor:pointer;transition:all .2s;}
+.adm-back:hover{background:rgba(255,255,255,.1);color:#fff;}
+.adm-nav{display:flex;gap:3px;padding:11px 14px;background:var(--depth);border-bottom:1px solid rgba(80,120,180,.12);overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.adm-tab{padding:7px 13px;border-radius:26px;font-size:11px;font-weight:800;letter-spacing:.5px;white-space:nowrap;border:none;background:transparent;color:rgba(255,255,255,.45);cursor:pointer;transition:all .2s;}
+.adm-tab.on{background:var(--vessel);color:var(--gold2);}
+.adm-tab:hover:not(.on){color:rgba(255,255,255,.7);}
+.adm-main{flex:1;overflow-y:auto;padding:18px 16px;max-width:800px;margin:0 auto;width:100%;}
+.adm-panel{display:none;}
+.adm-panel.on{display:block;}
+.adm-page-title{font-family:var(--display);font-size:22px;color:var(--gold2);margin-bottom:3px;}
+.adm-page-sub{font-size:12px;color:rgba(255,255,255,.4);margin-bottom:20px;}
+.adm-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:22px;}
+.ads-card{background:var(--vessel);border-radius:14px;padding:15px;border:1px solid rgba(80,120,180,.13);}
+.ads-ico{font-size:21px;margin-bottom:5px;}
+.ads-n{font-family:var(--display);font-size:26px;font-weight:900;color:var(--gold2);}
+.ads-l{font-size:10px;color:rgba(255,255,255,.35);font-weight:800;letter-spacing:.8px;text-transform:uppercase;margin-top:2px;}
+.adm-tbl-wrap{background:var(--vessel);border-radius:14px;overflow:hidden;border:1px solid rgba(80,120,180,.12);}
+.adm-tbl-hd{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid rgba(80,120,180,.12);}
+.adm-tbl-hd h3{font-size:14px;font-weight:800;color:#E2E8F0;}
+.adm-add-btn{background:linear-gradient(135deg,var(--gold),#D4860A);color:var(--abyss);border:none;border-radius:26px;padding:7px 16px;font-size:11.5px;font-weight:900;cursor:pointer;}
+table.adm-tbl{width:100%;border-collapse:collapse;}
+table.adm-tbl th{background:rgba(255,255,255,.03);padding:9px 14px;font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.35);text-align:left;border-bottom:1px solid rgba(80,120,180,.1);}
+table.adm-tbl td{padding:11px 14px;font-size:12.5px;color:#CBD5E1;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:middle;}
+table.adm-tbl tr:last-child td{border-bottom:none;}
+table.adm-tbl tr:hover td{background:rgba(255,255,255,.02);}
+.aab-approve{padding:4px 11px;border-radius:7px;font-size:11px;font-weight:700;border:none;cursor:pointer;background:rgba(0,200,83,.12);color:var(--life2);}
+.aab-del{padding:4px 11px;border-radius:7px;font-size:11px;font-weight:700;border:none;cursor:pointer;background:rgba(192,57,43,.12);color:#FCA5A5;}
+.upl-form{background:var(--vessel);border-radius:16px;padding:22px;border:1px solid rgba(80,120,180,.12);}
+.upl-form h3{font-size:15px;font-weight:800;color:#E2E8F0;margin-bottom:3px;}
+.upl-form>p{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:18px;}
+.upl-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.upl-field{display:flex;flex-direction:column;gap:5px;}
+.upl-field.full{grid-column:1/-1;}
+.upl-field label{font-size:11px;font-weight:800;color:rgba(255,255,255,.5);letter-spacing:.5px;}
+.upl-field input,.upl-field select,.upl-field textarea{background:rgba(255,255,255,.05);border:1.5px solid rgba(80,120,180,.15);border-radius:9px;padding:10px 13px;font-size:13px;color:#E2E8F0;outline:none;transition:border-color .2s;}
+.upl-field input:focus,.upl-field select:focus,.upl-field textarea:focus{border-color:var(--gold2);}
+.upl-field input::placeholder,.upl-field textarea::placeholder{color:rgba(255,255,255,.2);}
+.upl-field textarea{resize:vertical;min-height:80px;}
+.upl-field select option{background:var(--vessel);}
+.upl-submit{width:100%;margin-top:16px;padding:13px;border-radius:11px;background:linear-gradient(135deg,var(--gold),#D4860A);color:var(--abyss);font-size:14.5px;font-weight:900;border:none;cursor:pointer;}
+.upl-prog{display:none;margin-top:12px;}
+.upl-prog-row{display:flex;justify-content:space-between;font-size:11.5px;color:rgba(255,255,255,.5);margin-bottom:4px;}
+.upl-prog-bar{height:5px;background:rgba(255,255,255,.07);border-radius:5px;overflow:hidden;}
+.upl-prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:5px;transition:width .3s;}
+.settings-wrap{background:var(--vessel);border-radius:16px;padding:22px;border:1px solid rgba(80,120,180,.12);}
+.settings-section{margin-bottom:22px;}
+.settings-section h4{font-size:12.5px;font-weight:800;color:rgba(255,255,255,.5);letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px;padding-bottom:7px;border-bottom:1px solid rgba(80,120,180,.1);}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;}
+.toggle-row label{font-size:13px;color:#CBD5E1;}
+.tog{position:relative;width:42px;height:22px;}
+.tog input{opacity:0;width:0;height:0;position:absolute;}
+.tog-track{position:absolute;inset:0;border-radius:22px;background:rgba(255,255,255,.1);cursor:pointer;transition:background .2s;}
+.tog input:checked+.tog-track{background:var(--gold);}
+.tog-track::before{content:'';position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;}
+.tog input:checked+.tog-track::before{transform:translateX(20px);}
+.save-settings-btn{padding:11px 22px;border-radius:10px;background:linear-gradient(135deg,var(--gold),#D4860A);color:var(--abyss);font-size:13px;font-weight:900;border:none;cursor:pointer;}
+.admin-login-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:800;display:flex;align-items:center;justify-content:center;padding:16px;display:none;}
+.admin-login-box{background:var(--depth);border:1px solid var(--border-gold);border-radius:22px;padding:32px 26px;max-width:340px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,.6);}
+.admin-login-box h2{font-family:var(--display);font-size:22px;color:var(--gold2);margin-bottom:5px;text-align:center;}
+.admin-login-box p{font-size:12px;color:var(--muted);text-align:center;margin-bottom:22px;}
+.adm-in{width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(80,120,180,.15);border-radius:10px;padding:12px 15px;font-size:13.5px;color:#fff;outline:none;margin-bottom:10px;transition:border-color .2s;}
+.adm-in:focus{border-color:var(--gold2);}
+.adm-login-btn{width:100%;padding:13px;border-radius:10px;background:linear-gradient(135deg,var(--gold),#D4860A);color:var(--abyss);font-size:14.5px;font-weight:900;border:none;cursor:pointer;margin-top:4px;}
+.adm-cancel-btn{width:100%;padding:10px;border-radius:10px;background:transparent;color:rgba(255,255,255,.4);font-size:13px;font-weight:700;border:none;cursor:pointer;margin-top:7px;}
+
+/* MODALS */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:750;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .25s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-box{background:var(--depth);border:1px solid var(--border-gold);border-radius:22px;padding:30px 24px;text-align:center;max-width:340px;width:100%;transform:scale(.9) translateY(16px);transition:transform .3s;box-shadow:0 24px 70px rgba(0,0,0,.5);}
+.modal-overlay.open .modal-box{transform:scale(1) translateY(0);}
+.modal-ico{font-size:50px;margin-bottom:11px;}
+.modal-title{font-family:var(--display);font-size:22px;font-weight:900;color:var(--white);margin-bottom:8px;}
+.modal-msg{font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:20px;}
+.modal-btn{width:100%;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--gold),#D4860A);color:var(--abyss);font-size:14px;font-weight:900;cursor:pointer;box-shadow:0 5px 22px rgba(201,148,58,.35);}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(55px);background:var(--vessel);border:1px solid var(--border-gold);color:var(--text);padding:11px 22px;border-radius:50px;font-size:13px;font-weight:700;z-index:2000;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:transform .3s ease,opacity .3s;opacity:0;pointer-events:none;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+/* FOOTER */
+.site-footer{background:var(--depth);border-top:1px solid var(--border-gold);padding:38px 20px 24px;text-align:center;}
+.sf-brand{font-family:var(--display);font-size:20px;font-weight:900;color:var(--white);margin-bottom:5px;}
+.sf-brand span{color:var(--gold2);}
+.sf-sub{font-size:12px;color:var(--muted);}
+.sf-links{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:14px 0;}
+.sf-links a{font-size:11.5px;color:var(--muted);padding:5px 12px;border-radius:20px;border:1px solid var(--border);transition:all .2s;}
+.sf-links a:hover{color:var(--gold2);border-color:var(--border-gold);}
+.sf-socials{display:flex;justify-content:center;gap:9px;margin:12px 0;}
+.sfsoc{width:37px;height:37px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;transition:all .2s;}
+.sfsoc:hover{background:var(--gold);border-color:var(--gold);}
+.sf-verse{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--gold);display:block;margin-bottom:5px;}
+.sf-copy{font-size:11.5px;color:var(--dim);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:500px){
+  .upl-grid{grid-template-columns:1fr;}
+  .upl-field.full{grid-column:auto;}
+  .adm-stats{grid-template-columns:1fr 1fr;}
+  .fund-grid{grid-template-columns:1fr 1fr;}
+  .impact-metrics{grid-template-columns:1fr 1fr;}
+  .pillars{grid-template-columns:1fr 1fr;}
+  .books-grid{grid-template-columns:1fr 1fr;}
+  .nav-links{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- BROADCAST TICKER -->
+<div class="broadcast-bar">
+  <div class="broadcast-inner">
+    <div class="broadcast-label"><span class="blive"></span>LIVE</div>
+    <div class="ticker-track">
+      <span>Gospel Blast Now Active</span><span>Abigael Glory Ministries</span>
+      <span>Free & Premium Books Available</span><span>Prayer Changes Everything</span>
+      <span>Medical Grants Open</span><span>AI Prayer Agent Available 24/7</span>
+      <span>New Books: Abigael & Sophia — Coming Soon</span><span>Prison Ministry Yaoundé</span>
+      <span>Orphanage Outreach Active</span><span>Join 5000+ Believers Online</span>
+      <span>Gospel Blast Now Active</span><span>Abigael Glory Ministries</span>
+      <span>Free & Premium Books Available</span><span>Prayer Changes Everything</span>
+      <span>Medical Grants Open</span><span>AI Prayer Agent Available 24/7</span>
+      <span>New Books: Abigael & Sophia — Coming Soon</span><span>Prison Ministry Yaoundé</span>
+      <span>Orphanage Outreach Active</span><span>Join 5000+ Believers Online</span>
+    </div>
+  </div>
+</div>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <div class="nav-brand" onclick="snap('hero-top')">
+    <div class="nav-emblem">✦</div>
+    <div class="nav-name">Abigael Glory<small>Ministries</small></div>
+  </div>
+  <div class="nav-links">
+    <button onclick="snap('about-sec')">About</button>
+    <button onclick="snap('store-sec')">Books</button>
+    <button onclick="snap('testimony-sec')">Testimony</button>
+    <button onclick="snap('grants-sec')">Grants</button>
+    <button onclick="snap('donate-sec')">Give</button>
+    <button onclick="snap('prayer-sec')">Prayer</button>
+    <button onclick="snap('connect-sec')">Connect</button>
+  </div>
+  <div class="nav-right">
+    <button class="btn-nav-store" onclick="snap('store-sec')">📚 Books</button>
+    <button class="btn-nav-admin" onclick="showAdminLogin()">⚙ Admin</button>
+  </div>
+</nav>
+
+<!-- PUBLIC SITE -->
+<div id="view-home" class="view active">
+
+<!-- HERO -->
+<section class="hero" id="hero-top">
+  <div class="hero-aura"></div>
+  <div class="hero-particles" id="heroP"></div>
+
+  <!-- Animated SVG Seal -->
+  <svg class="hero-seal" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="sg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFE08A" stop-opacity=".5"/><stop offset="100%" stop-color="#C9943A" stop-opacity="0"/></radialGradient>
+      <linearGradient id="sg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F5D070"/><stop offset="100%" stop-color="#C9943A"/></linearGradient>
+    </defs>
+    <circle cx="100" cy="100" r="98" fill="url(#sg1)"/>
+    <circle cx="100" cy="100" r="88" fill="none" stroke="url(#sg2)" stroke-width="1.5" stroke-dasharray="5 3" opacity=".6"/>
+    <circle cx="100" cy="100" r="78" fill="none" stroke="#C9943A" stroke-width=".7" opacity=".3"/>
+    <path d="M100 55 C72 44 40 56 42 76 C44 92 68 100 100 100" fill="url(#sg2)" opacity=".6"/>
+    <path d="M100 55 C128 44 160 56 158 76 C156 92 132 100 100 100" fill="url(#sg2)" opacity=".6"/>
+    <rect x="93" y="38" width="14" height="80" rx="4" fill="url(#sg2)"/>
+    <rect x="60" y="68" width="80" height="14" rx="4" fill="url(#sg2)"/>
+    <text x="100" y="36" text-anchor="middle" font-size="12" fill="#F5D070">★ ★ ★</text>
+    <text x="100" y="155" text-anchor="middle" font-family="serif" font-size="13" fill="#F0C96A" font-weight="bold">ABIGAEL GLORY</text>
+    <text x="100" y="170" text-anchor="middle" font-family="serif" font-size="10" fill="#C9943A">MINISTRIES</text>
+    <circle cx="100" cy="75" r="6" fill="#FFE08A" opacity=".9"/>
+  </svg>
+
+  <div class="hero-kicker"><span class="kdot"></span>Spirit-Filled Digital Evangelism · Cameroon &amp; Beyond</div>
+
+  <h1 class="hero-title">
+    ABIGAEL<br>
+    <span class="flame">GLORY</span>
+    <span class="sub-line">Carrying Christ to Every Soul</span>
+  </h1>
+
+  <div class="hero-verse">"The Spirit of the Lord is upon me, because He has anointed me to preach the Gospel to the poor…"</div>
+  <div class="hero-by">— Luke 4:18 · Founded by <strong style="color:var(--gold2)">Besong Aseck Lydia</strong></div>
+
+  <div class="hero-proof">
+    <span class="hpill hp-g">✔ Live Evangelism</span>
+    <span class="hpill hp-b">✔ Free &amp; Premium Books</span>
+    <span class="hpill hp-o">✔ Humanitarian Grants</span>
+    <span class="hpill hp-gold">✔ AI Prayer Agent</span>
+  </div>
+
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="snap('store-sec')">📚 Explore the Library →</button>
+    <a class="btn-fire" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+      Gospel Blast
+    </a>
+    <button class="btn-secondary" onclick="snap('agent-sec')">🤖 AI Prayer Agent</button>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-n">5,000+</div><div class="hstat-l">Followers</div></div>
+    <div class="hstat"><div class="hstat-n">500+</div><div class="hstat-l">Books Shared</div></div>
+    <div class="hstat"><div class="hstat-n" id="prayerCountHero">∞</div><div class="hstat-l">Prayers</div></div>
+    <div class="hstat"><div class="hstat-n">3</div><div class="hstat-l">Outreach Zones</div></div>
+  </div>
+</section>
+
+<svg class="wave-divider" viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,28 C360,56 1080,0 1440,28 L1440,56 L0,56 Z" fill="#050C16"/>
+</svg>
+
+<!-- SECONDARY NAV -->
+<div class="sec-nav">
+  <div class="sec-nav-inner">
+    <button class="snav-btn" onclick="snap('about-sec')">About</button>
+    <button class="snav-btn" onclick="snap('store-sec')">📚 Library</button>
+    <button class="snav-btn" onclick="snap('pricing-sec')">💎 Plans</button>
+    <button class="snav-btn" onclick="snap('agent-sec')">🤖 AI Agent</button>
+    <button class="snav-btn" onclick="snap('testimony-sec')">✦ Testimony</button>
+    <button class="snav-btn" onclick="snap('grants-sec')">🤲 Grants</button>
+    <button class="snav-btn" onclick="snap('donate-sec')">❤️ Give</button>
+    <button class="snav-btn" onclick="snap('events-sec')">📅 Events</button>
+    <button class="snav-btn" onclick="snap('prayer-sec')">🙏 Prayer</button>
+    <button class="snav-btn" onclick="snap('connect-sec')">🌍 Connect</button>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ABOUT -->
+<div id="about-sec">
+  <div class="sec-hd"><div class="ln"></div><h2>✦ About the Ministry</h2><div class="ln r"></div></div>
+  <div class="about-card">
+    <div class="about-stripe"></div>
+    <div class="about-body">
+      <p><strong style="color:var(--gold2)">Abigael Glory Ministries</strong> was founded by <strong>Besong Aseck Lydia</strong> — a Spirit-filled Digital Christian Evangelist with an unquenchable burden for souls. Born out of personal hardship, she launched her Facebook ministry in 2025, quickly reaching over 5,000 followers across Cameroon and beyond.</p>
+      <p>Through <em>Gospel Blast</em>, teaching series on the Life of Jesus, Journey to Easter, and upcoming books <em>Abigael</em> and <em>Sophia</em>, the ministry reaches the world — offering free books, premium resources, humanitarian grants, AI-powered prayer support, and direct evangelism across prisons, orphanages and communities in need.</p>
+      <div class="about-stats">
+        <div class="astat"><div class="astat-n">5,000+</div><div class="astat-l">Followers</div></div>
+        <div class="astat"><div class="astat-n">500+</div><div class="astat-l">Resources</div></div>
+        <div class="astat"><div class="astat-n" id="prayerCountAbout">∞</div><div class="astat-l">Prayers</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="founder-strip">
+    <div class="founder-av">🙏</div>
+    <div class="founder-info">
+      <div class="ftitle">Founder &amp; Digital Evangelist</div>
+      <h4>Besong Aseck Lydia</h4>
+      <p>Spirit-filled evangelist, teacher, intercessor and servant of God reaching souls from Yaoundé to the ends of the earth through digital and physical ministry.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<div class="sec-hd"><div class="ln"></div><h2>🕊️ Ministry Pillars</h2><div class="ln r"></div></div>
+<div class="pillars">
+  <div class="pillar"><div class="ico">📖</div><h4>Digital Evangelism</h4><p>Gospel Blast, Life of Jesus &amp; daily Bible content reaching thousands on Facebook.</p></div>
+  <div class="pillar p2"><div class="ico">📚</div><h4>Book Ministry</h4><p>Free &amp; premium Christian books, articles, series and devotionals for every believer.</p></div>
+  <div class="pillar p3"><div class="ico">🏥</div><h4>Medical Grants</h4><p>Assistance for hospital bills, surgeries and medications for those in desperate need.</p></div>
+  <div class="pillar p4"><div class="ico">🤖</div><h4>AI Prayer Agent</h4><p>24/7 AI prayer companion — scriptures, guidance and intercession on demand.</p></div>
+  <div class="pillar p5"><div class="ico">⛓️</div><h4>Prison Ministry</h4><p>Bibles, prayer and pastoral care inside correctional facilities across Cameroon.</p></div>
+  <div class="pillar p6"><div class="ico">🏠</div><h4>Orphanage Outreach</h4><p>Food, clothing, books &amp; worship visits to orphanages in Yaoundé.</p></div>
+</div>
+
+<!-- BOOK STORE -->
+<div id="store-sec">
+  <div class="sec-hd"><div class="ln"></div><h2>📚 Books &amp; Resources</h2><div class="ln r"></div></div>
+  <div class="store-header">
+    <h3>"The entrance of Your words gives light…"</h3>
+    <p>Browse free and premium Christian resources. Free books require registration only. Blessed &amp; Anointed plans unlock premium content, audio devotionals and pre-order access to new books.</p>
+  </div>
+  <div class="tier-tabs">
+    <button class="tier-tab active" id="tier-all" onclick="setTier('all',this)">All Resources</button>
+    <button class="tier-tab" id="tier-free" onclick="setTier('free',this)">🆓 Free</button>
+    <button class="tier-tab tier-blessed" id="tier-blessed" onclick="setTier('blessed',this)">💜 Blessed</button>
+    <button class="tier-tab tier-anointed" id="tier-anointed" onclick="setTier('anointed',this)">👑 Anointed</button>
+  </div>
+  <div class="store-search">
+    <input type="text" id="storeSearch" placeholder="Search books, articles, devotionals…" oninput="filterStore()"/>
+    <button onclick="filterStore()">🔍</button>
+  </div>
+  <div class="filter-row">
+    <span class="fchip on" onclick="setFilter('all',this)">All</span>
+    <span class="fchip" onclick="setFilter('book',this)">📖 Books</span>
+    <span class="fchip" onclick="setFilter('series',this)">📺 Series</span>
+    <span class="fchip" onclick="setFilter('article',this)">📰 Articles</span>
+    <span class="fchip" onclick="setFilter('devotional',this)">🌅 Devotionals</span>
+  </div>
+  <div class="books-grid" id="booksGrid">
+    <p style="text-align:center;color:var(--muted);font-size:13px;grid-column:1/-1;padding:24px;">Loading resources…</p>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div id="pricing-sec">
+  <div class="sec-hd"><div class="ln"></div><h2>💎 Ministry Plans</h2><div class="ln r"></div></div>
+  <div class="pricing-header">
+    <h3>Choose Your Level of Blessing</h3>
+    <p>Start free. Upgrade to unlock premium books, audio content, and direct ministry partnership benefits.</p>
+  </div>
+  <div class="pricing-cards">
+
+    <div class="plan-card">
+      <div class="plan-stripe" style="background:linear-gradient(90deg,#3A5068,#2E4560)"></div>
+      <div class="plan-body">
+        <div class="plan-badge pb-free2">🆓 Always Free</div>
+        <div class="plan-name">Seeker</div>
+        <div class="plan-desc">Begin your faith journey. Access the core free library and community.</div>
+        <div class="plan-price pp-free">$0</div>
+        <div class="plan-per">Free forever · No credit card required</div>
+        <ul class="plan-features">
+          <li><span class="fc-yes">✓</span>All free books, articles &amp; series</li>
+          <li><span class="fc-yes">✓</span>Access to Gospel Blast series</li>
+          <li><span class="fc-yes">✓</span>AI Prayer Agent (5 prayers/day)</li>
+          <li><span class="fc-yes">✓</span>Submit testimony &amp; prayer requests</li>
+          <li><span class="fc-yes">✓</span>Humanitarian grant applications</li>
+          <li><span class="fc-yes">✓</span>Weekly newsletter</li>
+          <li class="dim-feat"><span class="fc-no">–</span>Premium &amp; paid books</li>
+          <li class="dim-feat"><span class="fc-no">–</span>Audio devotionals</li>
+          <li class="dim-feat"><span class="fc-no">–</span>Unlimited AI Prayer Agent</li>
+          <li class="dim-feat"><span class="fc-no">–</span>Ministry partner benefits</li>
+        </ul>
+        <button class="plan-cta pc-free" onclick="registerFree()">Start Free →</button>
+      </div>
+    </div>
+
+    <div class="plan-card featured">
+      <div class="plan-stripe" style="background:linear-gradient(90deg,#7C3AED,#A855F7,#C4B5FD)"></div>
+      <div class="plan-body">
+        <div style="display:flex;gap:8px;margin-bottom:12px;">
+          <div class="plan-badge pb-blessed">💜 Blessed</div>
+          <div class="plan-badge pb-popular">⭐ Popular</div>
+        </div>
+        <div class="plan-name">Blessed</div>
+        <div class="plan-desc">Full library access, premium books, audio content &amp; ministry partnership.</div>
+        <div class="plan-price pp-blessed">$9<span style="font-size:20px;">.99</span></div>
+        <div class="plan-per">/month · Cancel anytime</div>
+        <ul class="plan-features">
+          <li><span class="fc-yes">✓</span>Everything in Free</li>
+          <li><span class="fc-yes">✓</span><strong>All premium books &amp; articles</strong></li>
+          <li><span class="fc-yes">✓</span>Audio devotionals &amp; teachings</li>
+          <li><span class="fc-yes">✓</span>Unlimited AI Prayer Agent</li>
+          <li><span class="fc-yes">✓</span>Downloadable PDF resources</li>
+          <li><span class="fc-yes">✓</span>Pre-order new books (Abigael, Sophia)</li>
+          <li><span class="fc-yes">✓</span>Monthly live prayer session access</li>
+          <li><span class="fc-yes">✓</span>Ministry partner badge</li>
+          <li><span class="fc-yes">✓</span>Email devotional series</li>
+          <li class="dim-feat"><span class="fc-no">–</span>1-on-1 ministry consultation</li>
+          <li class="dim-feat"><span class="fc-no">–</span>Elite partner recognition</li>
+        </ul>
+        <button class="plan-cta pc-blessed" onclick="openPayment('Blessed Plan','$9.99/mo')">💜 Go Blessed — $9.99/mo</button>
+      </div>
+    </div>
+
+    <div class="plan-card elite-plan">
+      <div class="plan-stripe" style="background:linear-gradient(90deg,#D4A012,#F5D070,#FFE8A0)"></div>
+      <div class="plan-body">
+        <div class="plan-badge pb-anointed">👑 Anointed</div>
+        <div class="plan-name" style="color:var(--gold3);">Anointed</div>
+        <div class="plan-desc">Maximum blessing. Every resource, direct pastoral access &amp; elite ministry partner status.</div>
+        <div class="plan-price pp-anointed">$24<span style="font-size:20px;">.99</span></div>
+        <div class="plan-per">/month · All-access pass</div>
+        <ul class="plan-features">
+          <li><span class="fc-yes">✓</span>Everything in Blessed</li>
+          <li><span class="fc-yes">✓</span><strong>All future books — automatic access</strong></li>
+          <li><span class="fc-yes">✓</span>Monthly 1-on-1 prayer consultation with Lydia</li>
+          <li><span class="fc-yes">✓</span>Personal prayer request follow-up</li>
+          <li><span class="fc-yes">✓</span>Elite partner recognition (website + social)</li>
+          <li><span class="fc-yes">✓</span>Priority humanitarian grant review</li>
+          <li><span class="fc-yes">✓</span>Access to exclusive teachings &amp; prophetic words</li>
+          <li><span class="fc-yes">✓</span>Annual ministry impact report</li>
+          <li><span class="fc-yes">✓</span>Invitations to online ministry retreats</li>
+          <li><span class="fc-yes">✓</span>Physical book shipment (Cameroon)</li>
+          <li><span class="fc-yes">✓</span>Name listed in ministry prayer roll</li>
+          <li><span class="fc-yes">✓</span>Co-sowing opportunity in new projects</li>
+        </ul>
+        <button class="plan-cta pc-anointed" onclick="openPayment('Anointed Plan','$24.99/mo')">👑 Go Anointed — $24.99/mo</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- AI AGENT -->
+<div id="agent-sec">
+  <div class="sec-hd"><div class="ln"></div><h2>🤖 AI Evangelism &amp; Prayer Agent</h2><div class="ln r"></div></div>
+  <div style="background:rgba(201,148,58,.06);border:1px solid var(--border-gold);border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:12.5px;color:var(--muted);line-height:1.65;">
+    <strong style="color:var(--gold2);">Sister Lydia AI</strong> is trained on Scripture and real pastoral wisdom. Ask for prayer, a Bible verse, encouragement, grant guidance, or evangelism resources. Available 24/7.
+  </div>
+  <div class="agent-wrap">
+    <div class="agent-header">
+      <div class="agent-av">✦</div>
+      <div class="agent-info">
+        <h4>Sister Lydia AI</h4>
+        <p>Evangelism Agent · Prayer Companion · Ministry Guide</p>
+      </div>
+      <div class="agent-online"><span class="kdot" style="width:5px;height:5px;"></span>Online</div>
+    </div>
+    <div class="agent-body" id="agentBody">
+      <div class="msg-bubble msg-agent">
+        Shalom and God bless you! 🙏 I am Sister Lydia AI — your prayer companion, Scripture guide and ministry assistant.<br><br>
+        You can ask me for prayer, a Bible verse for your situation, guidance on grants, information about our books, or simply share what's on your heart.<br><br>
+        <em>"Call to me and I will answer you…"</em>
+        <span class="msg-src">— Jeremiah 33:3</span>
+      </div>
+    </div>
+    <div class="agent-footer">
+      <div class="agent-quick-btns">
+        <button class="aqb" onclick="quickMsg('Pray for me')">🙏 Pray for me</button>
+        <button class="aqb" onclick="quickMsg('Give me a Bible verse for strength')">📖 Bible verse</button>
+        <button class="aqb" onclick="quickMsg('Tell me about the free books')">📚 Free books</button>
+        <button class="aqb" onclick="quickMsg('How do I apply for a grant?')">🤲 Grants</button>
+        <button class="aqb" onclick="quickMsg('I want to share my testimony')">✦ Testimony</button>
+      </div>
+      <div class="agent-input-row">
+        <input class="agent-input" id="agentInput" placeholder="Ask Sister Lydia AI anything…" onkeydown="if(event.key==='Enter')sendAgentMsg()"/>
+        <button class="agent-send" onclick="sendAgentMsg()">➤</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONY -->
+<div id="testimony-sec">
+  <div class="sec-hd"><div class="ln"></div><h2>✦ Testimonies</h2><div class="ln r"></div></div>
+  <div class="testimony-banner">
+    <h3>"They overcame by the blood of the Lamb and by the word of their testimony."</h3>
+    <p>Has God healed, saved, or turned your situation around? Your story will preach to thousands. — Revelation 12:11</p>
+  </div>
+  <div class="wizard-card" id="testiWizardCard">
+    <div class="wiz-prog">
+      <div class="pd dn" id="td1"></div><div class="pd" id="td2"></div>
+      <div class="pd" id="td3"></div><div class="pd" id="td4"></div><div class="pd" id="td5"></div>
+    </div>
+    <div class="wiz-step on" id="ts1">
+      <div class="wiz-q">What is your name? 👤</div>
+      <div class="wiz-hint">You may use your real name or stay anonymous.</div>
+      <input class="wiz-in" type="text" id="t_name" placeholder="e.g. Grace M. — or type 'Anonymous'"/>
+      <div class="wiz-nav"><button class="wiz-fwd" onclick="twNext(1)">Next →</button></div>
+    </div>
+    <div class="wiz-step" id="ts2">
+      <div class="wiz-q">Where are you from? 📍</div>
+      <div class="wiz-hint">City and country help others connect with your story.</div>
+      <input class="wiz-in" type="text" id="t_loc" placeholder="e.g. Yaoundé, Cameroon"/>
+      <div class="wiz-nav"><button class="wiz-back" onclick="twBack(2)">← Back</button><button class="wiz-fwd" onclick="twNext(2)">Next →</button></div>
+    </div>
+    <div class="wiz-step" id="ts3">
+      <div class="wiz-q">What category? 📂</div>
+      <div class="wiz-hint">Select what best describes what God did.</div>
+      <div class="wiz-opts">
+        <button class="wiz-opt" onclick="selOpt(this,'t_cat')">🏥 Physical Healing</button>
+        <button class="wiz-opt" onclick="selOpt(this,'t_cat')">✝️ Salvation</button>
+        <button class="wiz-opt" onclick="selOpt(this,'t_cat')">💰 Financial Miracle</button>
+        <button class="wiz-opt" onclick="selOpt(this,'t_cat')">👨‍👩‍👧 Family Restoration</button>
+        <button class="wiz-opt" onclick="selOpt(this,'t_cat')">⛓️ Deliverance</button>
+        <button class="wiz-opt" onclick="selOpt(this,'t_cat')">🙏 Answered Prayer</button>
+        <button class="wiz-opt" onclick="selOpt(this,'t_cat')">✨ Other Miracle</button>
+      </div>
+      <input type="hidden" id="t_cat" value=""/>
+      <div class="wiz-nav"><button class="wiz-back" onclick="twBack(3)">← Back</button><button class="wiz-fwd" onclick="twNext(3)">Next →</button></div>
+    </div>
+    <div class="wiz-step" id="ts4">
+      <div class="wiz-q">Tell your story 📖</div>
+      <div class="wiz-hint">What were you going through? What did God do?</div>
+      <textarea class="wiz-in" id="t_story" rows="6" placeholder="Share your full testimony here…"></textarea>
+      <div class="wiz-nav"><button class="wiz-back" onclick="twBack(4)">← Back</button><button class="wiz-fwd" onclick="twNext(4)">Next →</button></div>
+    </div>
+    <div class="wiz-step" id="ts5">
+      <div class="wiz-q">May we share your story? 📢</div>
+      <div class="wiz-hint">Your testimony may be shared on the website, Facebook, and in future ministry books.</div>
+      <div class="wiz-opts">
+        <button class="wiz-opt" onclick="selOpt(this,'t_perm')">✅ Yes — share it!</button>
+        <button class="wiz-opt" onclick="selOpt(this,'t_perm')">🔒 Keep private</button>
+      </div>
+      <input type="hidden" id="t_perm" value=""/>
+      <div class="wiz-nav">
+        <button class="wiz-back" onclick="twBack(5)">← Back</button>
+        <button class="wiz-fwd" style="background:linear-gradient(135deg,var(--life),#00783A);" onclick="submitTestimony()">✦ Submit Glory</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-hd" style="margin-top:24px;"><div class="ln"></div><h2>🌟 Real Testimonies</h2><div class="ln r"></div></div>
+  <div id="testimoniesWall" style="display:flex;flex-direction:column;gap:12px;">
+    <div class="testi-card">
+      <span class="tcat-badge">🏥 Physical Healing</span>
+      <div class="testi-text">In 2024, during our ministry posting in Nyom, a beloved mama was diagnosed with breast cancer. We gathered and prayed in the name of Jesus. God moved. She was miraculously healed — to this day she stands as a living testimony. All glory to Jesus.</div>
+      <div class="testi-auth"><div class="t-av">🙏</div><div><div class="t-name">Mama from Nyom</div><div class="t-loc">Nyom, Cameroon · 2024</div></div></div>
+      <button class="share-testi-btn" onclick="shareTesti('Mama from Nyom was healed of breast cancer through prayer. Glory to Jesus! — Abigael Glory Ministries')">📢 Share</button>
+    </div>
+    <div class="testi-card">
+      <span class="tcat-badge">✨ Healing Miracle</span>
+      <div class="testi-text">In 2023 in Nkolodom, a taxi driver had been bedridden for two years with a severe foot ulcer. Two weeks after prayer, the ulcer completely dried up and healed. The family offered their home as a church. A healing became a church. To God be glory!</div>
+      <div class="testi-auth"><div class="t-av">✨</div><div><div class="t-name">Anonymous — Taxi Driver</div><div class="t-loc">Nkolodom, Yaoundé · 2023</div></div></div>
+      <button class="share-testi-btn" onclick="shareTesti('A taxi driver bedridden 2 years with foot ulcer healed completely! His home became a church. — Abigael Glory Ministries')">📢 Share</button>
+    </div>
+  </div>
+</div>
+
+<!-- HUMANITARIAN -->
+<div id="grants-sec">
+  <div class="sec-hd"><div class="ln"></div><h2>🤲 Grants &amp; Humanitarian</h2><div class="ln r"></div></div>
+  <div class="impact-bar">
+    <h4>📊 Ministry Impact This Year</h4>
+    <div class="impact-metrics">
+      <div class="im-item"><div class="im-n">47</div><div class="im-l">Medical Grants</div></div>
+      <div class="im-item"><div class="im-n">120+</div><div class="im-l">Families Fed</div></div>
+      <div class="im-item"><div class="im-n">38</div><div class="im-l">School Fees Paid</div></div>
+      <div class="im-item"><div class="im-n">200+</div><div class="im-l">Bibles Given</div></div>
+    </div>
+  </div>
+  <div class="grant-cards">
+    <div class="grant-card gm"><div class="gc-head"><div class="gc-ico">🏥</div><div><h4>Medical Bill Grants</h4><p>For those who cannot afford healthcare</p></div></div><div class="gc-body"><p>Assistance for hospital bills, surgeries, medications and emergency medical needs.</p><ul class="gc-list"><li>Hospital bill assistance</li><li>Medication &amp; treatment costs</li><li>Emergency medical relief</li></ul><a class="gc-apply" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">🏥 Apply via Facebook</a></div></div>
+    <div class="grant-card gs"><div class="gc-head"><div class="gc-ico">🎓</div><div><h4>School Fees &amp; Education</h4><p>Helping children stay in school</p></div></div><div class="gc-body"><p>School fees, uniforms, books and educational supplies for those who cannot afford them.</p><ul class="gc-list"><li>Primary &amp; secondary school fees</li><li>School books and supplies</li><li>Orphan education support</li></ul><a class="gc-apply" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">🎓 Apply via Facebook</a></div></div>
+    <div class="grant-card gf"><div class="gc-head"><div class="gc-ico">🍞</div><div><h4>Food &amp; Basic Needs</h4><p>Emergency relief for families</p></div></div><div class="gc-body"><p>Food packages and basic essentials for families facing hunger and extreme poverty.</p><ul class="gc-list"><li>Food packages &amp; groceries</li><li>Support for widows &amp; orphans</li><li>Relief for displaced families</li></ul><a class="gc-apply" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">🍞 Apply via Facebook</a></div></div>
+    <div class="grant-card gp"><div class="gc-head"><div class="gc-ico">📖</div><div><h4>Bible &amp; Resource Distribution</h4><p>Free Bibles and Christian literature</p></div></div><div class="gc-body"><p>Free Bibles distributed to prisons, orphanages and communities — no soul unreached.</p><ul class="gc-list"><li>Free Bibles for the unreached</li><li>Christian books for prisoners</li><li>Devotionals for new believers</li></ul><a class="gc-apply" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">📖 Request Resources</a></div></div>
+  </div>
+</div>
+
+<!-- DONATE -->
+<div id="donate-sec">
+  <div class="sec-hd"><div class="ln"></div><h2>❤️ Support the Ministry</h2><div class="ln r"></div></div>
+  <div class="donate-hero">
+    <div class="dh-head"><p>Every Gift Reaches the Unreached</p><span>Fast · Secure · 100% to ministry work</span></div>
+    <div class="dh-body">
+      <div class="momo-wrap">
+        <div class="momo-top"><div class="momo-ico">📱</div><div><h4>MTN Mobile Money</h4><p>Send directly to Lydia — Cameroon</p></div></div>
+        <div class="momo-number-box">
+          <div><div class="momo-num-label">MoMo Number</div><div class="momo-num">673 567 253</div><div class="momo-name-txt">Besong Aseck Lydia</div></div>
+          <button class="momo-copy-btn" onclick="copyMomo()">📋 Copy</button>
+        </div>
+        <p class="momo-note">Open MTN MoMo → Send Money → Enter <strong>673567253</strong> → Confirm</p>
+      </div>
+      <div class="fb-give-wrap">
+        <div class="fg-top"><div class="fg-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg></div><div><h4>Facebook Pay / Stars</h4><p>Donate on the Facebook page</p></div></div>
+        <a class="fg-btn" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">Send via Facebook Pay / Stars →</a>
+      </div>
+    </div>
+  </div>
+  <div class="fund-grid">
+    <div class="fund-card fd-med"><div class="fc-stripe"></div><div class="fc-body"><div class="fc-top"><div class="fc-ico">🏥</div><h4>Medical Fund</h4></div><p>Hospital bills &amp; medications for people who cannot afford care.</p><div class="prog-lbl"><span>Progress</span><span>67%</span></div><div class="prog"><div class="prog-f" style="width:67%"></div></div><button class="give-btn" onclick="openPayment('Medical Fund','Any Amount')">❤️ Give</button></div></div>
+    <div class="fund-card fd-orp"><div class="fc-stripe"></div><div class="fc-body"><div class="fc-top"><div class="fc-ico">🏠</div><h4>Orphanages</h4></div><p>Food, shelter &amp; Christ's love for orphaned children in Yaoundé.</p><div class="prog-lbl"><span>Progress</span><span>42%</span></div><div class="prog"><div class="prog-f" style="width:42%"></div></div><button class="give-btn" onclick="openPayment('Orphanage Fund','Any Amount')">💙 Give</button></div></div>
+    <div class="fund-card fd-pri"><div class="fc-stripe"></div><div class="fc-body"><div class="fc-top"><div class="fc-ico">⛓️</div><h4>Prison Ministry</h4></div><p>Fund Bibles, books and pastoral visits for inmates.</p><div class="prog-lbl"><span>Progress</span><span>53%</span></div><div class="prog"><div class="prog-f" style="width:53%"></div></div><button class="give-btn" onclick="openPayment('Prison Ministry Fund','Any Amount')">💜 Give</button></div></div>
+    <div class="fund-card fd-gen"><div class="fc-stripe"></div><div class="fc-body"><div class="fc-top"><div class="fc-ico">🌍</div><h4>Evangelism</h4></div><p>Support online outreach and book distribution worldwide.</p><div class="prog-lbl"><span>Progress</span><span>35%</span></div><div class="prog"><div class="prog-f" style="width:35%"></div></div><button class="give-btn" onclick="openPayment('Evangelism Fund','Any Amount')">💚 Give</button></div></div>
+  </div>
+</div>
+
+<!-- EVENTS -->
+<div id="events-sec">
+  <div class="sec-hd"><div class="ln"></div><h2>📅 Events &amp; Outreach</h2><div class="ln r"></div></div>
+  <div class="event-list">
+    <div class="event-card"><div class="event-date"><div class="ev-day">20</div><div class="ev-mon">Apr</div></div><div class="event-info"><h4>Sunday Gospel Live Stream</h4><p>Join Lydia live on Facebook for worship, prayer and the Word.</p><span class="ev-tag evt-live">🔴 Live</span></div><a class="ev-join" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">Join →</a></div>
+    <div class="event-card"><div class="event-date"><div class="ev-day">25</div><div class="ev-mon">Apr</div></div><div class="event-info"><h4>Orphanage Outreach — Yaoundé</h4><p>Book distribution, food &amp; prayer at local orphanages.</p><span class="ev-tag evt-online">📦 Outreach</span></div><a class="ev-join" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">Support →</a></div>
+    <div class="event-card"><div class="event-date"><div class="ev-day">27</div><div class="ev-mon">Apr</div></div><div class="event-info"><h4>Online Prayer Night</h4><p>Group intercession and testimony sharing via Facebook Live.</p><span class="ev-tag evt-pray">🙏 Prayer</span></div><a class="ev-join" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">Join →</a></div>
+    <div class="event-card"><div class="event-date"><div class="ev-day">3</div><div class="ev-mon">May</div></div><div class="event-info"><h4>Prison Ministry Visit</h4><p>Pastoral care, Bible distribution &amp; evangelism inside correctional facilities.</p><span class="ev-tag evt-online">⛓️ Prison</span></div><a class="ev-join" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">Donate →</a></div>
+  </div>
+</div>
+
+<!-- PRAYER REQUEST -->
+<div id="prayer-sec">
+  <div class="sec-hd"><div class="ln"></div><h2>🙏 Prayer Requests</h2><div class="ln r"></div></div>
+  <div class="prayer-promise">
+    <blockquote>"Call to me and I will answer you and tell you great and unsearchable things…"</blockquote>
+    <cite>— Jeremiah 33:3 · Every request is personally prayed over by Lydia</cite>
+  </div>
+  <div class="prayer-form-card">
+    <h3>Send Your Prayer Request</h3>
+    <p>Share your need below. Received in confidence and prayed over faithfully. Use the AI Prayer Agent above for immediate support.</p>
+    <input class="pf-in" type="text" id="pName" placeholder="Your Name (optional)"/>
+    <input class="pf-in" type="text" id="pCountry" placeholder="Your Country"/>
+    <select class="pf-in" id="pCat">
+      <option value="" disabled selected>Prayer Category</option>
+      <option>🏥 Healing &amp; Health</option>
+      <option>💰 Financial Breakthrough</option>
+      <option>👨‍👩‍👧 Family &amp; Relationships</option>
+      <option>💼 Employment &amp; Business</option>
+      <option>✝️ Salvation for Loved One</option>
+      <option>🧠 Peace of Mind</option>
+      <option>⛓️ Deliverance</option>
+      <option>🙏 General Prayer</option>
+    </select>
+    <textarea class="pf-in pf-ta" id="pRequest" placeholder="Share your prayer request here…"></textarea>
+    <button class="pray-btn" onclick="submitPrayer()">🙏 Send Prayer to Lydia</button>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter-box">
+  <h3>📬 Stay Encouraged — Weekly Devotionals</h3>
+  <p>Get weekly devotionals, testimony updates, new books and ministry news delivered to you.</p>
+  <div class="nl-row">
+    <input class="nl-input" type="email" id="nlEmail" placeholder="Enter your email address…"/>
+    <button class="nl-btn" onclick="subscribeNL()">Subscribe</button>
+  </div>
+</div>
+
+<!-- CONNECT -->
+<div id="connect-sec">
+  <div class="sec-hd"><div class="ln"></div><h2>🌍 Connect &amp; Contact</h2><div class="ln r"></div></div>
+  <div class="connect-grid">
+    <a class="connect-card" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">
+      <div class="connect-ico" style="background:linear-gradient(135deg,#1877F2,#0a58bf);"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg></div>
+      <div class="connect-info"><h4>Facebook Ministry Page</h4><p>Follow Gospel Blast &amp; live streams</p></div>
+      <span class="connect-arr">→</span>
+    </a>
+    <a class="connect-card" href="https://wa.me/237673567253" target="_blank">
+      <div class="connect-ico" style="background:linear-gradient(135deg,#128C7E,#25D366);">💬</div>
+      <div class="connect-info"><h4>WhatsApp</h4><p>+237 673 567 253 · Chat directly</p></div>
+      <span class="connect-arr">→</span>
+    </a>
+    <a class="connect-card" href="mailto:abigaelgloryministries@gmail.com">
+      <div class="connect-ico" style="background:linear-gradient(135deg,var(--gold),#D4860A);">📧</div>
+      <div class="connect-info"><h4>Email</h4><p>abigaelgloryministries@gmail.com</p></div>
+      <span class="connect-arr">→</span>
+    </a>
+  </div>
+  <div class="contact-form-card">
+    <h3>✉️ Send a Message</h3>
+    <input class="pf-in" type="text" id="cName" placeholder="Your Name *"/>
+    <input class="pf-in" type="email" id="cEmail" placeholder="Your Email *"/>
+    <input class="pf-in" type="text" id="cSubject" placeholder="Subject"/>
+    <textarea class="pf-in pf-ta" id="cMsg" placeholder="Your message…"></textarea>
+    <button class="contact-submit" onclick="sendContact()">✦ Send Message</button>
+  </div>
+</div>
+
+</div><!-- /.page -->
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="sf-brand">Abigael <span>Glory</span> Ministries</div>
+  <div class="sf-sub">Founded by Besong Aseck Lydia · Cameroon · Est. 2025</div>
+  <div class="sf-socials">
+    <div class="sfsoc" onclick="window.open('https://www.facebook.com/share/17RYr3KVJA/','_blank')"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg></div>
+    <div class="sfsoc" onclick="window.open('https://wa.me/237673567253','_blank')">💬</div>
+  </div>
+  <div class="sf-links">
+    <a href="#" onclick="snap('about-sec')">About</a>
+    <a href="#" onclick="snap('store-sec')">Library</a>
+    <a href="#" onclick="snap('pricing-sec')">Plans</a>
+    <a href="#" onclick="snap('testimony-sec')">Testimony</a>
+    <a href="#" onclick="snap('grants-sec')">Grants</a>
+    <a href="#" onclick="snap('donate-sec')">Give</a>
+    <a href="#" onclick="snap('prayer-sec')">Prayer</a>
+    <a href="#" onclick="snap('connect-sec')">Contact</a>
+    <a href="#" onclick="showAdminLogin()">Admin</a>
+  </div>
+  <span class="sf-verse">"For I am not ashamed of the Gospel of Christ, for it is the power of God…" — Romans 1:16</span>
+  <div class="sf-copy">&copy; 2025 Abigael Glory Ministries · Spirit-Filled Digital Evangelism · Built with Faith ✦</div>
+</footer>
+
+</div><!-- /#view-home -->
+
+<!-- ADMIN PANEL -->
+<div id="view-dashboard">
+  <header class="adm-header">
+    <div class="adm-brand">
+      <div class="nav-emblem" style="width:30px;height:30px;font-size:14px;">✦</div>
+      <div><h2>Ministry Dashboard</h2><p>Abigael Glory Ministries</p></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:9.5px;font-weight:800;background:rgba(0,200,83,.1);color:var(--life2);border:1px solid rgba(0,200,83,.22);" id="dbBadge">⬤ Demo Mode</span>
+      <button class="adm-back" onclick="exitAdmin()">← Public Site</button>
+    </div>
+  </header>
+  <nav class="adm-nav">
+    <button class="adm-tab on" onclick="showAdmPanel('overview',this)">📊 Overview</button>
+    <button class="adm-tab" onclick="showAdmPanel('members',this)">👥 Members</button>
+    <button class="adm-tab" onclick="showAdmPanel('testimonies',this)">✦ Testimonies</button>
+    <button class="adm-tab" onclick="showAdmPanel('prayers',this)">🙏 Prayers</button>
+    <button class="adm-tab" onclick="showAdmPanel('upload',this)">📚 Library</button>
+    <button class="adm-tab" onclick="showAdmPanel('orders',this)">💳 Orders</button>
+    <button class="adm-tab" onclick="showAdmPanel('events',this)">📅 Events</button>
+    <button class="adm-tab" onclick="showAdmPanel('messages',this)">✉️ Messages</button>
+    <button class="adm-tab" onclick="showAdmPanel('settings',this)">⚙ Settings</button>
+  </nav>
+  <div class="adm-main">
+
+    <div class="adm-panel on" id="ap-overview">
+      <div class="adm-page-title">Ministry at a Glance</div>
+      <div class="adm-page-sub">Live stats · All data stored securely</div>
+      <div class="adm-stats">
+        <div class="ads-card"><div class="ads-ico">👥</div><div class="ads-n" id="as-members">0</div><div class="ads-l">Members</div></div>
+        <div class="ads-card"><div class="ads-ico">📚</div><div class="ads-n" id="as-content">10</div><div class="ads-l">Resources</div></div>
+        <div class="ads-card"><div class="ads-ico">✦</div><div class="ads-n" id="as-test">0</div><div class="ads-l">Testimonies</div></div>
+        <div class="ads-card"><div class="ads-ico">🙏</div><div class="ads-n" id="as-prayers">0</div><div class="ads-l">Prayer Requests</div></div>
+        <div class="ads-card"><div class="ads-ico">💳</div><div class="ads-n" id="as-orders">0</div><div class="ads-l">Plan Orders</div></div>
+        <div class="ads-card"><div class="ads-ico">💰</div><div class="ads-n" id="as-revenue">$0</div><div class="ads-l">Revenue</div></div>
+      </div>
+      <div class="adm-tbl-wrap">
+        <div class="adm-tbl-hd"><h3>Recent Activity</h3><button class="adm-add-btn" onclick="showAdmPanel('upload',null)">+ Add Resource</button></div>
+        <div id="overviewActivity" style="padding:16px;color:rgba(255,255,255,.3);font-size:13px;text-align:center;">Loading…</div>
+      </div>
+    </div>
+
+    <div class="adm-panel" id="ap-members">
+      <div class="adm-page-title">Members</div>
+      <div class="adm-page-sub">All registered members</div>
+      <div class="adm-tbl-wrap">
+        <div class="adm-tbl-hd"><h3>All Members</h3><button class="adm-add-btn" onclick="exportMembers()">⬇ Export CSV</button></div>
+        <div style="overflow-x:auto;"><table class="adm-tbl"><thead><tr><th>Name</th><th>Email</th><th>Plan</th><th>Country</th><th>Joined</th></tr></thead><tbody id="membersTable"><tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">No members yet.</td></tr></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="adm-panel" id="ap-testimonies">
+      <div class="adm-page-title">Testimonies</div>
+      <div class="adm-page-sub">Review and approve testimonies</div>
+      <div class="adm-tbl-wrap">
+        <div class="adm-tbl-hd"><h3>All Testimonies</h3></div>
+        <div style="overflow-x:auto;"><table class="adm-tbl"><thead><tr><th>Name</th><th>Category</th><th>Story</th><th>Status</th><th>Actions</th></tr></thead><tbody id="testiTable"><tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">No testimonies yet.</td></tr></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="adm-panel" id="ap-prayers">
+      <div class="adm-page-title">Prayer Requests</div>
+      <div class="adm-page-sub">Handle with compassion</div>
+      <div class="adm-tbl-wrap">
+        <div class="adm-tbl-hd"><h3>Prayer Requests</h3></div>
+        <div style="overflow-x:auto;"><table class="adm-tbl"><thead><tr><th>Name</th><th>Country</th><th>Category</th><th>Request</th><th>Date</th><th>Status</th></tr></thead><tbody id="prayerTable"><tr><td colspan="6" style="text-align:center;color:#475569;padding:24px;">No requests yet.</td></tr></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="adm-panel" id="ap-upload">
+      <div class="adm-page-title">Upload New Content</div>
+      <div class="adm-page-sub">Add books, articles, series or devotionals to the library</div>
+      <div class="upl-form">
+        <h3>New Resource</h3>
+        <p>Published resources are immediately visible to members at the appropriate plan tier.</p>
+        <div class="upl-grid">
+          <div class="upl-field full"><label>Title *</label><input type="text" id="u_title" placeholder="e.g. The Power of Prayer"/></div>
+          <div class="upl-field"><label>Type *</label><select id="u_type"><option value="" disabled selected>Select type</option><option value="book">📖 Book</option><option value="series">📺 Series</option><option value="article">📰 Article</option><option value="devotional">🌅 Devotional</option></select></div>
+          <div class="upl-field"><label>Access Tier *</label><select id="u_tier"><option value="free">🆓 Free (All Members)</option><option value="blessed">💜 Blessed ($9.99+)</option><option value="anointed">👑 Anointed ($24.99+)</option></select></div>
+          <div class="upl-field"><label>Status</label><select id="u_status"><option value="published">✅ Published</option><option value="coming">🔜 Coming Soon</option><option value="draft">📝 Draft</option></select></div>
+          <div class="upl-field"><label>Price ($ if sold separately, 0 = tier only)</label><input type="number" id="u_price" placeholder="0.00" min="0" step="0.01"/></div>
+          <div class="upl-field full"><label>Description</label><textarea id="u_desc" placeholder="Short description shown to members…"></textarea></div>
+          <div class="upl-field full"><label>Scripture / Subtitle</label><input type="text" id="u_scripture" placeholder="e.g. 'Call to me…' — Jer 33:3"/></div>
+          <div class="upl-field full"><label>Cover Image URL</label><input type="url" id="u_cover" placeholder="https://…"/></div>
+          <div class="upl-field full"><label>PDF / Download URL</label><input type="url" id="u_pdf" placeholder="https://…"/></div>
+          <div class="upl-field full"><label>Facebook Link (for Series/Articles)</label><input type="url" id="u_fb" placeholder="https://facebook.com/…"/></div>
+          <div class="upl-field full"><label>Tags (comma-separated)</label><input type="text" id="u_tags" placeholder="prayer, healing, faith"/></div>
+        </div>
+        <div class="upl-prog" id="uplProg">
+          <div class="upl-prog-row"><span id="uplStatus">Saving…</span><span id="uplPct">0%</span></div>
+          <div class="upl-prog-bar"><div class="upl-prog-fill" id="uplFill"></div></div>
+        </div>
+        <button class="upl-submit" onclick="uploadContent()">✦ Save &amp; Publish to Library</button>
+      </div>
+      <div class="adm-tbl-wrap" style="margin-top:20px;">
+        <div class="adm-tbl-hd"><h3>📚 Existing Resources</h3></div>
+        <div style="overflow-x:auto;"><table class="adm-tbl"><thead><tr><th>Title</th><th>Type</th><th>Tier</th><th>Status</th><th>Downloads</th><th>Actions</th></tr></thead><tbody id="resourcesTable"><tr><td colspan="6" style="text-align:center;color:#475569;padding:24px;">Loading…</td></tr></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="adm-panel" id="ap-orders">
+      <div class="adm-page-title">Plan Orders &amp; Revenue</div>
+      <div class="adm-page-sub">All subscriptions and donations</div>
+      <div class="adm-tbl-wrap">
+        <div class="adm-tbl-hd"><h3>All Orders</h3><button class="adm-add-btn" onclick="showToast('⬇ Exporting…')">⬇ Export</button></div>
+        <div style="overflow-x:auto;"><table class="adm-tbl"><thead><tr><th>Name</th><th>Plan</th><th>Amount</th><th>Method</th><th>Date</th></tr></thead><tbody id="ordersTable"><tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">No orders yet.</td></tr></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="adm-panel" id="ap-events">
+      <div class="adm-page-title">Manage Events</div>
+      <div class="adm-page-sub">Add or edit upcoming ministry events</div>
+      <div class="upl-form" style="margin-bottom:18px;">
+        <h3>Add New Event</h3>
+        <div class="upl-grid">
+          <div class="upl-field full"><label>Event Title *</label><input type="text" id="ev_title" placeholder="e.g. Sunday Gospel Live Stream"/></div>
+          <div class="upl-field"><label>Date *</label><input type="date" id="ev_date"/></div>
+          <div class="upl-field"><label>Type</label><select id="ev_type"><option value="live">🔴 Live Stream</option><option value="outreach">📦 Outreach</option><option value="prayer">🙏 Prayer Night</option><option value="prison">⛓️ Prison Ministry</option></select></div>
+          <div class="upl-field full"><label>Description</label><textarea id="ev_desc" placeholder="Event details…"></textarea></div>
+          <div class="upl-field full"><label>Facebook Link</label><input type="url" id="ev_fb" placeholder="https://facebook.com/…"/></div>
+        </div>
+        <button class="upl-submit" onclick="addEvent()">✦ Add Event</button>
+      </div>
+      <div class="adm-tbl-wrap">
+        <div class="adm-tbl-hd"><h3>All Events</h3></div>
+        <div style="overflow-x:auto;"><table class="adm-tbl"><thead><tr><th>Title</th><th>Date</th><th>Type</th><th>Actions</th></tr></thead><tbody id="eventsTable"><tr><td colspan="4" style="text-align:center;color:#475569;padding:24px;">No events yet.</td></tr></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="adm-panel" id="ap-messages">
+      <div class="adm-page-title">Contact Messages</div>
+      <div class="adm-page-sub">Messages sent through the website contact form</div>
+      <div class="adm-tbl-wrap">
+        <div class="adm-tbl-hd"><h3>All Messages</h3></div>
+        <div style="overflow-x:auto;"><table class="adm-tbl"><thead><tr><th>Name</th><th>Email</th><th>Subject</th><th>Message</th><th>Date</th></tr></thead><tbody id="messagesTable"><tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">No messages yet.</td></tr></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="adm-panel" id="ap-settings">
+      <div class="adm-page-title">Settings</div>
+      <div class="adm-page-sub">Configure your ministry platform</div>
+      <div class="settings-wrap">
+        <div class="settings-section">
+          <h4>Admin Password</h4>
+          <input class="adm-in" type="password" id="s_newpass" placeholder="New password…" style="margin-bottom:8px;"/>
+          <input class="adm-in" type="password" id="s_confirm" placeholder="Confirm password…"/>
+          <button class="save-settings-btn" style="margin-top:10px;" onclick="savePassword()">Save Password</button>
+        </div>
+        <div class="settings-section">
+          <h4>Platform Features</h4>
+          <div class="toggle-row"><label>Auto-approve testimonies</label><label class="tog"><input type="checkbox" id="t-autoApprove"><span class="tog-track"></span></label></div>
+          <div class="toggle-row"><label>Enable AI Prayer Agent</label><label class="tog"><input type="checkbox" id="t-aiAgent" checked><span class="tog-track"></span></label></div>
+          <div class="toggle-row"><label>Show pricing plans</label><label class="tog"><input type="checkbox" id="t-pricing" checked><span class="tog-track"></span></label></div>
+          <div class="toggle-row"><label>Enable newsletter subscription</label><label class="tog"><input type="checkbox" id="t-newsletter" checked><span class="tog-track"></span></label></div>
+        </div>
+        <div class="settings-section">
+          <h4>Supabase Integration</h4>
+          <p style="font-size:12.5px;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:12px;">Replace SUPABASE_URL and SUPABASE_ANON_KEY in the file to connect a real database. Zero-cost stack: Supabase Free + Vercel + GitHub = <strong style="color:var(--gold2);">$0/month forever.</strong></p>
+          <div style="padding:10px;background:rgba(255,255,255,.04);border-radius:9px;font-size:12px;color:rgba(255,255,255,.4);">Status: Demo mode (localStorage) — configure Supabase to go live</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="admin-login-overlay" id="adminLoginOverlay">
+  <div class="admin-login-box">
+    <h2>⚙ Admin Access</h2>
+    <p>Enter your admin password to manage the ministry dashboard</p>
+    <input class="adm-in" type="password" id="adminPassInput" placeholder="Admin Password" onkeydown="if(event.key==='Enter')verifyAdmin()"/>
+    <button class="adm-login-btn" onclick="verifyAdmin()">🔓 Enter Dashboard</button>
+    <button class="adm-cancel-btn" onclick="closeAdminLogin()">Cancel</button>
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="pay-overlay" id="payOverlay">
+  <div class="pay-sheet">
+    <div class="pay-sheet-hd">
+      <h3>Complete Your Gift</h3>
+      <button class="pay-close-btn" onclick="closePayment()">✕</button>
+    </div>
+    <div class="pay-summary">
+      <div><div class="pay-summary-name" id="paySummaryName">Blessed Plan</div><div style="font-size:11.5px;color:var(--muted);">Supporting Abigael Glory Ministries</div></div>
+      <div class="pay-summary-price" id="paySummaryPrice">$9.99/mo</div>
+    </div>
+    <div style="font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:10px;">Payment Method</div>
+    <div class="pay-methods-grid">
+      <div class="pay-method sel" onclick="selPayMethod(this)"><div class="pm-ico pm-momo">📱</div><div class="pm-info"><h5>MTN Mobile Money</h5><p>Cameroon · Orange Money accepted</p></div><div class="pm-radio"></div></div>
+      <div class="pay-method" onclick="selPayMethod(this)"><div class="pm-ico pm-card">💳</div><div class="pm-info"><h5>Credit / Debit Card</h5><p>Visa, Mastercard · Secured by Stripe</p></div><div class="pm-radio"></div></div>
+      <div class="pay-method" onclick="selPayMethod(this)"><div class="pm-ico pm-paypal">🅿</div><div class="pm-info"><h5>PayPal</h5><p>Global · Instant</p></div><div class="pm-radio"></div></div>
+    </div>
+    <div class="pay-form-fields">
+      <input class="pay-in" type="text" placeholder="Full Name *" id="pay_name"/>
+      <input class="pay-in" type="email" placeholder="Email Address *" id="pay_email"/>
+      <input class="pay-in" type="tel" placeholder="Phone / MoMo Number *" id="pay_phone"/>
+      <div class="pay-in-row">
+        <input class="pay-in" placeholder="Country" id="pay_country"/>
+        <input class="pay-in" placeholder="Referral / Promo Code" id="pay_promo"/>
+      </div>
+    </div>
+    <button class="pay-submit-btn" onclick="processPayment()">🔒 Complete &amp; Activate Access</button>
+    <div class="pay-secure-note">🔒 Secure · 14-day refund guarantee · 100% to ministry</div>
+  </div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal-box">
+    <div class="modal-ico" id="modalIco">🙌</div>
+    <div class="modal-title" id="modalTitle">Glory to God!</div>
+    <div class="modal-msg" id="modalMsg"></div>
+    <button class="modal-btn" onclick="closeModal()">Amen ✦</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+/* ══ CONFIG ══ */
+const SUPABASE_URL='https://YOUR_PROJECT.supabase.co';
+const SUPABASE_ANON='YOUR_ANON_KEY';
+const ADMIN_PASS_DEFAULT='AGM2025@Glory';
+const DEMO_MODE=SUPABASE_URL.includes('YOUR_PROJECT');
+
+/* ══ STORAGE ══ */
+const LS={
+  get:(k,d=[])=>{try{return JSON.parse(localStorage.getItem(k))||d;}catch{return d;}},
+  set:(k,v)=>localStorage.setItem(k,JSON.stringify(v))
+};
+
+/* ══ DEFAULT RESOURCES ══ */
+const DEFAULT_RES=[
+  {id:'r1',title:'The Power of Prayer',type:'book',tier:'free',status:'published',desc:'A life-changing guide to effective prayer and intercession in the Holy Spirit.',scripture:'"Call to me and I will answer you…" — Jer 33:3',cover:'',pdf:'',fb:'https://www.facebook.com/share/17RYr3KVJA/',tags:'prayer,faith',downloads:124,price:0,date:'2025-01-01'},
+  {id:'r2',title:'Life of Jesus — Teaching Series',type:'series',tier:'free',status:'published',desc:'Walking through the miracles, teachings and parables of Jesus Christ.',scripture:'',cover:'',pdf:'',fb:'https://www.facebook.com/share/17RYr3KVJA/',tags:'jesus,gospel',downloads:89,price:0,date:'2025-01-15'},
+  {id:'r3',title:'Gospel Blast Devotionals',type:'devotional',tier:'free',status:'published',desc:'Daily Gospel messages crafted for Facebook, WhatsApp and global sharing.',scripture:'"Your word is a lamp to my feet…" — Ps 119:105',cover:'',pdf:'',fb:'https://www.facebook.com/share/17RYr3KVJA/',tags:'devotional,daily',downloads:210,price:0,date:'2025-02-01'},
+  {id:'r4',title:'Journey to Easter',type:'devotional',tier:'free',status:'published',desc:'A daily devotional through the final week of Jesus\'s life — crucifixion &amp; resurrection.',scripture:'"He is risen!" — Matthew 28:6',cover:'',pdf:'',fb:'https://www.facebook.com/share/17RYr3KVJA/',tags:'easter,resurrection',downloads:67,price:0,date:'2025-02-15'},
+  {id:'r5',title:'How to Pray for the Sick',type:'article',tier:'free',status:'published',desc:'Step-by-step guidance on praying for healing with boldness and faith.',scripture:'"They will lay hands on the sick…" — Mark 16:18',cover:'',pdf:'',fb:'https://www.facebook.com/share/17RYr3KVJA/',tags:'healing,prayer',downloads:156,price:0,date:'2025-03-01'},
+  {id:'r6',title:'Deliverance &amp; Spiritual Warfare',type:'book',tier:'blessed',status:'published',desc:'A comprehensive guide to spiritual warfare, breaking bondages and walking in freedom.',scripture:'"For our struggle is not against flesh and blood…" — Eph 6:12',cover:'',pdf:'',fb:'https://www.facebook.com/share/17RYr3KVJA/',tags:'deliverance,warfare',downloads:44,price:9.99,date:'2025-03-15'},
+  {id:'r7',title:'Prophetic Devotional Series',type:'devotional',tier:'blessed',status:'published',desc:'Deep prophetic devotionals for the spirit-filled believer — audio and PDF included.',scripture:'"Surely the Lord does nothing without revealing His plan…" — Amos 3:7',cover:'',pdf:'',fb:'https://www.facebook.com/share/17RYr3KVJA/',tags:'prophetic,devotional',downloads:31,price:9.99,date:'2025-04-01'},
+  {id:'r8',title:'Divine Health &amp; Healing Blueprint',type:'book',tier:'blessed',status:'published',desc:'Scripture-based pathway to healing — faith principles, prayer strategies and real testimonies.',scripture:'"By His stripes we are healed." — Isaiah 53:5',cover:'',pdf:'',fb:'https://www.facebook.com/share/17RYr3KVJA/',tags:'healing,health',downloads:58,price:9.99,date:'2025-04-10'},
+  {id:'r9',title:'Abigael — A Story of Faith',type:'book',tier:'anointed',status:'coming',desc:'The upcoming story of Abigael — a woman whose life was transformed by the power of God\'s Word.',scripture:'',cover:'',pdf:'',fb:'',tags:'story,women,faith',downloads:0,price:24.99,date:'2025-06-01'},
+  {id:'r10',title:'Sophia — God\'s Wisdom',type:'book',tier:'anointed',status:'coming',desc:'A powerful testimony of divine wisdom, purpose and transformation. Coming soon.',scripture:'',cover:'',pdf:'',fb:'',tags:'wisdom,women,testimony',downloads:0,price:24.99,date:'2025-07-01'},
+];
+
+function getResources(){const s=LS.get('agm_resources',null);if(s&&s.length)return s;LS.set('agm_resources',DEFAULT_RES);return DEFAULT_RES;}
+function saveResources(r){LS.set('agm_resources',r);}
+function getMembers(){return LS.get('agm_members',[]);}
+function getTestimonies(){return LS.get('agm_testimonies',[]);}
+function getPrayers(){return LS.get('agm_prayers',[]);}
+function getOrders(){return LS.get('agm_orders',[]);}
+function getMessages(){return LS.get('agm_messages',[]);}
+function getEvents(){return LS.get('agm_events',[]);}
+
+/* ══ SNAP SCROLL ══ */
+function snap(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+
+/* ══ INIT ══ */
+document.addEventListener('DOMContentLoaded',()=>{
+  updatePrayerCounts();
+  renderStore();
+  createParticles();
+  const cur=LS.get('agm_current_member',null);
+  if(cur&&typeof cur==='object'&&cur.name){}
+});
+
+/* ══ PARTICLES ══ */
+function createParticles(){
+  const c=document.getElementById('heroP');if(!c)return;
+  for(let i=0;i<20;i++){
+    const d=document.createElement('div');d.className='hp';
+    const sz=2+Math.random()*4;
+    d.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${60+Math.random()*40}%;animation-delay:${Math.random()*14}s;animation-duration:${10+Math.random()*10}s;background:${Math.random()>.6?'var(--gold)':Math.random()>.5?'var(--life)':'var(--sky)'};`;
+    c.appendChild(d);
+  }
+}
+
+/* ══ PRAYER COUNTS ══ */
+function updatePrayerCounts(){
+  const n=getPrayers().length||'∞';
+  ['prayerCountHero','prayerCountAbout'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=n;});
+}
+
+/* ══ STORE ══ */
+let storeTier='all',storeFilter='all';
+function setTier(tier,btn){
+  storeTier=tier;
+  document.querySelectorAll('.tier-tab').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  renderStore();
+}
+function setFilter(f,el){
+  storeFilter=f;
+  document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  renderStore();
+}
+function filterStore(){renderStore();}
+
+function renderStore(){
+  const grid=document.getElementById('booksGrid');if(!grid)return;
+  const search=(document.getElementById('storeSearch')?.value||'').toLowerCase();
+  const resources=getResources();
+  let filtered=resources.filter(r=>{
+    if(storeTier!=='all'&&r.tier!==storeTier)return false;
+    if(storeFilter!=='all'&&r.type!==storeFilter)return false;
+    if(search&&!r.title.toLowerCase().includes(search)&&!(r.desc||'').toLowerCase().includes(search)&&!(r.tags||'').toLowerCase().includes(search))return false;
+    return true;
+  });
+  if(!filtered.length){grid.innerHTML='<p style="text-align:center;color:var(--muted);font-size:13px;grid-column:1/-1;padding:24px 0;">No resources found.</p>';return;}
+  grid.innerHTML=filtered.map(r=>bookCardHTML(r)).join('');
+}
+
+function bookCardHTML(r){
+  const cur=LS.get('agm_current_member',null);
+  const plan=cur?.plan||'free';
+  const tierAccess={free:['free'],blessed:['free','blessed'],anointed:['free','blessed','anointed']};
+  const hasAccess=(tierAccess[plan]||['free']).includes(r.tier)&&r.status==='published';
+  const tbClass={free:'btb-free',blessed:'btb-blessed',anointed:'btb-anointed'};
+  const tierEmoji={free:'🆓',blessed:'💜',anointed:'👑'};
+  const tierLabel={free:'Free',blessed:'Blessed',anointed:'Anointed'};
+  const cardClass=r.tier==='blessed'?'paid':r.tier==='anointed'?'elite':'';
+  const coverStyle=r.cover?`background:url('${r.cover}') center/cover;`:`background:linear-gradient(135deg,var(--night),var(--altar));`;
+
+  let actionBtn='';
+  if(r.status==='coming'){
+    actionBtn=`<div style="display:flex;align-items:center;justify-content:center;width:100%;padding:9px;border-radius:9px;background:rgba(255,255,255,.05);color:var(--muted);font-size:11.5px;font-weight:700;">🔜 Coming Soon</div>`;
+  } else if(hasAccess||r.tier==='free'){
+    if(r.pdf){actionBtn=`<a class="bab bab-free" href="${r.pdf}" target="_blank" onclick="incDL('${r.id}')">⬇ Download Free</a>`;}
+    else if(r.fb){actionBtn=`<a class="bab bab-free" href="${r.fb}" target="_blank" onclick="incDL('${r.id}')">📖 Read on Facebook</a>`;}
+    else{actionBtn=`<a class="bab bab-free" href="https://www.facebook.com/share/17RYr3KVJA/" target="_blank">📖 Read Online</a>`;}
+  } else {
+    const planNeed=r.tier==='blessed'?'Blessed ($9.99/mo)':'Anointed ($24.99/mo)';
+    const btnCls=r.tier==='blessed'?'bab-blessed':'bab-anointed';
+    const price=r.tier==='blessed'?'$9.99/mo':'$24.99/mo';
+    actionBtn=`<button class="bab ${btnCls}" onclick="openPayment('${planNeed}','${price}')">🔓 Unlock — ${price}</button>`;
+  }
+
+  const priceTag=r.tier==='free'?`<span class="book-price free-tag">FREE ✦</span>`:r.price>0?`<span class="book-price">$${r.price.toFixed(2)} <small>/in plan</small></span>`:`<span style="font-size:11px;color:var(--muted);">Plan access</span>`;
+
+  return `<div class="book-card ${cardClass}">
+    <div class="book-cover-wrap" style="${coverStyle}"><span style="font-size:36px;text-align:center;${r.cover?'display:none;':''}">📖</span></div>
+    <div class="book-info">
+      <span class="btb ${tbClass[r.tier]}">${tierEmoji[r.tier]} ${tierLabel[r.tier]}</span>
+      <h4>${r.title}</h4>
+      <p>${(r.desc||'').substring(0,80)}${(r.desc||'').length>80?'…':''}</p>
+      ${priceTag}
+      ${actionBtn}
+      <div class="book-dls">📥 ${r.downloads||0} downloads</div>
+    </div>
+  </div>`;
+}
+
+function incDL(id){const res=getResources();const r=res.find(x=>x.id===id);if(r){r.downloads=(r.downloads||0)+1;saveResources(res);}}
+
+/* ══ FREE REGISTER ══ */
+function registerFree(){
+  const m={name:'Friend',email:'',plan:'free',joined:new Date().toISOString()};
+  LS.set('agm_current_member',m);
+  renderStore();
+  showModal('📚','Access Granted!','You now have full access to all free books, articles, series and devotionals. God bless you! ✝️');
+}
+
+/* ══ TESTIMONY WIZARD ══ */
+function twNext(step){
+  const textFields={1:'t_name',2:'t_loc',4:'t_story'};
+  const selFields={3:'t_cat'};
+  if(textFields[step]&&!document.getElementById(textFields[step]).value.trim()){showToast('⚠️ Please fill in this field.');return;}
+  if(selFields[step]&&!document.getElementById(selFields[step]).value){showToast('⚠️ Please select an option.');return;}
+  document.getElementById('ts'+step).classList.remove('on');
+  document.getElementById('ts'+(step+1)).classList.add('on');
+  document.getElementById('td'+(step+1)).classList.add('dn');
+}
+function twBack(step){
+  document.getElementById('ts'+step).classList.remove('on');
+  document.getElementById('ts'+(step-1)).classList.add('on');
+  document.getElementById('td'+step).classList.remove('dn');
+}
+function selOpt(btn,fid){
+  btn.closest('.wiz-opts').querySelectorAll('.wiz-opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.getElementById(fid).value=btn.textContent.trim();
+}
+function submitTestimony(){
+  const perm=document.getElementById('t_perm').value;
+  if(!perm){showToast('⚠️ Please select a sharing option.');return;}
+  const t={name:document.getElementById('t_name').value.trim(),location:document.getElementById('t_loc').value.trim(),category:document.getElementById('t_cat').value,story:document.getElementById('t_story').value.trim(),permission:perm,approved:false,date:new Date().toISOString()};
+  const tests=getTestimonies();tests.push(t);LS.set('agm_testimonies',tests);
+  if(perm.includes('Yes'))addTestiToWall(t);
+  window.open('https://www.facebook.com/share/17RYr3KVJA/','_blank');
+  showModal('🙌','Glory to God!','Your testimony has been submitted! It will be prayed over and shared to build faith in thousands. — Rev 12:11 ✝️');
+  for(let i=1;i<=5;i++){document.getElementById('ts'+i).classList.toggle('on',i===1);document.getElementById('td'+i).classList.toggle('dn',i===1);}
+  ['t_name','t_loc','t_story'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  ['t_cat','t_perm'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  document.querySelectorAll('.wiz-opt').forEach(b=>b.classList.remove('sel'));
+}
+function addTestiToWall(t){
+  const wall=document.getElementById('testimoniesWall');if(!wall)return;
+  const emos={'🏥 Physical Healing':'🏥','✝️ Salvation':'✝️','💰 Financial Miracle':'💰','👨‍👩‍👧 Family Restoration':'👨‍👩‍👧','⛓️ Deliverance':'⛓️','🙏 Answered Prayer':'🙏','✨ Other Miracle':'✨'};
+  const em=emos[t.category]||'✨';
+  const div=document.createElement('div');div.className='testi-card';div.style.animation='fadeUp .5s ease both';
+  div.innerHTML=`<span class="tcat-badge">${t.category}</span><div class="testi-text">${t.story}</div><div class="testi-auth"><div class="t-av">${em}</div><div><div class="t-name">${t.name}</div><div class="t-loc">${t.location||'Cameroon'}</div></div></div>`;
+  wall.prepend(div);
+}
+
+/* ══ PRAYER ══ */
+function submitPrayer(){
+  const req=document.getElementById('pRequest').value.trim();
+  if(!req){showToast('⚠️ Please enter your prayer request.');return;}
+  const p={name:document.getElementById('pName').value.trim()||'Anonymous',country:document.getElementById('pCountry').value.trim(),category:document.getElementById('pCat').value||'General Prayer',request:req,prayed:false,date:new Date().toISOString()};
+  const prayers=getPrayers();prayers.push(p);LS.set('agm_prayers',prayers);
+  updatePrayerCounts();
+  window.open('https://www.facebook.com/share/17RYr3KVJA/','_blank');
+  showModal('🙏','Prayer Received!','Your request has been sent to Lydia. She will personally pray over your situation. God hears every prayer. — Jeremiah 33:3');
+  ['pName','pCountry','pRequest'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  document.getElementById('pCat').value='';
+}
+
+/* ══ NEWSLETTER ══ */
+function subscribeNL(){
+  const email=document.getElementById('nlEmail').value.trim();
+  if(!email||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){showToast('⚠️ Please enter a valid email address.');return;}
+  const subs=LS.get('agm_newsletter',[]);
+  if(!subs.includes(email)){subs.push(email);LS.set('agm_newsletter',subs);}
+  showModal('📬','You\'re Subscribed!','Thank you! Weekly devotionals and ministry updates coming your way. God bless you!');
+  document.getElementById('nlEmail').value='';
+}
+
+/* ══ CONTACT ══ */
+function sendContact(){
+  const name=document.getElementById('cName').value.trim();
+  const email=document.getElementById('cEmail').value.trim();
+  const msg=document.getElementById('cMsg').value.trim();
+  if(!name||!email||!msg){showToast('⚠️ Please fill all required fields.');return;}
+  const msgs=getMessages();msgs.push({name,email,subject:document.getElementById('cSubject').value.trim(),message:msg,read:false,date:new Date().toISOString()});
+  LS.set('agm_messages',msgs);
+  showModal('✉️','Message Sent!','Your message has been received. Lydia will respond as soon as possible. God bless you!');
+  ['cName','cEmail','cSubject','cMsg'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+}
+
+/* ══ COPY MOMO ══ */
+function copyMomo(){navigator.clipboard.writeText('673567253').then(()=>showToast('📱 673567253 copied!')).catch(()=>showToast('MoMo: 673 567 253'));}
+function shareTesti(text){window.open('https://wa.me/?text='+encodeURIComponent('✝️ TESTIMONY — Abigael Glory Ministries:\n\n"'+text+'"\n\nhttps://facebook.com/share/17RYr3KVJA/'),'_blank');}
+
+/* ══ AI AGENT ══ */
+const AR={
+  pray:[
+    {t:"Let us pray together 🙏\n\nHeavenly Father, I come to You on behalf of this precious soul. You know their every need before they speak it. Let Your peace that surpasses all understanding guard their heart and mind. You are Jehovah Rapha — the God who heals. Let Your light break through every shadow. Touch them right now with Your mighty hand. In Jesus' powerful name. Amen. 🙏",s:"Philippians 4:6-7"},
+    {t:"Father God, we lift up this request before Your throne of grace. You are a present help in time of trouble. Let Your peace flood this heart right now. Remove fear. Remove doubt. For You have not given us a spirit of fear, but of power, love and a sound mind. We trust You. Amen. 🙏",s:"2 Timothy 1:7"}
+  ],
+  verse:[
+    {t:"Here is a word for you:\n\n\"For I know the plans I have for you, declares the Lord — plans to prosper you and not to harm you, plans to give you hope and a future.\"\n\nGod has a plan for your life. You are not forgotten. You are held in His hands right now.",s:"Jeremiah 29:11"},
+    {t:"\"Do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God. And the peace of God, which surpasses all understanding, will guard your hearts.\"\n\nBring it all to God. He promises peace in return.",s:"Philippians 4:6-7"},
+    {t:"\"The Lord is my shepherd; I shall not want. He makes me lie down in green pastures. He leads me beside still waters. He restores my soul.\"\n\nHe is your shepherd today. He sees your weariness and He promises to restore you.",s:"Psalm 23:1-3"}
+  ],
+  books:[{t:"Our library has free and premium books! 📚\n\nFREE (Seeker): The Power of Prayer, Life of Jesus series, Journey to Easter devotional, Gospel Blast, and How to Pray for the Sick.\n\nBLESSED ($9.99/mo): Unlocks Deliverance & Spiritual Warfare, Prophetic Devotionals, Divine Health Blueprint, and all future blessed releases.\n\nANOINTED ($24.99/mo): Everything + coming books Abigael and Sophia, 1-on-1 prayer with Lydia, elite partner status.\n\nScroll up to the Books section to explore and unlock!",s:"Psalm 119:130"}],
+  grant:[{t:"We offer humanitarian grants for:\n\n🏥 Medical bills & hospital emergencies\n🎓 School fees for children\n🍞 Food & basic needs relief\n📖 Free Bibles for prisons & orphanages\n\nTo apply, message Lydia on Facebook or WhatsApp: +237 673 567 253. Every request is reviewed personally and prayerfully.\n\n\"The generous will themselves be blessed.\" — Proverbs 22:9",s:"Proverbs 22:9"}],
+  testimony:[{t:"How beautiful! Rev 12:11 says they overcame by the blood of the Lamb and by the word of their testimony.\n\nYour story has power. It will build faith in others, encourage the broken, and glorify God.\n\nPlease scroll to the Testimony section and use the wizard to share what God has done. You can stay anonymous. Every story is prayed over by Lydia. ✦",s:"Revelation 12:11"}],
+  default:[
+    {t:"I am here for you. Whether you need prayer, a scripture, guidance on books or grants — I am ready to serve you in the name of Jesus.\n\nWhat is on your heart today? 🙏",s:"Matthew 11:28"},
+    {t:"\"Come to me, all who are weary and burdened, and I will give you rest.\" Jesus speaks these words to you right now. Whatever you are carrying, He can carry it with you.\n\nHow can I help you today?",s:"Matthew 11:28-29"}
+  ]
+};
+function getRnd(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function getResp(msg){
+  const m=msg.toLowerCase();
+  if(m.includes('pray')||m.includes('prayer'))return getRnd(AR.pray);
+  if(m.includes('verse')||m.includes('scripture')||m.includes('strength')||m.includes('bible'))return getRnd(AR.verse);
+  if(m.includes('book')||m.includes('free book')||m.includes('library')||m.includes('resource'))return getRnd(AR.books);
+  if(m.includes('grant')||m.includes('medical')||m.includes('hospital')||m.includes('school fee')||m.includes('food'))return getRnd(AR.grant);
+  if(m.includes('testimony')||m.includes('testim')||m.includes('share'))return getRnd(AR.testimony);
+  return getRnd(AR.default);
+}
+
+function sendAgentMsg(){
+  const input=document.getElementById('agentInput');
+  const msg=input.value.trim();if(!msg)return;
+  input.value='';
+  appendMsg(msg,'user');
+  const td=document.createElement('div');td.className='msg-bubble msg-typing';td.id='agentTyping';
+  td.innerHTML='<div class="tdot"></div><div class="tdot"></div><div class="tdot"></div>';
+  document.getElementById('agentBody').appendChild(td);
+  scrollAgent();
+  setTimeout(()=>{
+    const td2=document.getElementById('agentTyping');if(td2)td2.remove();
+    const r=getResp(msg);appendMsg(r.t,'agent',r.s);
+  },1200+Math.random()*800);
+}
+function quickMsg(msg){document.getElementById('agentInput').value=msg;sendAgentMsg();}
+function appendMsg(text,role,src=''){
+  const body=document.getElementById('agentBody');
+  const div=document.createElement('div');
+  div.className='msg-bubble '+(role==='user'?'msg-user':'msg-agent');
+  div.style.alignSelf=role==='user'?'flex-end':'flex-start';
+  div.innerHTML=text.replace(/\n/g,'<br>')+(src&&role==='agent'?`<span class="msg-src">— ${src}</span>`:'');
+  body.appendChild(div);scrollAgent();
+}
+function scrollAgent(){const b=document.getElementById('agentBody');if(b)b.scrollTop=b.scrollHeight;}
+
+/* ══ PAYMENT ══ */
+function openPayment(name,price){
+  document.getElementById('paySummaryName').textContent=name;
+  document.getElementById('paySummaryPrice').textContent=price;
+  document.getElementById('payOverlay').classList.add('open');
+  document.body._payPlan={name,price};
+}
+function closePayment(){document.getElementById('payOverlay').classList.remove('open');}
+function selPayMethod(el){document.querySelectorAll('.pay-method').forEach(m=>m.classList.remove('sel'));el.classList.add('sel');}
+function processPayment(){
+  const name=document.getElementById('pay_name').value.trim();
+  const email=document.getElementById('pay_email').value.trim();
+  if(!name||!email){showToast('⚠️ Please enter your name and email.');return;}
+  const planInfo=document.body._payPlan||{name:'Blessed Plan',price:'$9.99/mo'};
+  const plan=planInfo.name.toLowerCase().includes('anointed')?'anointed':planInfo.name.toLowerCase().includes('blessed')?'blessed':planInfo.name.toLowerCase().includes('fund')||planInfo.name.toLowerCase().includes('any')?'free':'free';
+  const orders=getOrders();
+  orders.push({name,email,plan:planInfo.name,amount:planInfo.price,method:document.querySelector('.pay-method.sel .pm-info h5')?.textContent||'MoMo',date:new Date().toISOString()});
+  LS.set('agm_orders',orders);
+  const member={name,email,plan,joined:new Date().toISOString()};
+  const mems=getMembers();if(!mems.find(m=>m.email===email)){mems.push(member);}LS.set('agm_members',mems);
+  LS.set('agm_current_member',member);
+  closePayment();renderStore();
+  const pLabel=plan==='anointed'?'👑 Anointed':plan==='blessed'?'💜 Blessed':'🆓 Free';
+  showModal('🎉',`Welcome, ${name.split(' ')[0]}!`,`Your ${pLabel} plan is now active! All your resources are unlocked. Lydia will personally pray for you. Check your email for access details. God bless you!`);
+  ['pay_name','pay_email','pay_phone','pay_country','pay_promo'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+}
+
+/* ══ ADMIN ══ */
+function showAdminLogin(){document.getElementById('adminLoginOverlay').style.display='flex';}
+function closeAdminLogin(){document.getElementById('adminLoginOverlay').style.display='none';}
+function verifyAdmin(){
+  const p=document.getElementById('adminPassInput').value;
+  const stored=localStorage.getItem('agm_admin_pass')||ADMIN_PASS_DEFAULT;
+  if(p===stored){
+    closeAdminLogin();
+    document.getElementById('view-home').classList.remove('active');
+    document.getElementById('view-dashboard').classList.add('active');
+    loadAdminDashboard();renderResourcesTable();
+    document.getElementById('adminPassInput').value='';
+  } else {showToast('⚠️ Incorrect password.');document.getElementById('adminPassInput').value='';}
+}
+function exitAdmin(){
+  document.getElementById('view-dashboard').classList.remove('active');
+  document.getElementById('view-home').classList.add('active');
+}
+function savePassword(){
+  const p=document.getElementById('s_newpass').value;
+  const c=document.getElementById('s_confirm').value;
+  if(!p){showToast('⚠️ Enter a new password.');return;}
+  if(p!==c){showToast('⚠️ Passwords do not match.');return;}
+  localStorage.setItem('agm_admin_pass',p);showToast('✅ Password saved!');
+}
+
+/* ══ ADMIN PANELS ══ */
+function showAdmPanel(panel,btn){
+  document.querySelectorAll('.adm-panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.adm-tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('ap-'+panel)?.classList.add('on');
+  if(btn)btn.classList.add('on');
+  if(panel==='overview')loadAdminDashboard();
+  else if(panel==='members')renderMembersTable();
+  else if(panel==='testimonies')renderTestiTable();
+  else if(panel==='prayers')renderPrayerTable();
+  else if(panel==='upload')renderResourcesTable();
+  else if(panel==='orders')renderOrdersTable();
+  else if(panel==='messages')renderMessagesTable();
+  else if(panel==='events')renderEventsTable();
+}
+
+function loadAdminDashboard(){
+  const mems=getMembers(),tests=getTestimonies(),prayers=getPrayers(),orders=getOrders(),res=getResources();
+  ['as-members','as-test','as-prayers','as-orders'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.textContent=[mems.length,tests.length,prayers.length,orders.length][i];});
+  const el=document.getElementById('as-content');if(el)el.textContent=res.length;
+  const rev=orders.reduce((s,o)=>{const v=parseFloat((o.amount||'').replace(/[^0-9.]/g,''))||0;return s+v;},0);
+  const rel=document.getElementById('as-revenue');if(rel)rel.textContent='$'+rev.toFixed(2);
+  const act=document.getElementById('overviewActivity');if(!act)return;
+  const items=[...mems.slice(-3).map(m=>`<tr><td style="color:#94A3B8;font-size:12px;">👥 ${m.name} registered (${m.plan||'free'})</td><td style="color:#475569;font-size:11px;">${new Date(m.joined||Date.now()).toLocaleDateString()}</td></tr>`),
+    ...tests.slice(-2).map(t=>`<tr><td style="color:#94A3B8;font-size:12px;">✦ ${t.name} submitted testimony</td><td style="color:#475569;font-size:11px;">${new Date(t.date||Date.now()).toLocaleDateString()}</td></tr>`),
+    ...prayers.slice(-2).map(p=>`<tr><td style="color:#94A3B8;font-size:12px;">🙏 ${p.name} sent prayer request</td><td style="color:#475569;font-size:11px;">${new Date(p.date||Date.now()).toLocaleDateString()}</td></tr>`)];
+  act.innerHTML=items.length?`<table class="adm-tbl"><thead><tr><th>Activity</th><th>Date</th></tr></thead><tbody>${items.join('')}</tbody></table>`:'<p style="text-align:center;padding:18px;color:#475569;font-size:13px;">No activity yet. Share the site to start receiving registrations.</p>';
+}
+
+function renderMembersTable(){
+  const tbody=document.getElementById('membersTable');if(!tbody)return;
+  const mems=getMembers();
+  if(!mems.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">No members yet.</td></tr>';return;}
+  tbody.innerHTML=mems.map(m=>`<tr><td><strong style="color:#E2E8F0;">${m.name}</strong></td><td style="color:#94A3B8;font-size:12px;">${m.email||'—'}</td><td><span style="font-size:10px;padding:2px 9px;border-radius:12px;background:${m.plan==='anointed'?'rgba(212,160,18,.12)':m.plan==='blessed'?'rgba(124,58,237,.12)':'rgba(255,255,255,.07)'};color:${m.plan==='anointed'?'var(--gold3)':m.plan==='blessed'?'#C4B5FD':'var(--muted)'};font-weight:800;">${m.plan||'free'}</span></td><td style="color:#94A3B8;font-size:12px;">${m.country||'—'}</td><td style="color:#475569;font-size:11px;">${new Date(m.joined||Date.now()).toLocaleDateString()}</td></tr>`).join('');
+}
+function exportMembers(){
+  const mems=getMembers();if(!mems.length){showToast('⚠️ No members to export.');return;}
+  const csv=['Name,Email,Plan,Country,Joined',...mems.map(m=>`"${m.name}","${m.email}","${m.plan||'free'}","${m.country||''}","${m.joined||''}"`)].join('\n');
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='AGM_Members.csv';a.click();
+  showToast('✅ Members exported!');
+}
+
+function renderTestiTable(){
+  const tbody=document.getElementById('testiTable');if(!tbody)return;
+  const tests=getTestimonies();
+  if(!tests.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">No testimonies yet.</td></tr>';return;}
+  tbody.innerHTML=tests.map((t,i)=>`<tr><td><strong style="color:#E2E8F0;">${t.name}</strong></td><td style="color:#94A3B8;font-size:12px;">${t.category}</td><td style="color:#94A3B8;font-size:12px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-style:italic;">${t.story}</td><td><span style="font-size:10px;padding:2px 9px;border-radius:12px;background:${t.approved?'rgba(0,200,83,.1)':'rgba(201,148,58,.1)'};color:${t.approved?'var(--life2)':'var(--gold2)'};font-weight:800;">${t.approved?'Approved':'Pending'}</span></td><td style="white-space:nowrap;"><button class="aab-approve" onclick="approveTest(${i})">✓</button> <button class="aab-del" onclick="delTest(${i})">✕</button></td></tr>`).join('');
+}
+function approveTest(i){const t=getTestimonies();if(t[i]){t[i].approved=true;LS.set('agm_testimonies',t);addTestiToWall(t[i]);renderTestiTable();showToast('✅ Approved!');}}
+function delTest(i){const t=getTestimonies();t.splice(i,1);LS.set('agm_testimonies',t);renderTestiTable();showToast('🗑 Removed.');}
+
+function renderPrayerTable(){
+  const tbody=document.getElementById('prayerTable');if(!tbody)return;
+  const prayers=getPrayers();
+  if(!prayers.length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:#475569;padding:24px;">No requests yet.</td></tr>';return;}
+  tbody.innerHTML=prayers.map((p,i)=>`<tr><td><strong style="color:#E2E8F0;">${p.name}</strong></td><td style="color:#94A3B8;font-size:12px;">${p.country||'—'}</td><td style="color:#94A3B8;font-size:12px;">${p.category}</td><td style="font-size:12px;color:#CBD5E1;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.request}</td><td style="color:#475569;font-size:11px;">${new Date(p.date||Date.now()).toLocaleDateString()}</td><td><button class="aab-approve" onclick="markPrayed(${i})">${p.prayed?'✓':'🙏'}</button></td></tr>`).join('');
+}
+function markPrayed(i){const p=getPrayers();if(p[i]){p[i].prayed=true;LS.set('agm_prayers',p);renderPrayerTable();showToast('🙏 Marked as prayed!');}}
+
+function renderResourcesTable(){
+  const tbody=document.getElementById('resourcesTable');if(!tbody)return;
+  const res=getResources();
+  if(!res.length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:#475569;padding:24px;">No resources.</td></tr>';return;}
+  tbody.innerHTML=res.map((r,i)=>`<tr><td><strong style="color:#E2E8F0;">${r.title}</strong></td><td style="color:#94A3B8;text-transform:capitalize;">${r.type}</td><td style="font-size:10px;padding:2px 9px;border-radius:12px;font-weight:800;display:inline-block;color:${r.tier==='anointed'?'var(--gold3)':r.tier==='blessed'?'#C4B5FD':'var(--life2)'};background:${r.tier==='anointed'?'rgba(212,160,18,.1)':r.tier==='blessed'?'rgba(124,58,237,.1)':'rgba(0,200,83,.1)'};">${r.tier}</td><td><span style="font-size:10px;padding:2px 9px;border-radius:12px;font-weight:800;background:rgba(0,200,83,.1);color:var(--life2);">${r.status}</span></td><td style="color:#94A3B8;">${r.downloads||0}</td><td><button class="aab-del" onclick="delRes(${i})">✕</button></td></tr>`).join('');
+}
+function delRes(i){const res=getResources();res.splice(i,1);saveResources(res);renderResourcesTable();renderStore();showToast('🗑 Removed.');}
+
+async function uploadContent(){
+  const title=document.getElementById('u_title').value.trim();
+  const type=document.getElementById('u_type').value;
+  if(!title||!type){showToast('⚠️ Title and type are required.');return;}
+  const prog=document.getElementById('uplProg');prog.style.display='block';
+  document.getElementById('uplStatus').textContent='Saving…';
+  let pct=0;const iv=setInterval(()=>{pct=Math.min(pct+22,88);document.getElementById('uplFill').style.width=pct+'%';document.getElementById('uplPct').textContent=pct+'%';},130);
+  const r={id:'r'+(Date.now()),title,type,tier:document.getElementById('u_tier').value||'free',status:document.getElementById('u_status').value||'published',desc:document.getElementById('u_desc').value.trim(),scripture:document.getElementById('u_scripture').value.trim(),cover:document.getElementById('u_cover').value.trim(),pdf:document.getElementById('u_pdf').value.trim(),fb:document.getElementById('u_fb').value.trim(),tags:document.getElementById('u_tags').value.trim(),price:parseFloat(document.getElementById('u_price').value)||0,downloads:0,date:new Date().toISOString()};
+  const res=getResources();res.unshift(r);saveResources(res);
+  clearInterval(iv);document.getElementById('uplFill').style.width='100%';document.getElementById('uplPct').textContent='100%';document.getElementById('uplStatus').textContent='Saved!';
+  setTimeout(()=>{prog.style.display='none';},1800);
+  showToast('✅ Resource published!');
+  ['u_title','u_desc','u_scripture','u_cover','u_pdf','u_fb','u_tags'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  document.getElementById('u_type').value='';document.getElementById('u_tier').value='free';document.getElementById('u_status').value='published';document.getElementById('u_price').value='';
+  renderResourcesTable();renderStore();
+}
+
+function renderOrdersTable(){
+  const tbody=document.getElementById('ordersTable');if(!tbody)return;
+  const orders=getOrders();
+  if(!orders.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">No orders yet.</td></tr>';return;}
+  tbody.innerHTML=orders.map(o=>`<tr><td><strong style="color:#E2E8F0;">${o.name}</strong></td><td style="color:#94A3B8;">${o.plan}</td><td style="color:var(--life2);font-weight:800;">${o.amount}</td><td style="color:#94A3B8;font-size:12px;">${o.method}</td><td style="color:#475569;font-size:11px;">${new Date(o.date).toLocaleDateString()}</td></tr>`).join('');
+}
+
+function renderMessagesTable(){
+  const tbody=document.getElementById('messagesTable');if(!tbody)return;
+  const msgs=getMessages();
+  if(!msgs.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:#475569;padding:24px;">No messages yet.</td></tr>';return;}
+  tbody.innerHTML=msgs.map(m=>`<tr><td><strong style="color:#E2E8F0;">${m.name}</strong></td><td style="color:#94A3B8;font-size:12px;">${m.email}</td><td style="color:#CBD5E1;font-size:12px;">${m.subject||'—'}</td><td style="font-size:12px;color:#94A3B8;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${m.message}</td><td style="color:#475569;font-size:11px;">${new Date(m.date||Date.now()).toLocaleDateString()}</td></tr>`).join('');
+}
+
+function addEvent(){
+  const title=document.getElementById('ev_title').value.trim();
+  const date=document.getElementById('ev_date').value;
+  if(!title||!date){showToast('⚠️ Title and date required.');return;}
+  const evs=getEvents();evs.unshift({title,date,type:document.getElementById('ev_type').value,desc:document.getElementById('ev_desc').value.trim(),fb:document.getElementById('ev_fb').value.trim(),active:true,id:'ev'+Date.now()});
+  LS.set('agm_events',evs);showToast('✅ Event added!');
+  ['ev_title','ev_date','ev_desc','ev_fb'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  renderEventsTable();
+}
+function renderEventsTable(){
+  const tbody=document.getElementById('eventsTable');if(!tbody)return;
+  const evs=getEvents();
+  if(!evs.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:#475569;padding:24px;">No events yet.</td></tr>';return;}
+  tbody.innerHTML=evs.map((e,i)=>`<tr><td><strong style="color:#E2E8F0;">${e.title}</strong></td><td style="color:#94A3B8;">${e.date}</td><td style="color:#94A3B8;text-transform:capitalize;">${e.type}</td><td><button class="aab-del" onclick="delEvent(${i})">✕</button></td></tr>`).join('');
+}
+function delEvent(i){const evs=getEvents();evs.splice(i,1);LS.set('agm_events',evs);renderEventsTable();showToast('🗑 Removed.');}
+
+/* ══ MODALS & TOAST ══ */
+function showModal(ico,title,msg){
+  document.getElementById('modalIco').textContent=ico;
+  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalMsg').textContent=msg;
+  document.getElementById('successModal').classList.add('open');
+}
+function closeModal(){document.getElementById('successModal').classList.remove('open');}
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3400);
+}
+
+/* CLOSE ON OVERLAY CLICK */
+document.getElementById('payOverlay').addEventListener('click',function(e){if(e.target===this)closePayment();});
+document.getElementById('successModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+</script>
+</body>
+</html>
