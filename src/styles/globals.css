@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+@theme {
+  /* AGM Brand Palette — Deep Indigo faith meets African gold */
+  --color-night: #0D0F1A;
+  --color-deep: #131629;
+  --color-ink: #1C2040;
+  --color-gold: #D4A843;
+  --color-gold-light: #F0C96B;
+  --color-gold-dim: #8A6B28;
+  --color-spirit: #6B5CE7;
+  --color-spirit-light: #9B8FF5;
+  --color-ember: #E85D3A;
+  --color-pearl: #F5F2EC;
+  --color-pearl-dim: #E8E2D9;
+  --color-mist: #B8C0CC;
+  --color-slate: #4A5568;
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Spacing scale */
+  --spacing-section: 6rem;
+  --spacing-container: 1280px;
+
+  /* Radius */
+  --radius-card: 1rem;
+  --radius-btn: 0.5rem;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.3);
+  --shadow-glow: 0 0 40px rgba(212,168,67,0.15);
+}
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-night);
+    color: var(--color-pearl);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    min-height: 100dvh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background-color: var(--color-gold);
+    color: var(--color-night);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    background: linear-gradient(135deg, var(--color-gold), var(--color-gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-spirit {
+    background: linear-gradient(135deg, var(--color-spirit), var(--color-spirit-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-card {
+    background: rgba(28, 32, 64, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 168, 67, 0.12);
+  }
+
+  .bg-card-hover {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .bg-card-hover:hover {
+    border-color: rgba(212, 168, 67, 0.35);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 30px rgba(212, 168, 67, 0.2);
+  }
+
+  .glow-spirit {
+    box-shadow: 0 0 30px rgba(107, 92, 231, 0.25);
+  }
+
+  .section-padding {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+  }
+
+  .container-max {
+    max-width: var(--spacing-container);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--color-deep); }
+  ::-webkit-scrollbar-thumb { background: var(--color-gold-dim); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-gold); }
+}
+
+/* Ambient background glow */
+.ambient-bg::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  right: -10%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(107,92,231,0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambient-bg::after {
+  content: '';
+  position: fixed;
+  bottom: -20%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(212,168,67,0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}

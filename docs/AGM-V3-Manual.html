@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AGM V3 — Build Manual & Deployment Guide</title>
+<style>
+  :root {
+    --night: #0D0F1A;
+    --deep: #131629;
+    --ink: #1C2040;
+    --gold: #D4A843;
+    --gold-light: #F0C96B;
+    --spirit: #6B5CE7;
+    --ember: #E85D3A;
+    --pearl: #F5F2EC;
+    --mist: #B8C0CC;
+    --slate: #4A5568;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Georgia', serif;
+    background: var(--night);
+    color: var(--pearl);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  .page { max-width: 900px; margin: 0 auto; padding: 60px 32px; }
+  h1 { font-size: 2.8rem; color: var(--gold); margin-bottom: 8px; letter-spacing: -0.02em; }
+  h2 { font-size: 1.6rem; color: var(--gold); margin: 48px 0 16px; border-bottom: 1px solid rgba(212,168,67,0.2); padding-bottom: 10px; }
+  h3 { font-size: 1.15rem; color: var(--pearl); margin: 28px 0 10px; }
+  h4 { font-size: 0.95rem; color: var(--gold); margin: 20px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+  p { color: var(--mist); margin-bottom: 14px; }
+  a { color: var(--gold); }
+  .subtitle { color: var(--mist); font-size: 1.1rem; margin-bottom: 40px; }
+  .badge {
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    background: rgba(212,168,67,0.1); border: 1px solid rgba(212,168,67,0.25);
+    color: var(--gold); font-size: 12px; font-family: monospace; margin: 2px;
+  }
+  .badge.blue { background: rgba(107,92,231,0.1); border-color: rgba(107,92,231,0.25); color: #9B8FF5; }
+  .badge.red { background: rgba(232,93,58,0.1); border-color: rgba(232,93,58,0.25); color: var(--ember); }
+  .badge.green { background: rgba(72,187,120,0.1); border-color: rgba(72,187,120,0.25); color: #68D391; }
+  code {
+    font-family: 'Courier New', monospace;
+    background: var(--ink);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 2px 7px; border-radius: 5px; font-size: 0.88em; color: var(--gold-light);
+  }
+  pre {
+    background: var(--ink); border: 1px solid rgba(212,168,67,0.15);
+    border-radius: 12px; padding: 24px; overflow-x: auto;
+    margin: 16px 0 24px; font-size: 13px; line-height: 1.6;
+  }
+  pre code { background: none; border: none; padding: 0; color: var(--pearl); }
+  .card {
+    background: rgba(28,32,64,0.6); border: 1px solid rgba(212,168,67,0.12);
+    border-radius: 14px; padding: 24px; margin: 16px 0;
+  }
+  .card.warn { border-color: rgba(232,93,58,0.3); background: rgba(232,93,58,0.05); }
+  .card.tip { border-color: rgba(72,187,120,0.3); background: rgba(72,187,120,0.05); }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; }
+  th { text-align: left; padding: 10px 14px; color: var(--gold); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid rgba(212,168,67,0.2); }
+  td { padding: 10px 14px; color: var(--mist); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
+  td:first-child { color: var(--pearl); font-weight: 500; }
+  ol, ul { color: var(--mist); padding-left: 22px; margin-bottom: 16px; }
+  li { margin-bottom: 8px; line-height: 1.6; }
+  li::marker { color: var(--gold); }
+  .step {
+    display: flex; gap: 16px; margin-bottom: 16px;
+    padding: 18px; background: var(--ink); border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--gold); color: var(--night);
+    font-weight: bold; font-size: 13px; display: flex;
+    align-items: center; justify-content: center; shrink: 0; flex-shrink: 0;
+  }
+  .toc a { display: block; padding: 5px 0; color: var(--mist); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .toc a:hover { color: var(--gold); }
+  .toc { margin-bottom: 48px; }
+  .header-bar {
+    background: linear-gradient(135deg, rgba(107,92,231,0.15), rgba(212,168,67,0.1));
+    border-bottom: 1px solid rgba(212,168,67,0.15);
+    padding: 32px; text-align: center; margin-bottom: 0;
+  }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 40px 0; }
+</style>
+</head>
+<body>
+
+<div class="header-bar">
+  <h1>AGM V3</h1>
+  <p class="subtitle">Abigael Glory Ministries — Build Manual & Deployment Guide</p>
+  <div>
+    <span class="badge">Next.js 15.3</span>
+    <span class="badge">TypeScript 5.8</span>
+    <span class="badge">Tailwind v4</span>
+    <span class="badge blue">Supabase</span>
+    <span class="badge blue">OpenRouter AI</span>
+    <span class="badge green">Vercel</span>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- TOC -->
+  <h2>Table of Contents</h2>
+  <nav class="toc">
+    <a href="#overview">1. Project Overview</a>
+    <a href="#structure">2. File Structure</a>
+    <a href="#stack">3. Technology Stack</a>
+    <a href="#setup">4. Local Setup</a>
+    <a href="#supabase">5. Supabase Setup</a>
+    <a href="#env">6. Environment Variables</a>
+    <a href="#payments">7. Payment Setup (PayPal + Flutterwave)</a>
+    <a href="#ai">8. AI Configuration (OpenRouter)</a>
+    <a href="#email">9. Email Setup (Resend)</a>
+    <a href="#deploy">10. Deploy to Vercel</a>
+    <a href="#admin">11. Admin Setup</a>
+    <a href="#pricing">12. Pricing & Monetization</a>
+    <a href="#affiliate">13. Affiliate System</a>
+    <a href="#scaling">14. Scaling Guide</a>
+    <a href="#costs">15. Cost Breakdown</a>
+  </nav>
+
+  <!-- OVERVIEW -->
+  <h2 id="overview">1. Project Overview</h2>
+  <p>AGM V3 is a full-stack enterprise ministry platform with subscription monetization, AI-powered content tools, an affiliate system, and complete admin control. It is built to be deployed at zero fixed monthly cost at launch.</p>
+
+  <table>
+    <tr><th>Layer</th><th>Purpose</th><th>Technology</th></tr>
+    <tr><td>Frontend</td><td>Public site + member dashboard + admin</td><td>Next.js 15.3 + TypeScript + Tailwind v4</td></tr>
+    <tr><td>Backend</td><td>Auth, database, storage, functions</td><td>Supabase (PostgreSQL + Auth + Edge)</td></tr>
+    <tr><td>AI</td><td>Sermon summaries, devotionals, email drafts</td><td>OpenRouter → Gemini 2.5 Flash / Claude / GPT-4o mini</td></tr>
+    <tr><td>Payments</td><td>Subscriptions + donations</td><td>PayPal + Flutterwave</td></tr>
+    <tr><td>Email</td><td>Broadcasts + transactional</td><td>Resend</td></tr>
+    <tr><td>Hosting</td><td>Frontend deployment</td><td>Vercel</td></tr>
+  </table>
+
+  <!-- STRUCTURE -->
+  <h2 id="structure">2. File Structure</h2>
+  <pre><code>agm-v3/
+├── src/
+│   ├── app/
+│   │   ├── (auth)/           # Login, Register, Reset Password
+│   │   ├── (public)/         # Homepage, Sermons, Prayer, Donate, Events, Blog
+│   │   ├── (dashboard)/      # Member dashboard, Vault, Courses, Affiliate, Settings
+│   │   ├── (admin)/          # Admin panel — all management pages
+│   │   └── api/              # All API routes
+│   │       ├── ai/           # sermon-summary, devotional, email-draft
+│   │       ├── admin/        # broadcast
+│   │       ├── auth/         # callback
+│   │       ├── donations/    # create + history
+│   │       ├── prayer/       # wall + submit
+│   │       ├── subscriptions/# create + cancel
+│   │       └── webhooks/     # PayPal + Flutterwave
+│   ├── components/
+│   │   ├── admin/            # AdminSidebar, AdminAnalyticsClient
+│   │   ├── layout/           # Navbar, Footer, DashboardSidebar, DashboardTopbar
+│   │   ├── sections/         # All homepage sections
+│   │   └── settings/         # SettingsClient
+│   ├── lib/
+│   │   └── supabase/         # client.ts + server.ts
+│   ├── styles/
+│   │   └── globals.css       # Tailwind v4 + AGM design system
+│   ├── types/
+│   │   └── index.ts          # All TypeScript types + PRICING_TIERS
+│   └── middleware.ts          # Auth route protection
+├── supabase/
+│   ├── migrations/
+│   │   └── 001_initial_schema.sql   # Complete DB schema
+│   └── config.toml
+├── .env.example
+├── next.config.ts
+├── package.json
+├── tsconfig.json
+└── vercel.json</code></pre>
+
+  <!-- SETUP -->
+  <h2 id="setup">4. Local Setup</h2>
+  <div class="step"><div class="step-num">1</div><div><strong>Clone or unzip the project</strong><br/><code>cd agm-v3</code></div></div>
+  <div class="step"><div class="step-num">2</div><div><strong>Install dependencies</strong><pre><code>npm install</code></pre></div></div>
+  <div class="step"><div class="step-num">3</div><div><strong>Copy environment file</strong><pre><code>cp .env.example .env.local</code></pre>Fill in all values — see Section 6.</div></div>
+  <div class="step"><div class="step-num">4</div><div><strong>Run Supabase migration</strong><pre><code>npx supabase db push</code></pre></div></div>
+  <div class="step"><div class="step-num">5</div><div><strong>Start dev server</strong><pre><code>npm run dev</code></pre>Open <a href="http://localhost:3000">http://localhost:3000</a></div></div>
+
+  <!-- SUPABASE -->
+  <h2 id="supabase">5. Supabase Setup</h2>
+  <ol>
+    <li>Go to <a href="https://supabase.com">supabase.com</a> and create a new project (free tier is enough at launch).</li>
+    <li>In your Supabase project, go to <strong>SQL Editor</strong> and paste the contents of <code>supabase/migrations/001_initial_schema.sql</code>. Run it.</li>
+    <li>Enable <strong>Google OAuth</strong> in Authentication → Providers. Add your Google OAuth credentials.</li>
+    <li>Under Authentication → URL Configuration, add your site URL and redirect URLs.</li>
+    <li>Go to Settings → API. Copy your <strong>Project URL</strong>, <strong>Anon Key</strong>, and <strong>Service Role Key</strong>.</li>
+    <li>Enable the <strong>pgvector</strong> extension in Database → Extensions for semantic sermon search.</li>
+  </ol>
+  <div class="card tip">
+    <strong>Tip:</strong> The schema includes Row Level Security on every table. Non-admin users can only see and modify their own data. Admins are controlled by the <code>role</code> field in <code>profiles</code>.
+  </div>
+
+  <!-- ENV -->
+  <h2 id="env">6. Environment Variables</h2>
+  <table>
+    <tr><th>Variable</th><th>Where to Get It</th><th>Required</th></tr>
+    <tr><td>NEXT_PUBLIC_SUPABASE_URL</td><td>Supabase → Settings → API</td><td>✅ Yes</td></tr>
+    <tr><td>NEXT_PUBLIC_SUPABASE_ANON_KEY</td><td>Supabase → Settings → API</td><td>✅ Yes</td></tr>
+    <tr><td>SUPABASE_SERVICE_ROLE_KEY</td><td>Supabase → Settings → API</td><td>✅ Yes</td></tr>
+    <tr><td>NEXT_PUBLIC_APP_URL</td><td>Your domain, e.g. https://agm.church</td><td>✅ Yes</td></tr>
+    <tr><td>OPENROUTER_API_KEY</td><td>openrouter.ai → Keys</td><td>✅ For AI features</td></tr>
+    <tr><td>RESEND_API_KEY</td><td>resend.com → API Keys</td><td>✅ For email</td></tr>
+    <tr><td>NEXT_PUBLIC_PAYPAL_CLIENT_ID</td><td>developer.paypal.com</td><td>✅ For PayPal donations</td></tr>
+    <tr><td>PAYPAL_CLIENT_SECRET</td><td>developer.paypal.com</td><td>✅ For PayPal webhooks</td></tr>
+    <tr><td>NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY</td><td>dashboard.flutterwave.com</td><td>For African payments</td></tr>
+    <tr><td>FLUTTERWAVE_SECRET_KEY</td><td>dashboard.flutterwave.com</td><td>For Flutterwave webhooks</td></tr>
+  </table>
+
+  <!-- PAYMENTS -->
+  <h2 id="payments">7. Payment Setup</h2>
+  <h3>PayPal</h3>
+  <ol>
+    <li>Go to <a href="https://developer.paypal.com">developer.paypal.com</a>.</li>
+    <li>Create a new app in the Developer Dashboard.</li>
+    <li>Copy the <strong>Client ID</strong> and <strong>Secret</strong>.</li>
+    <li>Test in Sandbox mode first, then switch to Live when ready.</li>
+    <li>Set webhook URL: <code>https://yourdomain.com/api/webhooks/payments</code></li>
+    <li>Subscribe to event: <code>PAYMENT.CAPTURE.COMPLETED</code></li>
+  </ol>
+
+  <h3>Flutterwave (African Payments)</h3>
+  <ol>
+    <li>Go to <a href="https://dashboard.flutterwave.com">dashboard.flutterwave.com</a> and create an account.</li>
+    <li>Under Settings → API, get your <strong>Public Key</strong> and <strong>Secret Key</strong>.</li>
+    <li>Add the Flutterwave inline script to your HTML head (or use next/script).</li>
+    <li>Set webhook URL: <code>https://yourdomain.com/api/webhooks/payments</code></li>
+    <li>Supports: MTN Mobile Money, Orange Money, Visa/Mastercard, bank transfer across 30+ African countries.</li>
+  </ol>
+  <div class="card">
+    <strong>Note for Cameroon:</strong> Flutterwave supports XAF (CFA Franc) and USD. Always set currency to USD for consistency with PayPal. Members in Cameroon can pay via MTN MoMo or Orange Money through Flutterwave.
+  </div>
+
+  <!-- AI -->
+  <h2 id="ai">8. AI Configuration</h2>
+  <ol>
+    <li>Create account at <a href="https://openrouter.ai">openrouter.ai</a>.</li>
+    <li>Generate an API key from your dashboard.</li>
+    <li>Add credits — start with $5, which covers thousands of requests.</li>
+  </ol>
+
+  <h3>AI Model Routing</h3>
+  <table>
+    <tr><th>Task</th><th>Model</th><th>Cost</th></tr>
+    <tr><td>Sermon descriptions</td><td>google/gemini-2.0-flash-exp:free</td><td>Free</td></tr>
+    <tr><td>Devotional generation</td><td>anthropic/claude-sonnet-4-5</td><td>~$0.003/call</td></tr>
+    <tr><td>Email drafts</td><td>openai/gpt-4o-mini</td><td>~$0.001/call</td></tr>
+  </table>
+
+  <!-- EMAIL -->
+  <h2 id="email">9. Email Setup (Resend)</h2>
+  <ol>
+    <li>Create account at <a href="https://resend.com">resend.com</a>.</li>
+    <li>Verify your sending domain (<code>agm.church</code>) by adding DNS records.</li>
+    <li>Create an API key and add it to <code>RESEND_API_KEY</code>.</li>
+    <li>Free tier: 3,000 emails/day, 100/month on the free plan — enough for early stage.</li>
+    <li>Update the <code>from</code> address in <code>/api/admin/broadcast/route.ts</code> to match your verified domain.</li>
+  </ol>
+
+  <!-- DEPLOY -->
+  <h2 id="deploy">10. Deploy to Vercel</h2>
+  <div class="step"><div class="step-num">1</div><div>Push the project to a GitHub repository.</div></div>
+  <div class="step"><div class="step-num">2</div><div>Go to <a href="https://vercel.com">vercel.com</a> → New Project → Import from GitHub.</div></div>
+  <div class="step"><div class="step-num">3</div><div>Add all environment variables from <code>.env.example</code> in the Vercel dashboard under Settings → Environment Variables.</div></div>
+  <div class="step"><div class="step-num">4</div><div>Set Root Directory to the project root. Framework Preset: Next.js. Click Deploy.</div></div>
+  <div class="step"><div class="step-num">5</div><div>Add your custom domain in Vercel → Settings → Domains. Point DNS to Vercel's nameservers.</div></div>
+  <div class="step"><div class="step-num">6</div><div>In Supabase → Authentication → URL Configuration, update Site URL and Redirect URLs to your production domain.</div></div>
+
+  <!-- ADMIN -->
+  <h2 id="admin">11. Admin Setup</h2>
+  <p>After deploying, make yourself a super admin:</p>
+  <pre><code>-- Run in Supabase SQL Editor:
+UPDATE public.profiles
+SET role = 'super_admin'
+WHERE email = 'your-email@example.com';</code></pre>
+  <p>Then visit <code>https://yourdomain.com/admin</code> to access the full admin panel.</p>
+  <h3>Admin Capabilities</h3>
+  <ul>
+    <li>View all members, change tiers, manage roles</li>
+    <li>Upload and publish sermons with AI-generated descriptions</li>
+    <li>Send email broadcasts to all or specific tier members</li>
+    <li>View analytics — revenue, growth, member distribution</li>
+    <li>Manage affiliates and approve payouts</li>
+    <li>Control all site settings and feature flags</li>
+  </ul>
+
+  <!-- PRICING -->
+  <h2 id="pricing">12. Pricing & Monetization</h2>
+  <table>
+    <tr><th>Tier</th><th>Monthly</th><th>Annual</th><th>Key Unlock</th></tr>
+    <tr><td>Seeker (Free)</td><td>$0</td><td>$0</td><td>10 sermons/mo, public devotionals</td></tr>
+    <tr><td>Believer</td><td>$5</td><td>$50</td><td>Full sermon library, downloads</td></tr>
+    <tr><td>Disciple ⭐</td><td>$10</td><td>$100</td><td>All courses, live stream, AI companion</td></tr>
+    <tr><td>Partner</td><td>$25</td><td>$250</td><td>Prayer calls, partner content</td></tr>
+    <tr><td>Kingdom Builder</td><td>$49</td><td>$490</td><td>Affiliate dashboard (30% commission)</td></tr>
+  </table>
+
+  <!-- AFFILIATE -->
+  <h2 id="affiliate">13. Affiliate System</h2>
+  <ul>
+    <li>Available exclusively to Kingdom Builder tier members ($49/mo)</li>
+    <li>Each member gets a unique referral code (auto-generated on signup)</li>
+    <li>Referral links: <code>https://agm.church/register?ref=YOURCODE</code></li>
+    <li>Commission: 30% of every subscription payment for referred members</li>
+    <li>Payouts: Monthly via PayPal or Payoneer — manually approved via admin panel</li>
+    <li>Dashboard: Real-time referral tracking, commission totals, pending payouts</li>
+  </ul>
+
+  <!-- SCALING -->
+  <h2 id="scaling">14. Scaling Guide</h2>
+  <table>
+    <tr><th>When</th><th>Action</th><th>Cost</th></tr>
+    <tr><td>500+ members</td><td>Upgrade to Supabase Pro</td><td>$25/mo</td></tr>
+    <tr><td>High traffic</td><td>Upgrade to Vercel Pro</td><td>$20/mo</td></tr>
+    <tr><td>Video hosting</td><td>Add Cloudflare Stream</td><td>$5/mo + usage</td></tr>
+    <tr><td>10K+ emails</td><td>Upgrade Resend plan</td><td>$20/mo</td></tr>
+    <tr><td>Heavy AI usage</td><td>Add OpenRouter credits</td><td>Pay per use</td></tr>
+  </table>
+
+  <!-- COSTS -->
+  <h2 id="costs">15. Launch Cost Breakdown</h2>
+  <table>
+    <tr><th>Service</th><th>Cost at Launch</th><th>Notes</th></tr>
+    <tr><td>Vercel</td><td>$0</td><td>Hobby tier</td></tr>
+    <tr><td>Supabase</td><td>$0</td><td>Free tier (500MB DB, 1GB storage)</td></tr>
+    <tr><td>Resend</td><td>$0</td><td>3,000 emails/day free</td></tr>
+    <tr><td>OpenRouter AI</td><td>~$2–5/mo</td><td>Pay per use, very cheap at launch</td></tr>
+    <tr><td>PayPal</td><td>~2.9% + $0.30</td><td>Per transaction only</td></tr>
+    <tr><td>Flutterwave</td><td>~1.4% per transaction</td><td>African payments</td></tr>
+    <tr><td><strong>Total Fixed</strong></td><td><strong>~$2–5/mo</strong></td><td>Near-zero until scaling</td></tr>
+  </table>
+
+  <hr/>
+  <p style="text-align:center; color: var(--slate); font-size: 13px; margin-top: 40px;">
+    AGM V3 — Built for Abigael Glory Ministries · Douala, Cameroon<br/>
+    Architecture by CTO-mode AI pipeline · Production-grade, GitHub-ready, zero-cost startup
+  </p>
+</div>
+</body>
+</html>

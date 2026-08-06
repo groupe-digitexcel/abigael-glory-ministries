@@ -1,0 +1,29 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "next build",
+  "devCommand": "next dev --turbopack",
+  "installCommand": "npm install",
+  "regions": ["cdg1"],
+  "env": {
+    "NEXT_PUBLIC_APP_URL": "@agm_app_url",
+    "NEXT_PUBLIC_SUPABASE_URL": "@agm_supabase_url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@agm_supabase_anon_key",
+    "SUPABASE_SERVICE_ROLE_KEY": "@agm_supabase_service_role",
+    "OPENROUTER_API_KEY": "@agm_openrouter_key",
+    "RESEND_API_KEY": "@agm_resend_key",
+    "CHARIOW_API_KEY": "@agm_chariow_api_key",
+    "CHARIOW_PULSE_SECRET": "@agm_chariow_pulse_secret",
+    "CHARIOW_PRODUCT_DONATION_10": "@agm_chariow_donation_10",
+    "CHARIOW_PRODUCT_DONATION_25": "@agm_chariow_donation_25",
+    "CHARIOW_PRODUCT_DONATION_50": "@agm_chariow_donation_50",
+    "CHARIOW_PRODUCT_DONATION_100": "@agm_chariow_donation_100",
+    "CHARIOW_PRODUCT_DONATION_250": "@agm_chariow_donation_250",
+    "CHARIOW_PRODUCT_DONATION_500": "@agm_chariow_donation_500",
+    "CHARIOW_PRODUCT_BRONZE_MONTHLY": "@agm_chariow_bronze_monthly",
+    "CHARIOW_PRODUCT_BRONZE_ANNUAL": "@agm_chariow_bronze_annual",
+    "CHARIOW_PRODUCT_SILVER_MONTHLY": "@agm_chariow_silver_monthly",
+    "CHARIOW_PRODUCT_SILVER_ANNUAL": "@agm_chariow_silver_annual",
+    "CHARIOW_PRODUCT_GOLD_MONTHLY": "@agm_chariow_gold_monthly",
+    "CHARIOW_PRODUCT_GOLD_ANNUAL": "@agm_chariow_gold_annual"
+  }
+}
